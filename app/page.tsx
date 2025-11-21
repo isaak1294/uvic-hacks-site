@@ -3,12 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3002";
+
 type Event = {
   name: string;
   date: string;
   location: string;
   tag: string;
   description: string;
+  eventUrl?: string;
   imageUrl?: string;
 };
 
@@ -47,6 +50,7 @@ export default function Page() {
       description:
         "A one-day creative coding sprint to build generative music with Strudel and friends.",
       imageUrl: "/images/strudel.png",
+      eventUrl: "https://jimmer.dev/strudel"
     },
   ];
 
@@ -358,25 +362,27 @@ export default function Page() {
 
 function EventCard({ event }: { event: Event }) {
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40 transition hover:border-blue-400 hover:bg-cool-steel-900">
-
+    <Link
+      href={event.eventUrl ?? "/"}
+      className="group flex h-full flex-col overflow-hidden rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40 transition hover:border-baltic-blue-400 hover:bg-cool-steel-900"
+    >
       {/* Thumbnail or gradient */}
       {event.imageUrl ? (
         <div className="h-40 w-full overflow-hidden">
           <img
             src={event.imageUrl}
             alt={event.name}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover transition group-hover:scale-[1.02]"
           />
         </div>
       ) : (
-        <div className="h-40 w-full bg-gradient-to-br from-blue-500 via-evergreen-500 to-gold-500" />
+        <div className="h-40 w-full bg-gradient-to-br from-baltic-blue-500 via-evergreen-500 to-goldenrod-500" />
       )}
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center justify-between gap-2">
-          <span className="rounded-full bg-blue-500/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-blue-300">
+          <span className="rounded-full bg-baltic-blue-500/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-baltic-blue-300">
             {event.tag}
           </span>
 
@@ -397,13 +403,15 @@ function EventCard({ event }: { event: Event }) {
           {event.description}
         </p>
 
-        <button className="mt-4 text-xs font-semibold text-blue-300 underline-offset-4 transition hover:underline">
+        {/* “View details” is now just styled text */}
+        <span className="mt-4 text-xs font-semibold text-baltic-blue-300 underline-offset-4 transition group-hover:underline">
           View details
-        </button>
+        </span>
       </div>
-    </div>
+    </Link>
   );
 }
+
 
 
 function ProjectCard({ project }: { project: Project }) {

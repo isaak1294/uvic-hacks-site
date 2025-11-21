@@ -2,6 +2,8 @@
 
 import { useState, FormEvent } from "react";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3002";
+
 export default function JoinPage() {
     const [name, setName] = useState("");
     const [vNumber, setVNumber] = useState("");
@@ -17,14 +19,6 @@ export default function JoinPage() {
         setLoading(true);
 
         try {
-            // Decide API base depending on where we are
-            const isLocal =
-                typeof window !== "undefined" &&
-                window.location.hostname === "localhost";
-
-            const API_BASE = isLocal
-                ? "http://localhost:3002"
-                : "https://strudel-hackathon.onrender.com";
 
             const res = await fetch(`${API_BASE}/api/registrations`, {
                 method: "POST",
