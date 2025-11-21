@@ -1,65 +1,475 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import Link from "next/link";
+
+type Event = {
+  name: string;
+  date: string;
+  location: string;
+  tag: string;
+  description: string;
+  imageUrl?: string;
+};
+
+type Project = {
+  name: string;
+  team: string;
+  event: string;
+  description: string;
+  projectUrl?: string;
+  imageUrl?: string;
+};
+
+
+
+export default function Page() {
+  const year = new Date().getFullYear();
+
+  const upcomingEvents: Event[] = [
+    {
+      name: "UVic Hacks: First Meeting",
+      date: "Jan 15, 2026",
+      location: "ECS 123",
+      tag: "Kickoff",
+      description:
+        "Come hang out, meet the organizers, and learn what UVic Hacks is all about. We’ll go over upcoming events, form interest groups, and help you find teammates.",
+      imageUrl: "/images/ecs123.png",
+    },
+  ];
+
+  const pastEvents: Event[] = [
+    {
+      name: "Strudel Sound Jam",
+      date: "Nov 16, 2025",
+      location: "Hickman 105",
+      tag: "Featured",
+      description:
+        "A one-day creative coding sprint to build generative music with Strudel and friends.",
+      imageUrl: "/images/strudel.png",
+    },
+  ];
+
+
+  const winningProjects: Project[] = [
+    {
+      name: "Strudel Hackathon Winners",
+      team: "Individual",
+      event: "Strudel Hackathon: Fall 2025",
+      description:
+        "Five winning songs for the Strudel Hackathon Fall 2025.",
+      projectUrl: "https://strudel.jimmer.dev",
+      //imageUrl: "/images/campus-compass.jpg",
+    },
+  ];
+
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="min-h-screen bg-neutral-950 text-cool-steel-50">
+      {/* Navbar */}
+      <header className="sticky top-0 z-20 border-b border-cool-steel-800 bg-neutral-900 backdrop-blur">
+        <nav className="mx-auto flex max-w-6xl items-center px-4 py-3 md:px-6">
+          {/* Left: Logo */}
+          <div className="flex items-center gap-2">
+            <span className="text-lg font-semibold tracking-tight">
+              <span className="text-baltic-blue-300">UVic</span>{" "}
+              <span className="text-goldenrod-300">Hacks</span>
+            </span>
+          </div>
+
+          {/* Right: Nav links + CTA */}
+          <div className="ml-auto flex items-center gap-6 text-xs font-medium">
+            <div className="hidden items-center gap-6 md:flex">
+              <a
+                href="#featured"
+                className="transition hover:text-baltic-blue-300"
+              >
+                Featured
+              </a>
+              <a
+                href="#upcoming"
+                className="transition hover:text-baltic-blue-300"
+              >
+                Upcoming
+              </a>
+              <a
+                href="#about"
+                className="transition hover:text-baltic-blue-300"
+              >
+                About
+              </a>
+            </div>
+
+            <Link
+              href="/join"
+              className="rounded-full bg-baltic-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-baltic-blue-900/60 transition hover:bg-baltic-blue-400 hover:shadow-lg"
+            >
+              Join Now
+            </Link>
+          </div>
+        </nav>
+
+      </header>
+
+      {/* Hero / Featured */}
+      <section
+        id="featured"
+        className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-20"
+      >
+        <div className="max-w-3xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-baltic-blue-300/80">
+            UVic Hackathon Club
+          </p>
+
+          <h1 className="mt-5 text-4xl font-display font-bold leading-tight tracking-tight md:text-6xl">
+            <span className="block">Code. Learn. <span className="text-goldenrod-400">Compete.</span></span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
+
+          <p className="mt-6 text-lg md:text-xl">
+            Showcase your talent on UVic&apos;s biggest stage.
+          </p>
+
+          <p className="mt-3 max-w-xl text-sm text-cool-steel-100">
+            UVic Hacks brings together developers, designers, and makers from
+            across campus to build ambitious projects, learn new technologies,
+            and connect with the local tech community.
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center gap-4">
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              href="#signup"
+              className="rounded-full bg-baltic-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-baltic-blue-900/60 transition hover:bg-baltic-blue-400 hover:shadow-lg"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
+              Join the Club
+            </a>
             <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              href="#upcoming"
+              className="text-sm font-medium text-cool-steel-200 underline-offset-4 hover:text-baltic-blue-300 hover:underline"
             >
-              Learning
-            </a>{" "}
-            center.
+              See upcoming events
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Upcoming Events */}
+      <section
+        id="upcoming"
+        className="mx-auto max-w-6xl px-4  md:px-6 "
+      >
+        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
+              Upcoming events
+            </h2>
+            <p className="mt-2 text-sm text-cool-steel-300">
+              Hackathons, workshops, and info sessions happening on campus.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 grid gap-6 md:grid-cols-3">
+          {upcomingEvents.map((event) => (
+            <EventCard key={event.name} event={event} />
+          ))}
+        </div>
+
+      </section>
+
+      {/* Winning Projects */}
+      <section
+        id="projects"
+        className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14"
+      >
+        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
+              Winning student projects
+            </h2>
+            <p className="mt-2 text-sm text-cool-steel-300">
+              Highlights from past UVic Hacks events and partner hackathons.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 grid gap-6 md:grid-cols-3">
+          {winningProjects.map((project) => (
+            <ProjectCard key={project.name} project={project} />
+          ))}
+        </div>
+
+      </section>
+
+      <section
+        id="past"
+        className="mx-auto max-w-6xl px-4  md:px-6 "
+      >
+        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
+              Past events
+            </h2>
+            <p className="mt-2 text-sm text-cool-steel-300">
+              Hackathons, workshops, and info sessions happening on campus.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 grid gap-6 md:grid-cols-3">
+          {pastEvents.map((event) => (
+            <EventCard key={event.name} event={event} />
+          ))}
+        </div>
+
+      </section>
+
+      {/* About / FAQ */}
+      <section
+        id="about"
+        className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16"
+      >
+        <div className="grid gap-12 md:grid-cols-[3fr,2fr] md:items-start">
+          {/* About Content */}
+          <div>
+            <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
+              About UVic Hacks
+            </h2>
+
+            <p className="mt-4 text-sm text-cool-steel-200">
+              UVic Hacks is a fully student-run hackathon club at the University of
+              Victoria, officially registered with the UVSS. Our mission is to build
+              a thriving community of builders, creators, designers, and developers
+              who want to make cool things and push themselves beyond the classroom.
+            </p>
+
+            <p className="mt-3 text-sm text-cool-steel-200">
+              We host hackathons, mini-sprints, workshops, and project nights where
+              students of all skill levels can learn new technologies, meet teammates,
+              and ship projects they’re proud of. Beginners are absolutely welcome—we
+              structure our events so anyone can contribute meaningfully, even if
+              they’ve never been to a hackathon before.
+            </p>
+
+            <p className="mt-3 text-sm text-cool-steel-200">
+              Beyond running events on campus, one of our major goals is to assemble
+              strong UVic teams and send them to external hackathons across Canada
+              and beyond. We want to represent UVic at larger competitions, build
+              connections with the wider tech community, and bring that momentum back
+              home.
+            </p>
+          </div>
+
+          {/* FAQ */}
+          <div>
+            <h3 className="text-xl font-display font-semibold tracking-tight md:text-2xl">
+              Frequently Asked Questions
+            </h3>
+
+            <div className="mt-6 space-y-6 text-sm text-cool-steel-200">
+              {/* Q1 */}
+              <div>
+                <p className="font-semibold text-cool-steel-100">
+                  What is a hackathon?
+                </p>
+                <p className="mt-1 text-cool-steel-300">
+                  A hackathon is a fast-paced event, usually 8 to 36 hours where teams
+                  build a project from scratch. It can be software, hardware, art,
+                  music, data science, or anything in between. You pick an idea,
+                  learn what you need, build as much as you can, and then present it
+                  at the end. It’s about creativity, collaboration, and learning by
+                  doing.
+                </p>
+              </div>
+
+              {/* Q2 */}
+              <div>
+                <p className="font-semibold text-cool-steel-100">
+                  Do I need experience?
+                </p>
+                <p className="mt-1 text-cool-steel-300">
+                  Not at all. Hackathons are one of the best ways to learn new skills
+                  quickly, and most beginners walk away with something they never
+                  thought they could build. We run beginner-friendly workshops and
+                  help match you with teammates.
+                </p>
+              </div>
+
+              {/* Q3 */}
+              <div>
+                <p className="font-semibold text-cool-steel-100">
+                  How do teams work?
+                </p>
+                <p className="mt-1 text-cool-steel-300">
+                  Teams typically have 2-4 members. You can join with friends, meet
+                  people at the kickoff event, or match with others at team formation.
+                  We emphasize collaboration over competition good teams are
+                  supportive, curious, and open to trying new ideas.
+                </p>
+              </div>
+
+              {/* Q4 */}
+              <div>
+                <p className="font-semibold text-cool-steel-100">
+                  What if I don’t have an idea?
+                </p>
+                <p className="mt-1 text-cool-steel-300">
+                  No problem. Most people show up with no idea at all. We’ll share
+                  prompts, themes, and example challenges to help your team get
+                  started. Inspiration usually hits once you start brainstorming.
+                </p>
+              </div>
+
+              {/* Q5 */}
+              <div>
+                <p className="font-semibold text-cool-steel-100">
+                  What does “representing UVic” mean?
+                </p>
+                <p className="mt-1 text-cool-steel-300">
+                  As UVic Hacks grows, we’ll assemble high-performing teams and send
+                  them to external hackathons. Think BC-wide, Canada-wide, or even
+                  international events. Our goal is to build a culture of innovation
+                  and put UVic on the map in the student tech scene.
+                </p>
+              </div>
+
+              {/* Q6 */}
+              <div>
+                <p className="font-semibold text-cool-steel-100">
+                  How do I join?
+                </p>
+                <p className="mt-1 text-cool-steel-300">
+                  Just scroll up and click <span className="text-baltic-blue-300 font-medium">Join the Club</span>.
+                  We’ll add you to our mailing list so you never miss an event.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Footer */}
+      <footer className="border-t border-cool-steel-800 py-6 text-center text-xs text-cool-steel-500">
+        <p>© {year} UVic Hacks. Built by students, for students.</p>
+      </footer>
+    </main>
+  );
+}
+
+function EventCard({ event }: { event: Event }) {
+  return (
+    <div className="flex h-full flex-col overflow-hidden rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40 transition hover:border-baltic-blue-400 hover:bg-cool-steel-900">
+
+      {/* Thumbnail or gradient */}
+      {event.imageUrl ? (
+        <div className="h-40 w-full overflow-hidden">
+          <img
+            src={event.imageUrl}
+            alt={event.name}
+            className="h-full w-full object-cover"
+          />
+        </div>
+      ) : (
+        <div className="h-40 w-full bg-gradient-to-br from-baltic-blue-500 via-evergreen-500 to-goldenrod-500" />
+      )}
+
+      {/* Content */}
+      <div className="flex flex-1 flex-col p-5">
+        <div className="flex items-center justify-between gap-2">
+          <span className="rounded-full bg-baltic-blue-500/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-baltic-blue-300">
+            {event.tag}
+          </span>
+
+          <span className="text-[11px] text-cool-steel-300">
+            {event.date}
+          </span>
+        </div>
+
+        <h3 className="mt-4 text-lg font-display font-semibold text-cool-steel-50">
+          {event.name}
+        </h3>
+
+        <p className="mt-1 text-xs text-cool-steel-300">
+          {event.location}
+        </p>
+
+        <p className="mt-3 flex-1 text-sm text-cool-steel-200">
+          {event.description}
+        </p>
+
+        <button className="mt-4 text-xs font-semibold text-baltic-blue-300 underline-offset-4 transition hover:underline">
+          View details
+        </button>
+      </div>
+    </div>
+  );
+}
+
+
+function ProjectCard({ project }: { project: Project }) {
+  return (
+    <div className="flex h-full flex-col overflow-hidden rounded-sm bg-neutral-900/80 shadow-sm shadow-black/40">
+      {/* Preview area: project iframe where the image would be */}
+      <div className="h-40 w-full overflow-hidden bg-cool-steel-900">
+        {project.projectUrl ? (
+          <iframe
+            src={project.projectUrl}
+            title={project.name}
+            className="h-full w-full border-0"
+            loading="lazy"
+          />
+        ) : project.imageUrl ? (
+          <img
+            src={project.imageUrl}
+            alt={project.name}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div className="h-full w-full bg-gradient-to-br from-baltic-blue-500 via-evergreen-500 to-goldenrod-500" />
+        )}
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-1 flex-col p-5 gap-3">
+        <div className="flex items-center justify-between gap-2">
+          <span className="rounded-full bg-goldenrod-500/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-goldenrod-300">
+            Winner
+          </span>
+          <span className="text-[11px] text-cool-steel-300">
+            {project.event}
+          </span>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-display font-semibold text-cool-steel-50">
+            {project.name}
+          </h3>
+          <p className="mt-1 text-xs text-cool-steel-300">
+            Team:{" "}
+            <span className="font-medium text-cool-steel-100">
+              {project.team}
+            </span>
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+
+        <p className="text-sm text-cool-steel-200">{project.description}</p>
+
+        <div className="mt-auto flex items-center justify-between gap-3 pt-2 text-xs">
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href={project.projectUrl}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 font-mono text-baltic-blue-300 underline-offset-4 hover:underline"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+            <span className="truncate max-w-[180px]">
+              {project.projectUrl}
+            </span>
+            <span className="text-[10px] uppercase tracking-wide">
+              Open
+            </span>
           </a>
         </div>
-      </main>
+      </div>
     </div>
   );
 }
