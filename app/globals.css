@@ -68,6 +68,33 @@
   --color-stone-brown-900: #1f1a14;
   --color-stone-brown-950: #15120e;
 
+  /* Electric Blue Scale */
+  --color-blue-50: #E0F7FF;
+  --color-blue-100: #B3EAFF;
+  --color-blue-200: #80DBFF;
+  --color-blue-300: #4DCCFF;
+  --color-blue-400: #26BDFF;
+  --color-blue-500: #00AFFF;
+  --color-blue-600: #0090D6;
+  --color-blue-700: #0070A6;
+  --color-blue-800: #004F73;
+  --color-blue-900: #002B3D;
+  --color-blue-950: #00A6FF;
+
+  /* Vivid Gold Scale */
+  --color-gold-50: #FFF7E0;
+  --color-gold-100: #FFEDB8;
+  --color-gold-200: #FFE38A;
+  --color-gold-300: #FFD95C;
+  --color-gold-400: #FFCF33;
+  --color-gold-500: #FFC300;
+  --color-gold-600: #D6A200;
+  --color-gold-700: #A68000;
+  --color-gold-800: #735900;
+  --color-gold-900: #3D2F00;
+  --color-gold-950: #FFC300;
+
+
 
 }
 

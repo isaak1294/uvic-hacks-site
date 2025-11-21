@@ -61,8 +61,8 @@ export default function JoinPage() {
                     {/* Left: Logo */}
                     <div className="flex items-center gap-2">
                         <span className="text-lg font-semibold tracking-tight">
-                            <span className="text-baltic-blue-300">UVic</span>{" "}
-                            <span className="text-goldenrod-300">Hacks</span>
+                            <span className="text-blue-950">UVic</span>{" "}
+                            <span className="text-gold-950">Hacks</span>
                         </span>
                     </div>
 
@@ -70,11 +70,11 @@ export default function JoinPage() {
                     <div className="ml-auto flex items-center gap-4 text-xs font-medium">
                         <a
                             href="/"
-                            className="text-cool-steel-300 transition hover:text-baltic-blue-300"
+                            className="text-cool-steel-300 transition hover:text-blue-300"
                         >
                             Back to home
                         </a>
-                        <span className="rounded-full bg-baltic-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-baltic-blue-900/60">
+                        <span className="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-blue-900/60">
                             Join UVic Hacks
                         </span>
                     </div>
@@ -85,7 +85,7 @@ export default function JoinPage() {
             <section className="flex flex-1 items-center justify-center px-4 py-10 md:px-6">
                 <div className="w-full max-w-lg">
                     <div className="mb-8 text-center">
-                        <p className="text-xl font-semibold uppercase tracking-[0.25em] text-baltic-blue-300/80">
+                        <p className="text-xl font-semibold uppercase tracking-[0.25em] text-blue-300/80">
                             Join the club
                         </p>
                     </div>
@@ -106,7 +106,7 @@ export default function JoinPage() {
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     placeholder="Jane Doe"
-                                    className="mt-1 w-full rounded-md border border-cool-steel-700 bg-neutral-950 px-3 py-2 text-sm text-cool-steel-50 outline-none ring-0 transition placeholder:text-cool-steel-500 focus:border-baltic-blue-500 focus:ring-2 focus:ring-baltic-blue-500/40"
+                                    className="mt-1 w-full rounded-md border border-cool-steel-700 bg-neutral-950 px-3 py-2 text-sm text-cool-steel-50 outline-none ring-0 transition placeholder:text-cool-steel-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40"
                                 />
                             </div>
 
@@ -124,7 +124,7 @@ export default function JoinPage() {
                                     value={vNumber}
                                     onChange={(e) => setVNumber(e.target.value)}
                                     placeholder="V00xxxxxx"
-                                    className="mt-1 w-full rounded-md border border-cool-steel-700 bg-neutral-950 px-3 py-2 text-sm text-cool-steel-50 outline-none ring-0 transition placeholder:text-cool-steel-500 focus:border-baltic-blue-500 focus:ring-2 focus:ring-baltic-blue-500/40"
+                                    className="mt-1 w-full rounded-md border border-cool-steel-700 bg-neutral-950 px-3 py-2 text-sm text-cool-steel-50 outline-none ring-0 transition placeholder:text-cool-steel-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40"
                                 />
                             </div>
 
@@ -142,20 +142,20 @@ export default function JoinPage() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="you@uvic.ca"
-                                    className="mt-1 w-full rounded-md border border-cool-steel-700 bg-neutral-950 px-3 py-2 text-sm text-cool-steel-50 outline-none ring-0 transition placeholder:text-cool-steel-500 focus:border-baltic-blue-500 focus:ring-2 focus:ring-baltic-blue-500/40"
+                                    className="mt-1 w-full rounded-md border border-cool-steel-700 bg-neutral-950 px-3 py-2 text-sm text-cool-steel-50 outline-none ring-0 transition placeholder:text-cool-steel-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40"
                                 />
                             </div>
 
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="mt-3 w-full rounded-full bg-baltic-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-baltic-blue-900/60 transition hover:bg-baltic-blue-400 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+                                className="mt-3 w-full rounded-full bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-blue-900/60 transition hover:bg-blue-400 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
                             >
                                 {loading ? "Submitting..." : "Join UVic Hacks"}
                             </button>
 
                             {error && (
-                                <p className="mt-3 text-center text-xs text-goldenrod-300">
+                                <p className="mt-3 text-center text-xs text-gold-300">
                                     {error}
                                 </p>
                             )}

@@ -72,8 +72,8 @@ export default function Page() {
           {/* Left: Logo */}
           <div className="flex items-center gap-2">
             <span className="text-lg font-semibold tracking-tight">
-              <span className="text-baltic-blue-300">UVic</span>{" "}
-              <span className="text-goldenrod-300">Hacks</span>
+              <span className="text-blue-950">UVic</span>{" "}
+              <span className="text-gold-950">Hacks</span>
             </span>
           </div>
 
@@ -82,19 +82,19 @@ export default function Page() {
             <div className="hidden items-center gap-6 md:flex">
               <a
                 href="#featured"
-                className="transition hover:text-baltic-blue-300"
+                className="transition hover:text-blue-300"
               >
                 Featured
               </a>
               <a
                 href="#upcoming"
-                className="transition hover:text-baltic-blue-300"
+                className="transition hover:text-blue-300"
               >
                 Upcoming
               </a>
               <a
                 href="#about"
-                className="transition hover:text-baltic-blue-300"
+                className="transition hover:text-blue-300"
               >
                 About
               </a>
@@ -102,7 +102,7 @@ export default function Page() {
 
             <Link
               href="/join"
-              className="rounded-full bg-baltic-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-baltic-blue-900/60 transition hover:bg-baltic-blue-400 hover:shadow-lg"
+              className="rounded-full bg-blue-950 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-blue-900/60 transition hover:bg-blue-400 hover:shadow-lg"
             >
               Join Now
             </Link>
@@ -117,12 +117,12 @@ export default function Page() {
         className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-20"
       >
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-baltic-blue-300/80">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-950">
             UVic Hackathon Club
           </p>
 
           <h1 className="mt-5 text-4xl font-display font-bold leading-tight tracking-tight md:text-6xl">
-            <span className="block">Code. Learn. <span className="text-goldenrod-400">Compete.</span></span>
+            <span className="block">Code. Learn. <span className="text-gold-950">Compete.</span></span>
           </h1>
 
           <p className="mt-6 text-lg md:text-xl">
@@ -138,13 +138,13 @@ export default function Page() {
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <a
               href="#signup"
-              className="rounded-full bg-baltic-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-baltic-blue-900/60 transition hover:bg-baltic-blue-400 hover:shadow-lg"
+              className="rounded-full bg-blue-950 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-blue-900/60 transition hover:bg-blue-400 hover:shadow-lg"
             >
               Join the Club
             </a>
             <a
               href="#upcoming"
-              className="text-sm font-medium text-cool-steel-200 underline-offset-4 hover:text-baltic-blue-300 hover:underline"
+              className="text-sm font-medium text-cool-steel-200 underline-offset-4 hover:text-blue-300 hover:underline"
             >
               See upcoming events
             </a>
@@ -338,7 +338,7 @@ export default function Page() {
                   How do I join?
                 </p>
                 <p className="mt-1 text-cool-steel-300">
-                  Just scroll up and click <span className="text-baltic-blue-300 font-medium">Join the Club</span>.
+                  Just scroll up and click <span className="text-blue-300 font-medium">Join the Club</span>.
                   We’ll add you to our mailing list so you never miss an event.
                 </p>
               </div>
@@ -358,7 +358,7 @@ export default function Page() {
 
 function EventCard({ event }: { event: Event }) {
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40 transition hover:border-baltic-blue-400 hover:bg-cool-steel-900">
+    <div className="flex h-full flex-col overflow-hidden rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40 transition hover:border-blue-400 hover:bg-cool-steel-900">
 
       {/* Thumbnail or gradient */}
       {event.imageUrl ? (
@@ -370,13 +370,13 @@ function EventCard({ event }: { event: Event }) {
           />
         </div>
       ) : (
-        <div className="h-40 w-full bg-gradient-to-br from-baltic-blue-500 via-evergreen-500 to-goldenrod-500" />
+        <div className="h-40 w-full bg-gradient-to-br from-blue-500 via-evergreen-500 to-gold-500" />
       )}
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center justify-between gap-2">
-          <span className="rounded-full bg-baltic-blue-500/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-baltic-blue-300">
+          <span className="rounded-full bg-blue-500/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-blue-300">
             {event.tag}
           </span>
 
@@ -397,7 +397,7 @@ function EventCard({ event }: { event: Event }) {
           {event.description}
         </p>
 
-        <button className="mt-4 text-xs font-semibold text-baltic-blue-300 underline-offset-4 transition hover:underline">
+        <button className="mt-4 text-xs font-semibold text-blue-300 underline-offset-4 transition hover:underline">
           View details
         </button>
       </div>
@@ -425,14 +425,14 @@ function ProjectCard({ project }: { project: Project }) {
             className="h-full w-full object-cover"
           />
         ) : (
-          <div className="h-full w-full bg-gradient-to-br from-baltic-blue-500 via-evergreen-500 to-goldenrod-500" />
+          <div className="h-full w-full bg-gradient-to-br from-blue-500 via-evergreen-500 to-gold-500" />
         )}
       </div>
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-5 gap-3">
         <div className="flex items-center justify-between gap-2">
-          <span className="rounded-full bg-goldenrod-500/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-goldenrod-300">
+          <span className="rounded-full bg-gold-500/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-gold-300">
             Winner
           </span>
           <span className="text-[11px] text-cool-steel-300">
@@ -459,7 +459,7 @@ function ProjectCard({ project }: { project: Project }) {
             href={project.projectUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 font-mono text-baltic-blue-300 underline-offset-4 hover:underline"
+            className="inline-flex items-center gap-2 font-mono text-blue-300 underline-offset-4 hover:underline"
           >
             <span className="truncate max-w-[180px]">
               {project.projectUrl}
