@@ -1,12 +1,15 @@
 import type { ReactNode } from "react";
 import "./globals.css";
 import { Montserrat, Archivo, Fira_Code } from "next/font/google";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "UVic Hacks",
-  icons: {
-    icon: "/uvic-hacks-icon.svg",
-  },
+  description:
+    "UVic Hacks is a student-run hackathon club at the University of Victoria. Code. Learn. Compete.",
+
+  metadataBase: new URL("https://uvichacks.com"),
+
   openGraph: {
     title: "UVic Hacks",
     description:
@@ -15,7 +18,7 @@ export const metadata = {
     siteName: "UVic Hacks",
     images: [
       {
-        url: "/og.png",
+        url: "/og.png", // uses metadataBase to become absolute
         width: 1200,
         height: 630,
         alt: "UVic Hacks — hackathon club at UVic",
@@ -23,6 +26,18 @@ export const metadata = {
     ],
     locale: "en_CA",
     type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "UVic Hacks",
+    description:
+      "Code. Learn. Compete. UVic's student-run hackathon club.",
+    images: ["/og.png"],
+  },
+
+  icons: {
+    icon: "/uvic-hacks-icon.svg",
   },
 };
 
