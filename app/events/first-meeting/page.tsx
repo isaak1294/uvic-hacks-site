@@ -42,9 +42,9 @@ export default function FirstMeetingEventPage() {
                         </a>
                         <a
                             href="#agenda"
-                            className="text-sm font-medium text-cool-steel-200 underline-offset-4 hover:text-baltic-blue-300 hover:underline"
+                            className="rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-baltic-blue-400 hover:shadow-lg"
                         >
-                            See agenda
+                            See Agenda
                         </a>
                     </div>
                 </div>
