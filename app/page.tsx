@@ -38,12 +38,13 @@ export default function Page() {
       description:
         "Come hang out, meet the organizers, and learn what UVic Hacks is all about. We’ll go over upcoming events, form interest groups, and help you find teammates.",
       imageUrl: "/images/ecs123.png",
+      eventUrl: "/events/first-meeting"
     },
   ];
 
   const pastEvents: Event[] = [
     {
-      name: "Strudel Sound Jam",
+      name: "Strudel Music Hackathon",
       date: "Nov 16, 2025",
       location: "Hickman 105",
       tag: "Featured",
@@ -51,6 +52,16 @@ export default function Page() {
         "A one-day creative coding sprint to build generative music with Strudel and friends.",
       imageUrl: "/images/strudel.png",
       eventUrl: "https://jimmer.dev/strudel"
+    },
+    {
+      name: "Inspire Hackathon",
+      date: "Oct 3-4, 2025",
+      location: "Hickman 105",
+      tag: "Featured",
+      description:
+        "Team up with Inspire UVic to work on software projects for social impact in this two-day hackathon!",
+      imageUrl: "/images/inspire.png",
+      eventUrl: "/events/inspire-hackathon"
     },
   ];
 
@@ -101,6 +112,12 @@ export default function Page() {
                 className="transition hover:text-blue-300"
               >
                 About
+              </a>
+              <a
+                href="#contact"
+                className="transition hover:text-blue-300"
+              >
+                Contact Us
               </a>
             </div>
 
@@ -162,15 +179,26 @@ export default function Page() {
         className="mx-auto max-w-6xl px-4  md:px-6 "
       >
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-          <div>
-            <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
-              Upcoming events
-            </h2>
+          <div className="w-full">
+            <div className="flex items-center gap-8">
+              <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
+                Upcoming events
+              </h2>
+
+              <a
+                href="/host"
+                className="whitespace-nowrap rounded-full bg-gold-950 px-6 py-3 text-sm font-semibold text-black shadow-md shadow-blue-900/60 transition hover:bg-blue-400 hover:shadow-lg"
+              >
+                Host Your Own Hackathon!
+              </a>
+            </div>
+
             <p className="mt-2 text-sm text-cool-steel-300">
               Hackathons, workshops, and info sessions happening on campus.
             </p>
           </div>
         </div>
+
 
         <div className="mt-8 grid gap-6 md:grid-cols-3">
           {upcomingEvents.map((event) => (
@@ -348,6 +376,39 @@ export default function Page() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section
+        id="contact"
+        className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14"
+      >
+        <div className="rounded-2xl   bg-neutral-900/80 p-8 shadow-sm shadow-black/40">
+          <h3 className="text-xl font-display font-semibold text-cool-steel-50">
+            Any Questions?
+          </h3>
+          <p className="mt-2 text-sm text-cool-steel-200">
+            Feel free to contact us with any inquiries you may have. We're always happy to talk about anything hackathon!
+          </p>
+
+          <div className="mt-7 flex flex-wrap items-center gap-3">
+            <a
+              href="mailto:contact@uvichacks.com"
+              className="rounded-full bg-goldenrod-500 px-6 py-3 text-sm font-semibold text-black shadow-md shadow-yellow-900/50 transition hover:bg-goldenrod-400 hover:shadow-lg"
+            >
+              Email UVic Hacks
+            </a>
+            <a
+              href="/join"
+              className="text-sm font-medium text-cool-steel-200 underline-offset-4 hover:text-baltic-blue-300 hover:underline"
+            >
+              Join the club
+            </a>
+          </div>
+
+          <p className="mt-3 text-xs text-cool-steel-500">
+            You can also reach out on Discord or through any UVic Hacks organizer.
+          </p>
         </div>
       </section>
 
