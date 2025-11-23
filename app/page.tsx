@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3002";
-
 type Event = {
   name: string;
   date: string;
@@ -37,15 +35,9 @@ function HeroSubtitleWithCount() {
       ? "http://localhost:3002"
       : "https://strudel-hackathon.onrender.com";
 
-    fetch(`${API_BASE}/api/registrations`)
-      .then((r) => {
-        if (!r.ok) throw new Error("Bad response");
-        return r.json();
-      })
-      .then((rows) => {
-        if (!Array.isArray(rows)) throw new Error("Bad data");
-        setCount(rows.length);
-      })
+    fetch(`${API_BASE}/api/registrations/count`)
+      .then(r => r.json())
+      .then(d => setCount(d.count ?? 0))
       .catch(() => setFailed(true));
   }, []);
 

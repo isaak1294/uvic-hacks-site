@@ -7,6 +7,23 @@ export const metadata = {
   icons: {
     icon: "/uvic-hacks-icon.svg",
   },
+  openGraph: {
+    title: "UVic Hacks",
+    description:
+      "Code. Learn. Compete. Showcase your talent on UVic's biggest stage.",
+    url: "https://uvichacks.com",
+    siteName: "UVic Hacks",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "UVic Hacks — hackathon club at UVic",
+      },
+    ],
+    locale: "en_CA",
+    type: "website",
+  },
 };
 
 const montserrat = Montserrat({
