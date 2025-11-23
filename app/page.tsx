@@ -237,11 +237,14 @@ export default function Page() {
         </div>
 
 
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
+        <div className="mt-8 flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory">
           {upcomingEvents.map((event) => (
-            <EventCard key={event.name} event={event} />
+            <div key={event.name} className="snap-start shrink-0 w-72">
+              <EventCard event={event} />
+            </div>
           ))}
         </div>
+
 
       </section>
 
@@ -261,11 +264,14 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
+        <div className="mt-8 flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory">
           {winningProjects.map((project) => (
-            <ProjectCard key={project.name} project={project} />
+            <div key={project.name} className="snap-start shrink-0 w-72">
+              <ProjectCard project={project} />
+            </div>
           ))}
         </div>
+
 
       </section>
 
@@ -284,9 +290,11 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
+        <div className="mt-8 flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory">
           {pastEvents.map((event) => (
-            <EventCard key={event.name} event={event} />
+            <div key={event.name} className="snap-start shrink-0 w-72">
+              <EventCard event={event} />
+            </div>
           ))}
         </div>
 
