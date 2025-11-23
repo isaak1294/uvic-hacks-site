@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3002";
@@ -23,6 +23,53 @@ type Project = {
   projectUrl?: string;
   imageUrl?: string;
 };
+
+function HeroSubtitleWithCount() {
+  const [count, setCount] = useState<number | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    const isLocal =
+      typeof window !== "undefined" &&
+      window.location.hostname === "localhost";
+
+    const API_BASE = isLocal
+      ? "http://localhost:3002"
+      : "https://strudel-hackathon.onrender.com";
+
+    fetch(`${API_BASE}/api/registrations`)
+      .then((r) => {
+        if (!r.ok) throw new Error("Bad response");
+        return r.json();
+      })
+      .then((rows) => {
+        if (!Array.isArray(rows)) throw new Error("Bad data");
+        setCount(rows.length);
+      })
+      .catch(() => setFailed(true));
+  }, []);
+
+  // If request failed OR still loading OR count is 0: show original subtitle
+  if (failed || count === null || count === 0) {
+    return (
+      <p className="mt-6 text-lg md:text-xl">
+        Showcase your talent on UVic&apos;s biggest stage.
+      </p>
+    );
+  }
+
+  // Success + count > 0: show the new line
+  return (
+    <p className="mt-6 text-lg md:text-xl text-cool-steel-100">
+      Join{" "}
+      <span className="text-goldenrod-400 font-semibold">
+        {count}
+      </span>{" "}
+      members in showcasing your talents on UVic&apos;s biggest stage.
+    </p>
+  );
+}
+
 
 
 
@@ -146,9 +193,7 @@ export default function Page() {
             <span className="block">Code. Learn. <span className="text-gold-950">Compete.</span></span>
           </h1>
 
-          <p className="mt-6 text-lg md:text-xl">
-            Showcase your talent on UVic&apos;s biggest stage.
-          </p>
+          <HeroSubtitleWithCount />
 
           <p className="mt-3 max-w-xl text-sm text-cool-steel-100">
             UVic Hacks brings together developers, designers, and makers from
