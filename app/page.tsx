@@ -53,7 +53,7 @@ function HeroSubtitleWithCount() {
   // Success + count > 0: show the new line
   return (
     <p className="mt-6 text-lg md:text-xl text-cool-steel-100">
-      Join{" "}
+      Join our{" "}
       <span className="text-goldenrod-400 font-semibold">
         {count}
       </span>{" "}

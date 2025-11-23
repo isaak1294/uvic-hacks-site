@@ -4,7 +4,7 @@ export default function FirstMeetingEventPage() {
     return (
         <main className="min-h-screen bg-neutral-950 text-cool-steel-50">
             {/* Hero */}
-            <section className="border-b border-cool-steel-800 bg-neutral-900/90 py-14 md:py-20">
+            <section className="  bg-neutral-900/90 py-14 md:py-20">
                 <div className="mx-auto max-w-6xl px-4 md:px-6">
                     <p className="text-xs font-semibold uppercase tracking-[0.25em] text-baltic-blue-300/80">
                         UVic Hacks Event
@@ -64,7 +64,7 @@ export default function FirstMeetingEventPage() {
                 </p>
 
                 <div className="mt-7 grid gap-6 md:grid-cols-3">
-                    <div className="rounded-lg border border-cool-steel-800 bg-neutral-900/70 p-6">
+                    <div className="rounded-lg   bg-neutral-900/70 p-6">
                         <h3 className="text-lg font-semibold text-baltic-blue-300">
                             Meet the club
                         </h3>
@@ -74,7 +74,7 @@ export default function FirstMeetingEventPage() {
                         </p>
                     </div>
 
-                    <div className="rounded-lg border border-cool-steel-800 bg-neutral-900/70 p-6">
+                    <div className="rounded-lg   bg-neutral-900/70 p-6">
                         <h3 className="text-lg font-semibold text-baltic-blue-300">
                             Plan the semester
                         </h3>
@@ -84,7 +84,7 @@ export default function FirstMeetingEventPage() {
                         </p>
                     </div>
 
-                    <div className="rounded-lg border border-cool-steel-800 bg-neutral-900/70 p-6">
+                    <div className="rounded-lg   bg-neutral-900/70 p-6">
                         <h3 className="text-lg font-semibold text-baltic-blue-300">
                             Assign roles
                         </h3>
@@ -105,7 +105,7 @@ export default function FirstMeetingEventPage() {
                     Agenda
                 </h2>
 
-                <div className="mt-6 rounded-xl border border-cool-steel-800 bg-neutral-900/70 p-6">
+                <div className="mt-6 rounded-xl   bg-neutral-900/70 p-6">
                     <ol className="space-y-4 text-sm text-cool-steel-200">
                         <li className="flex gap-3">
                             <span className="mt-0.5 text-baltic-blue-300 font-semibold">
@@ -195,7 +195,7 @@ export default function FirstMeetingEventPage() {
                 </p>
 
                 <div className="mt-6 grid gap-6 md:grid-cols-2">
-                    <div className="rounded-lg border border-cool-steel-800 bg-neutral-900/70 p-6">
+                    <div className="rounded-lg   bg-neutral-900/70 p-6">
                         <h3 className="text-lg font-semibold text-cool-steel-50">
                             Events Team
                         </h3>
@@ -206,7 +206,7 @@ export default function FirstMeetingEventPage() {
                         </ul>
                     </div>
 
-                    <div className="rounded-lg border border-cool-steel-800 bg-neutral-900/70 p-6">
+                    <div className="rounded-lg   bg-neutral-900/70 p-6">
                         <h3 className="text-lg font-semibold text-cool-steel-50">
                             Outreach & Sponsors
                         </h3>
@@ -217,7 +217,7 @@ export default function FirstMeetingEventPage() {
                         </ul>
                     </div>
 
-                    <div className="rounded-lg border border-cool-steel-800 bg-neutral-900/70 p-6">
+                    <div className="rounded-lg   bg-neutral-900/70 p-6">
                         <h3 className="text-lg font-semibold text-cool-steel-50">
                             Teams & Competitions
                         </h3>
@@ -228,7 +228,7 @@ export default function FirstMeetingEventPage() {
                         </ul>
                     </div>
 
-                    <div className="rounded-lg border border-cool-steel-800 bg-neutral-900/70 p-6">
+                    <div className="rounded-lg   bg-neutral-900/70 p-6">
                         <h3 className="text-lg font-semibold text-cool-steel-50">
                             Marketing & Media
                         </h3>
@@ -243,7 +243,7 @@ export default function FirstMeetingEventPage() {
 
             {/* Get ready */}
             <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-                <div className="rounded-2xl border border-cool-steel-800 bg-neutral-900/80 p-8 shadow-sm shadow-black/40">
+                <div className="rounded-2xl   bg-neutral-900/80 p-8 shadow-sm shadow-black/40">
                     <h3 className="text-xl font-display font-semibold text-cool-steel-50">
                         Come say hi
                     </h3>
