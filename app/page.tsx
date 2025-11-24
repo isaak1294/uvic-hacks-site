@@ -1,8 +1,7 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
+import HeroSubtitleWithCount from "./components/HeroSubtitleWithCount";
+import { Metadata } from "next";
 
 type Event = {
   name: string;
@@ -23,46 +22,22 @@ type Project = {
   imageUrl?: string;
 };
 
-function HeroSubtitleWithCount() {
-  const [count, setCount] = useState<number | null>(null);
-  const [failed, setFailed] = useState(false);
-
-  useEffect(() => {
-    const isLocal =
-      typeof window !== "undefined" &&
-      window.location.hostname === "localhost";
-
-    const API_BASE = isLocal
-      ? "http://localhost:3002"
-      : "https://strudel-hackathon.onrender.com";
-
-    fetch(`${API_BASE}/api/registrations/count`)
-      .then(r => r.json())
-      .then(d => setCount(d.count ?? 0))
-      .catch(() => setFailed(true));
-  }, []);
-
-  // If request failed OR still loading OR count is 0: show original subtitle
-  if (failed || count === null || count === 0) {
-    return (
-      <p className="mt-6 text-lg md:text-xl">
-        Showcase your talent on UVic&apos;s biggest stage.
-      </p>
-    );
+export const metadate: Metadata = {
+  title: "Uvic Hacks",
+  description: "Code. Learn. Compete. Victoria's hub for all things hackathon.",
+  keywords: ["hackathon", "networking", "uvic", "career", "hackathons", "competition"],
+  openGraph: {
+    title: "Uvic Hacks",
+    description: "Code. Learn. Compete. Victoria's hub for all things hackathon.",
+    siteName: "UvicHacks.com",
+    locale: "en_US",
+    images: [
+      {
+        url: "/images/og-v2"
+      }
+    ]
   }
-
-  // Success + count > 0: show the new line
-  return (
-    <p className="mt-6 text-lg md:text-xl text-cool-steel-100">
-      Join our{" "}
-      <span className="text-goldenrod-400 font-semibold">
-        {count}
-      </span>{" "}
-      members in showcasing your talents on UVic&apos;s biggest stage.
-    </p>
-  );
 }
-
 
 
 
@@ -122,9 +97,23 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-neutral-950 text-cool-steel-50">
       <Head>
-        <meta property="og:image" content="/images/og-v2.png" />
+
+        <title>UVic Hacks</title>
+        <meta name="description" content="Code. Learn. Compete. Showcase your talent on UVic's biggest stage." />
+
         <meta property="og:url" content="https://uvichacks.com" />
         <meta property="og:type" content="website" />
+        <meta property="og:title" content="UVic Hacks" />
+        <meta property="og:description" content="Code. Learn. Compete. Showcase your talent on UVic's biggest stage." />
+        <meta property="og:image" content="https://uvichacks.com/images/og-v2.png/" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="uvichacks.com" />
+        <meta property="twitter:url" content="https://uvichacks.com" />
+        <meta name="twitter:title" content="UVic Hacks" />
+        <meta name="twitter:description" content="Code. Learn. Compete. Showcase your talent on UVic's biggest stage." />
+        <meta name="twitter:image" content="https://uvichacks.com/images/og-v2.png" />
+
       </Head>
       {/* Navbar */}
       <header className="sticky top-0 z-20 border-b border-cool-steel-800 bg-neutral-900 backdrop-blur">
