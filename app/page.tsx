@@ -33,7 +33,7 @@ export const metadate: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/images/og-v2"
+        url: "https://uvichacks.com/images/og-v2"
       }
     ]
   }
