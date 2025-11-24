@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     siteName: "UVic Hacks",
     images: [
       {
-        url: "/og-v2.png", // uses metadataBase to become absolute
+        url: "/images/og-v2.png", // uses metadataBase to become absolute
         width: 1200,
         height: 630,
         alt: "UVic Hacks — hackathon club at UVic",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     title: "UVic Hacks",
     description:
       "Code. Learn. Compete. UVic's student-run hackathon club.",
-    images: ["/og-v2.png"],
+    images: ["/images/og-v2.png"],
   },
 
   icons: {
