@@ -1,4 +1,4 @@
-// app/events/first-meeting/page.tsx
+import NavBar from "@/app/components/NavBar";
 
 export default function FirstMeetingEventPage() {
     return (

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Head from "next/head";
 
 type Event = {
   name: string;
@@ -120,6 +121,11 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-neutral-950 text-cool-steel-50">
+      <Head>
+        <meta property="og:image" content="/images/og-v2.png" />
+        <meta property="og:url" content="https://uvichacks.com" />
+        <meta property="og:type" content="website" />
+      </Head>
       {/* Navbar */}
       <header className="sticky top-0 z-20 border-b border-cool-steel-800 bg-neutral-900 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center px-4 py-3 md:px-6">
