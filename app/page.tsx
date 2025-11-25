@@ -423,26 +423,44 @@ export default function Page() {
         id="contact"
         className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14"
       >
-        <div className="rounded-2xl   bg-neutral-900/80 p-8 shadow-sm shadow-black/40">
+        <div className="rounded-2xl bg-neutral-900/80 p-8 shadow-sm shadow-black/40">
           <h3 className="text-xl font-display font-semibold text-cool-steel-50">
             Any Questions?
           </h3>
           <p className="mt-2 text-sm text-cool-steel-200">
-            Feel free to contact us with any inquiries you may have. We're always happy to talk about anything hackathon!
+            Feel free to contact us with any inquiries you may have. We're always happy
+            to talk about anything hackathon!
           </p>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3">
+          <div className="mt-7 flex flex-wrap items-center gap-4">
             <a
               href="mailto:contact@uvichacks.com"
               className="rounded-full bg-goldenrod-500 px-6 py-3 text-sm font-semibold text-black shadow-md shadow-yellow-900/50 transition hover:bg-goldenrod-400 hover:shadow-lg"
             >
               Email UVic Hacks
             </a>
+
             <a
               href="/join"
               className="text-sm font-medium text-cool-steel-200 underline-offset-4 hover:text-baltic-blue-300 hover:underline"
             >
               Join the club
+            </a>
+
+            <a
+              href="https://instagram.com/uvichacks"
+              target="_blank"
+              rel="noreferrer"
+              className="ml-1 inline-flex items-center gap-2 rounded-full bg-neutral-950/60 px-3 py-2 text-xs text-cool-steel-200 shadow-sm shadow-black/30 transition hover:bg-neutral-950 hover:text-baltic-blue-300"
+              aria-label="UVic Hacks Instagram"
+              title="Follow UVic Hacks on Instagram"
+            >
+              <img
+                src="/uvh-instagram.png"
+                alt=""
+                className="h-5 w-5 rounded-full"
+              />
+              Instagram
             </a>
           </div>
 
@@ -451,6 +469,7 @@ export default function Page() {
           </p>
         </div>
       </section>
+
 
 
       {/* Footer */}

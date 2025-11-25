@@ -10,6 +10,8 @@ export const metadata: Metadata = {
 
   metadataBase: new URL("https://uvichacks.com"),
 
+  keywords: ["hackathon", "networking", "uvic", "career", "hackathons", "competition", "hacks"],
+
   openGraph: {
     title: "UVic Hacks",
     description:
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
     siteName: "UVic Hacks",
     images: [
       {
-        url: "/images/og-v2.png", // uses metadataBase to become absolute
+        url: "/images/og-v2.png",
         width: 1200,
         height: 630,
         alt: "UVic Hacks — hackathon club at UVic",
@@ -37,8 +39,21 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: "/uvic-hacks-icon.svg",
+    icon: "/favicon.svg",
   },
+
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    }
+  }
 };
 
 const montserrat = Montserrat({
