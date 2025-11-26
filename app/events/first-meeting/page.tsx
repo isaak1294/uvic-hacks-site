@@ -191,7 +191,7 @@ export default function FirstMeetingEventPage() {
                 </h2>
                 <p className="mt-3 max-w-3xl text-sm text-cool-steel-200">
                     UVic Hacks runs because students step up. You don’t need prior club
-                    experience — just interest and reliability. We’ll form small teams for:
+                    experience, just interest and reliability. We’ll form small teams for:
                 </p>
 
                 <div className="mt-6 grid gap-6 md:grid-cols-2">
