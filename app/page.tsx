@@ -451,7 +451,7 @@ export default function Page() {
               href="https://instagram.com/uvichacks"
               target="_blank"
               rel="noreferrer"
-              className="ml-1 inline-flex items-center gap-2 bg-neutral-900/60 px-3 py-2 text-xs text-cool-steel-200 shadow-sm shadow-black/30 transition hover:bg-neutral-950 hover:text-baltic-blue-300"
+              className="ml-1 inline-flex items-center gap-2 bg-neutral-900/60 px-3 py-2 text-xs text-cool-steel-200 transition hover:bg-neutral-950 hover:text-baltic-blue-300"
               aria-label="UVic Hacks Instagram"
               title="Follow UVic Hacks on Instagram"
             >
