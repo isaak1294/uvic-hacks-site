@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Head from "next/head";
 import HeroSubtitleWithCount from "./components/HeroSubtitleWithCount";
+import AlertBar from "./components/AlertBar";
 import { Metadata } from "next";
 
 type Event = {
@@ -189,12 +190,12 @@ export default function Page() {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <a
-              href="#signup"
+            <Link
+              href="/join"
               className="rounded-full bg-blue-950 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-blue-900/60 transition hover:bg-blue-400 hover:shadow-lg"
             >
               Join the Club
-            </a>
+            </Link>
             <a
               href="#upcoming"
               className="text-sm font-medium text-cool-steel-200 underline-offset-4 hover:text-blue-300 hover:underline"
