@@ -21,7 +21,7 @@ type GoalCategory = {
 
 export default function InternalRoadmap() {
     const roles: Role[] = [
-        { title: "President", name: "You", focus: "General Oversight & Direction" },
+        { title: "President", name: "Isaak", focus: "General Oversight & Direction" },
         { title: "Social Media Manager", name: "Ella", focus: "Content Strategy & Documentation" },
         { title: "Director of Event Planning", name: "Harsh", focus: "Logistics & Operations" },
         { title: "Director of Sponsorship", name: "Arfaz", focus: "Funding & Industry Relations" },
