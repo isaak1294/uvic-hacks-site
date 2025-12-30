@@ -56,6 +56,16 @@ export default function Page() {
       imageUrl: "/images/ecs123.png",
       eventUrl: "/events/first-meeting"
     },
+    {
+      name: "Inspire: 2026 Kickoff",
+      date: "Jan 30-31, 2026",
+      location: "TBD",
+      tag: "Main Event",
+      description:
+        "Inspire UVic is focused on STEM for social change. This hackathon will give you the opportunity to collaborate with a team to create a project for social change.",
+      imageUrl: "/images/impact2.png",
+      eventUrl: "/events/inspire-2026"
+    },
   ];
 
   const pastEvents: Event[] = [
