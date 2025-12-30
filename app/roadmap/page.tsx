@@ -28,32 +28,32 @@ const timelineEvents = [
         location: "TBD",
         description: "Learn a new skill at this hackathon.",
         highlight: false,
-        type: "workshop" // Added type
+        type: "workshop"
     },
     {
         month: "FEB",
         day: "21-22",
-        title: "Major Sponsor Hackathon", // You can change this name freely now
+        title: "Sponsored Hackathon 2",
         location: "TBD",
-        description: "Our flagship 24-hour hackathon! 500+ students, $5k in prizes, free food, and endless coding. This is the big one.",
+        description: "This hackathon will have pizza, prizes, and industry professionals present!",
         highlight: true,
-        type: "sponsored" // Added type
+        type: "sponsored"
     },
     {
         month: "MAR",
         day: "7",
         title: "Workshop Hackathon 2",
         location: "TBD",
-        description: "Did you build something cool? Show it off to professors and industry sponsors in a casual science-fair style setup.",
+        description: "Learn a new skill at this hackathon.",
         highlight: false,
         type: "workshop"
     },
     {
         month: "MAR",
         day: "20-21",
-        title: "Sponsored Hackathon 3", // You can change this name freely now
+        title: "Sponsored Hackathon 3",
         location: "TBD",
-        description: "A hands-on workshop led by our VP of Tech. Learn how to build a portfolio site using React and Tailwind CSS.",
+        description: "This hackathon will have pizza, prizes, and industry professionals present!",
         highlight: false,
         type: "sponsored"
     },
