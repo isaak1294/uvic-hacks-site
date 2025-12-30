@@ -10,7 +10,8 @@ const timelineEvents = [
         location: "ECS 116",
         description: "Join us a rundown of what's coming up this semester. Meet the new exec team and network with other club members.",
         highlight: false,
-        type: "general" // Added type
+        type: "general",
+        path: "/events/kickoff"
     },
     {
         month: "JAN",
@@ -19,7 +20,8 @@ const timelineEvents = [
         location: "TBD",
         description: "Create a project that can make a project that can make a difference with Inspire.",
         highlight: false,
-        type: "sponsored"
+        type: "sponsored",
+        path: "/events/inspire-2025"
     },
     {
         month: "FEB",
@@ -28,7 +30,8 @@ const timelineEvents = [
         location: "TBD",
         description: "Learn a new skill at this hackathon.",
         highlight: false,
-        type: "workshop"
+        type: "workshop",
+        path: "/events/kickoff"
     },
     {
         month: "FEB",
@@ -37,7 +40,8 @@ const timelineEvents = [
         location: "TBD",
         description: "This hackathon will have pizza, prizes, and industry professionals present!",
         highlight: true,
-        type: "sponsored"
+        type: "sponsored",
+        path: "/events/kickoff"
     },
     {
         month: "MAR",
@@ -46,7 +50,8 @@ const timelineEvents = [
         location: "TBD",
         description: "Learn a new skill at this hackathon.",
         highlight: false,
-        type: "workshop"
+        type: "workshop",
+        path: "/events/kickoff"
     },
     {
         month: "MAR",
@@ -55,7 +60,8 @@ const timelineEvents = [
         location: "TBD",
         description: "This hackathon will have pizza, prizes, and industry professionals present!",
         highlight: false,
-        type: "sponsored"
+        type: "sponsored",
+        path: "/events/kickoff"
     },
     {
         month: "APR",
@@ -64,7 +70,8 @@ const timelineEvents = [
         location: "Felicita's",
         description: "Wrap up the year with drinks, trivia, and the announcement of next year's executive team.",
         highlight: false,
-        type: "general"
+        type: "general",
+        path: "/events/kickoff"
     },
 ]
 

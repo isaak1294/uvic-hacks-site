@@ -207,10 +207,10 @@ export default function Page() {
               Join the Club
             </Link>
             <a
-              href="#upcoming"
-              className="text-sm font-medium text-cool-steel-200 underline-offset-4 hover:text-blue-300 hover:underline"
+              href="/roadmap"
+              className="whitespace-nowrap rounded-full bg-gold-950 px-6 py-3 text-sm font-semibold text-black shadow-md shadow-blue-900/60 transition hover:bg-blue-400 hover:shadow-lg"
             >
-              See upcoming events
+              Host A Hackathon!
             </a>
           </div>
         </div>
@@ -224,15 +224,18 @@ export default function Page() {
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div className="w-full">
             <div className="flex items-center gap-8">
-              <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
+              <Link
+                className="text-2xl font-display font-semibold tracking-tight md:text-3xl"
+                href="/roadmap"
+              >
                 Upcoming events
-              </h2>
+              </Link>
 
               <a
-                href="/host"
+                href="/roadmap"
                 className="whitespace-nowrap rounded-full bg-gold-950 px-6 py-3 text-sm font-semibold text-black shadow-md shadow-blue-900/60 transition hover:bg-blue-400 hover:shadow-lg"
               >
-                Host Your Own Hackathon!
+                See All Events
               </a>
             </div>
 

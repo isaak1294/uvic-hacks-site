@@ -7,7 +7,7 @@ export default function InspireHackathonPage() {
             <section className="bg-neutral-900/90 py-14 md:py-20">
                 <div className="mx-auto max-w-6xl px-4 md:px-6">
                     <p className="text-xs font-semibold uppercase tracking-[0.25em] text-baltic-blue-300/80">
-                        Featured Event • UVic Hacks x Inspire UVic
+                        Upcoming Event • UVic Hacks x Inspire UVic
                     </p>
 
                     <h1 className="mt-4 text-4xl font-display font-bold tracking-tight md:text-6xl">
@@ -16,22 +16,22 @@ export default function InspireHackathonPage() {
                     </h1>
 
                     <p className="mt-4 max-w-2xl text-lg text-cool-steel-100 md:text-xl">
-                        Team up with Inspire UVic to work on software projects for social
-                        impact in this two-day hackathon.
+                        A two-day build sprint dedicated to software solutions for social
+                        impact. Team up to create tools that make a difference.
                     </p>
 
                     <div className="mt-7 flex flex-wrap items-center gap-3 text-sm text-cool-steel-200">
-                        <span className="rounded-full bg-baltic-blue-500/15 px-3 py-1 text-baltic-blue-300">
+                        <span className="rounded-full bg-baltic-blue-500/15 px-3 py-1 text-baltic-blue-300 border border-baltic-blue-500/30">
                             Hickman 105
                         </span>
                         <span className="rounded-full bg-cool-steel-800/50 px-3 py-1 text-cool-steel-200">
-                            Oct 3–4, 2025
+                            Jan 30-31, 2026
                         </span>
                         <span className="rounded-full bg-cool-steel-800/50 px-3 py-1 text-cool-steel-200">
-                            2-Day Hackathon
+                            2-Day Build Sprint
                         </span>
-                        <span className="rounded-full bg-green-700/80 px-3 py-1 text-cool-steel-200">
-                            Completed
+                        <span className="rounded-full bg-gold-950/20 px-3 py-1 text-gold-500 border border-gold-900/30">
+                            Registration Open Soon
                         </span>
                     </div>
 
@@ -40,7 +40,13 @@ export default function InspireHackathonPage() {
                             href="/join"
                             className="rounded-full bg-baltic-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-baltic-blue-900/60 transition hover:bg-baltic-blue-400 hover:shadow-lg"
                         >
-                            Join UVic Hacks
+                            Register Now
+                        </a>
+                        <a
+                            href="#schedule"
+                            className="rounded-full bg-neutral-800 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-700"
+                        >
+                            View Schedule
                         </a>
                     </div>
                 </div>
@@ -49,219 +55,169 @@ export default function InspireHackathonPage() {
             {/* Overview */}
             <section className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
                 <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
-                    What is the Inspire Hackathon?
+                    Build for Social Impact
                 </h2>
 
                 <p className="mt-4 max-w-3xl text-sm text-cool-steel-200">
-                    The Inspire Hackathon is a two-day build sprint focused on creating
-                    software for social impact. You’ll work in teams to ship prototypes
-                    that support real causes, with mentors on hand for guidance on
-                    product, engineering, and pitching.
-                </p>
-
-                <p className="mt-3 max-w-3xl text-sm text-cool-steel-200">
-                    This event is open to everyone at UVic. Whether you’re brand new to
-                    hackathons or already a seasoned builder, there’s a place for you.
-                    You can come with a team or find one at kickoff.
+                    The Inspire Hackathon brings together students from all disciplines to
+                    solve pressing social challenges. Whether it's accessibility,
+                    environmental sustainability, or community health, we’re providing
+                    the space and mentorship to turn your ideas into functional prototypes.
                 </p>
 
                 <div className="mt-7 grid gap-6 md:grid-cols-3">
-                    <div className="rounded-lg bg-neutral-900/70 p-6 shadow-sm shadow-black/40">
+                    <div className="rounded-lg bg-neutral-900/70 p-6 shadow-sm shadow-black/40 border border-neutral-800">
                         <h3 className="text-lg font-semibold text-baltic-blue-300">
-                            Social impact focus
+                            Real-World Problems
                         </h3>
                         <p className="mt-2 text-sm text-cool-steel-200">
-                            Build tools, apps, or experiences that improve life on campus or
-                            beyond.
+                            Work on prompts provided by local non-profits and campus
+                            groups to ensure your hack has an immediate impact.
                         </p>
                     </div>
 
-                    <div className="rounded-lg bg-neutral-900/70 p-6 shadow-sm shadow-black/40">
+                    <div className="rounded-lg bg-neutral-900/70 p-6 shadow-sm shadow-black/40 border border-neutral-800">
                         <h3 className="text-lg font-semibold text-baltic-blue-300">
-                            Mentors & support
+                            Collaborative Mentoring
                         </h3>
                         <p className="mt-2 text-sm text-cool-steel-200">
-                            We’ll have organizers and mentors around for debugging,
-                            brainstorming, and feedback.
+                            Industry experts and senior students will be on-site to help with
+                            everything from backend logic to impact assessment.
                         </p>
                     </div>
 
-                    <div className="rounded-lg bg-neutral-900/70 p-6 shadow-sm shadow-black/40">
+                    <div className="rounded-lg bg-neutral-900/70 p-6 shadow-sm shadow-black/40 border border-neutral-800">
                         <h3 className="text-lg font-semibold text-baltic-blue-300">
-                            Beginner friendly
+                            Inclusive Environment
                         </h3>
                         <p className="mt-2 text-sm text-cool-steel-200">
-                            No experience required. We’ll help you get started and find a
-                            role that fits you.
+                            We value diverse perspectives. You don't need to be a CS major
+                            to help design a solution that changes lives.
                         </p>
                     </div>
                 </div>
             </section>
 
             {/* Schedule */}
-            <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
+            <section id="schedule" className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
                 <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
-                    Tentative Schedule
+                    Hackathon Schedule
                 </h2>
 
                 <div className="mt-6 grid gap-6 md:grid-cols-2">
-                    <div className="rounded-2xl bg-neutral-900/70 p-6 shadow-sm shadow-black/40">
+                    <div className="rounded-2xl bg-neutral-900/70 p-6 shadow-sm shadow-black/40 border border-neutral-800">
                         <h3 className="text-lg font-semibold text-cool-steel-50">
-                            Day 1: Kickoff & Build
+                            Day 1: Thursday, Jan 29
                         </h3>
                         <ul className="mt-3 space-y-2 text-sm text-cool-steel-200">
-                            <li>5:00 PM: Doors open + snacks</li>
-                            <li>5:30 PM: Welcome + theme reveal</li>
-                            <li>6:00 PM: Team formation</li>
-                            <li>6:30 PM: Hacking begins</li>
-                            <li>Evening: Mentor check-ins</li>
+                            <li>4:30 PM: Check-in & Networking</li>
+                            <li>5:30 PM: Opening Ceremony + Inspire Prompts</li>
+                            <li>6:00 PM: Team Formation & Ideation</li>
+                            <li>6:30 PM: Hacking Commences</li>
+                            <li>8:00 PM: Dinner & Mentor Rotations</li>
                         </ul>
                     </div>
 
-                    <div className="rounded-2xl bg-neutral-900/70 p-6 shadow-sm shadow-black/40">
+                    <div className="rounded-2xl bg-neutral-900/70 p-6 shadow-sm shadow-black/40 border border-neutral-800">
                         <h3 className="text-lg font-semibold text-cool-steel-50">
-                            Day 2: Finish & Present
+                            Day 2: Friday, Jan 30
                         </h3>
                         <ul className="mt-3 space-y-2 text-sm text-cool-steel-200">
-                            <li>9:00 AM: Build continues</li>
-                            <li>12:00 PM: Final push</li>
-                            <li>12:30 PM: Project expo & demos</li>
-                            <li>2:00 PM: Awards + wrap-up</li>
+                            <li>9:00 AM: Breakfast & Morning Standup</li>
+                            <li>12:00 PM: Technical Workshops & Lunch</li>
+                            <li>3:00 PM: Code Freeze & Slide Submissions</li>
+                            <li>4:00 PM: Project Expo & Social Impact Pitch</li>
+                            <li>6:00 PM: Awards Ceremony</li>
                         </ul>
                     </div>
                 </div>
-
-                <p className="mt-4 text-xs text-cool-steel-400">
-                    Schedule may shift slightly, registrants will receive the final plan
-                    closer to the event.
-                </p>
             </section>
 
-            {/* What to Bring / How Teams Work */}
+            {/* What to Bring */}
             <section className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
                 <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
-                    What to Bring
+                    The Essentials
                 </h2>
 
                 <div className="mt-4 grid gap-6 md:grid-cols-2">
                     <div className="rounded-2xl bg-neutral-900/70 p-6 shadow-sm shadow-black/40">
                         <h3 className="text-lg font-semibold text-cool-steel-50">
-                            Essentials
+                            Hardware & Gear
                         </h3>
                         <ul className="mt-2 list-disc pl-5 text-sm text-cool-steel-200 space-y-1">
-                            <li>Laptop + charger</li>
-                            <li>Headphones</li>
-                            <li>Water bottle</li>
-                            <li>Any hardware you want to use</li>
+                            <li>Laptop and chargers</li>
+                            <li>Reusable water bottle and mug</li>
+                            <li>A positive, collaborative mindset</li>
+                            <li>Optional: External monitor or keyboard</li>
                         </ul>
                     </div>
 
                     <div className="rounded-2xl bg-neutral-900/70 p-6 shadow-sm shadow-black/40">
                         <h3 className="text-lg font-semibold text-cool-steel-50">
-                            Teams
+                            The Teams
                         </h3>
                         <p className="mt-2 text-sm text-cool-steel-200">
-                            Teams are typically 2–4 people. If you come solo, we’ll help you
-                            find teammates at kickoff. Designers, developers, and idea-people
-                            are all valuable.
+                            Build in teams of 2–4. No team? No problem. We have a
+                            dedicated team-matching session right after the opening ceremony
+                            to help you find partners with complementary skills.
                         </p>
                     </div>
                 </div>
             </section>
 
-            {/* Judging */}
-            <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
+            {/* Judging Criteria */}
+            <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14 border-t border-neutral-900">
                 <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
-                    Judging Criteria
+                    Impact Criteria
                 </h2>
 
-                <div className="mt-5 grid gap-6 md:grid-cols-4">
-                    <div className="rounded-xl bg-neutral-900/70 p-5 shadow-sm shadow-black/40">
-                        <p className="text-sm font-semibold text-cool-steel-50">
-                            Social Impact
-                        </p>
-                        <p className="mt-2 text-xs text-cool-steel-200">
-                            Does it help people in a real way?
-                        </p>
-                    </div>
-                    <div className="rounded-xl bg-neutral-900/70 p-5 shadow-sm shadow-black/40">
-                        <p className="text-sm font-semibold text-cool-steel-50">
-                            Creativity
-                        </p>
-                        <p className="mt-2 text-xs text-cool-steel-200">
-                            Originality of concept and execution.
-                        </p>
-                    </div>
-                    <div className="rounded-xl bg-neutral-900/70 p-5 shadow-sm shadow-black/40">
-                        <p className="text-sm font-semibold text-cool-steel-50">
-                            Technical Quality
-                        </p>
-                        <p className="mt-2 text-xs text-cool-steel-200">
-                            How solid and thoughtful is the build?
-                        </p>
-                    </div>
-                    <div className="rounded-xl bg-neutral-900/70 p-5 shadow-sm shadow-black/40">
-                        <p className="text-sm font-semibold text-cool-steel-50">
-                            Presentation
-                        </p>
-                        <p className="mt-2 text-xs text-cool-steel-200">
-                            Clarity, story, and demo strength.
-                        </p>
-                    </div>
+                <div className="mt-5 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+                    {[
+                        { title: "Social Utility", desc: "Potential to improve lives." },
+                        { title: "Execution", desc: "How functional is the build?" },
+                        { title: "User Experience", desc: "Ease of use and accessibility." },
+                        { title: "Innovation", desc: "Creative use of technology." }
+                    ].map((item, i) => (
+                        <div key={i} className="rounded-xl bg-neutral-900/70 p-5 shadow-sm border border-neutral-800">
+                            <p className="text-sm font-semibold text-cool-steel-50">{item.title}</p>
+                            <p className="mt-2 text-xs text-cool-steel-300">{item.desc}</p>
+                        </div>
+                    ))}
                 </div>
             </section>
 
             {/* FAQ */}
             <section className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
                 <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
-                    FAQ
+                    Common Questions
                 </h2>
 
                 <div className="mt-6 space-y-6 text-sm text-cool-steel-200">
                     <div>
                         <p className="font-semibold text-cool-steel-100">
-                            Do I need experience?
+                            What if I can't code?
                         </p>
                         <p className="mt-1 text-cool-steel-300">
-                            No. We’ll support beginners with mentors, prompts, and team
-                            matching.
+                            Impact projects need designers, researchers, and project
+                            managers just as much as developers. Your skills are needed!
                         </p>
                     </div>
 
                     <div>
                         <p className="font-semibold text-cool-steel-100">
-                            Can I work on a project I already started?
+                            Is this an overnight event?
                         </p>
                         <p className="mt-1 text-cool-steel-300">
-                            We prefer new builds during the event, but using old ideas,
-                            libraries, or partial prototypes is totally fine.
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="font-semibold text-cool-steel-100">
-                            What should I build?
-                        </p>
-                        <p className="mt-1 text-cool-steel-300">
-                            Anything aligned with the social impact theme. We’ll share
-                            challenge prompts at kickoff.
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="font-semibold text-cool-steel-100">
-                            Is there food?
-                        </p>
-                        <p className="mt-1 text-cool-steel-300">
-                            There will be snacks and meals throughout the event.
+                            No. We wrap up Day 1 in the evening and resume on Friday morning
+                            to ensure everyone stays rested and productive.
                         </p>
                     </div>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="py-6 text-center text-xs text-cool-steel-500">
-                <p>UVic Hacks • Inspire Hackathon • Build for social impact.</p>
+            <footer className="py-10 border-t border-neutral-900 text-center text-xs text-cool-steel-500">
+                <p>UVic Hacks &bull; Inspire Hackathon 2026 &bull; Hickman 105</p>
             </footer>
         </main>
     );
