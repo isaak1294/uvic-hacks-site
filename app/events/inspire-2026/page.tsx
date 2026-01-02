@@ -107,7 +107,7 @@ export default function InspireHackathonPage() {
                 <div className="mt-6 grid gap-6 md:grid-cols-2">
                     <div className="rounded-2xl bg-neutral-900/70 p-6 shadow-sm shadow-black/40 border border-neutral-800">
                         <h3 className="text-lg font-semibold text-cool-steel-50">
-                            Day 1: Thursday, Jan 29
+                            Day 1: Friday, Jan 30
                         </h3>
                         <ul className="mt-3 space-y-2 text-sm text-cool-steel-200">
                             <li>4:30 PM: Check-in & Networking</li>
@@ -120,7 +120,7 @@ export default function InspireHackathonPage() {
 
                     <div className="rounded-2xl bg-neutral-900/70 p-6 shadow-sm shadow-black/40 border border-neutral-800">
                         <h3 className="text-lg font-semibold text-cool-steel-50">
-                            Day 2: Friday, Jan 30
+                            Day 2: Saturday, Jan 31
                         </h3>
                         <ul className="mt-3 space-y-2 text-sm text-cool-steel-200">
                             <li>9:00 AM: Breakfast & Morning Standup</li>
