@@ -90,7 +90,7 @@ export default function Sponsorship() {
                     <div className="ml-auto flex items-center gap-6 text-xs font-medium">
                         <div className="hidden items-center gap-6 md:flex">
                             <Link href="/sponsor/recruitment" className="transition hover:text-blue-300">Recruitment</Link>
-                            <Link href="/meet-the-team" className="transition hover:text-blue-300">Team</Link>
+                            <Link href="/sponsor/meet-the-team" className="transition hover:text-blue-300">Team</Link>
                             <Link href="mailto:contact@uvichacks.com" className="transition hover:text-blue-300">Contact</Link>
                         </div>
                         <Link
