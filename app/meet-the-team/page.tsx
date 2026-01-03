@@ -14,11 +14,11 @@ const teamMembers = [
     },
     {
         name: "Jake Cushway",
-        role: "VP of Outreach",
-        bio: "Description.",
+        role: "Operations and Marketing Manager",
+        bio: "Fourth Year Computer Science student passionate about learning, collaborating, and building innovative ideas as a community.",
         image: "/images/team/jake.png",
-        linkedin: "#",
-        github: "#",
+        linkedin: "https://www.linkedin.com/in/jakecushway/",
+        github: "https://github.com/jakecush1",
         website: "https://jakecushway.ca"
     },
     {
@@ -28,7 +28,7 @@ const teamMembers = [
         image: "/images/team/ella.png",
         linkedin: "#",
         github: "#",
-        website: "https://jimmer.dev"
+        website: "#"
     },
     {
         name: "Arfaz Hussain",
@@ -44,9 +44,9 @@ const teamMembers = [
         role: "VP of Logistics",
         bio: "Description.",
         image: "/images/team/harsh.png",
-        linkedin: "#",
-        github: "#",
-        website: "https://jimmer.dev"
+        linkedin: "https://www.linkedin.com/in/harsh-sreelal-73a9272b1",
+        github: "https://github.com/harshsreelal",
+        website: "#"
     },
 ];
 
