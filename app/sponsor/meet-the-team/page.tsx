@@ -58,28 +58,27 @@ export default function Team() {
                 <meta name="description" content="Meet the students behind UVic Hacks." />
             </Head>
 
-            {/* Navbar (Kept identical to your homepage for consistency) */}
+            {/* Navbar (Same as Roadmap) */}
             <header className="sticky top-0 z-20 border-b border-cool-steel-800 bg-neutral-900/80 backdrop-blur">
                 <nav className="mx-auto flex max-w-6xl items-center px-4 py-3 md:px-6">
                     <div className="flex items-center gap-2">
                         <Link href="/" className="text-lg font-semibold tracking-tight hover:opacity-80 transition">
-                            <span className="text-blue-950">UVic</span>{" "}
-                            <span className="text-gold-950">Hacks</span>
+                            <span className="text-blue-500">UVic</span>{" "}
+                            <span className="text-gold-500">Hacks</span>
                         </Link>
                     </div>
 
                     <div className="ml-auto flex items-center gap-6 text-xs font-medium">
                         <div className="hidden items-center gap-6 md:flex">
-                            <Link href="/#featured" className="transition hover:text-blue-300">Featured</Link>
-                            <Link href="/#upcoming" className="transition hover:text-blue-300">Upcoming</Link>
-                            <Link href="/#about" className="transition hover:text-blue-300">About</Link>
-                            <Link href="/#contact" className="transition hover:text-blue-300">Contact Us</Link>
+                            <Link href="/sponsor/recruitment" className="transition hover:text-blue-300">Recruitment</Link>
+                            <Link href="/meet-the-team" className="transition hover:text-blue-300">Team</Link>
+                            <Link href="/contact" className="transition hover:text-blue-300">Contact</Link>
                         </div>
                         <Link
-                            href="/join"
-                            className="rounded-full bg-blue-950 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-blue-900/60 transition hover:bg-blue-400 hover:shadow-lg"
+                            href="/sponsor"
+                            className="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-blue-900/60 transition hover:bg-blue-500 hover:shadow-lg"
                         >
-                            Join Now
+                            Become a Sponsor
                         </Link>
                     </div>
                 </nav>
