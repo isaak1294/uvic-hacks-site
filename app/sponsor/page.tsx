@@ -91,7 +91,7 @@ export default function Sponsorship() {
                         <div className="hidden items-center gap-6 md:flex">
                             <Link href="/sponsor/recruitment" className="transition hover:text-blue-300">Recruitment</Link>
                             <Link href="/sponsor/meet-the-team" className="transition hover:text-blue-300">Team</Link>
-                            <Link href="mailto:contact@uvichacks.com" className="transition hover:text-blue-300">Contact</Link>
+                            <Link href="mailto:isaak@uvichacks.com" className="transition hover:text-blue-300">Contact</Link>
                         </div>
                         <Link
                             href="/sponsor"
@@ -155,7 +155,7 @@ export default function Sponsorship() {
                                 </div>
 
                                 <Link
-                                    href="mailto:contact@uvichacks.com"
+                                    href="mailto:isaak@uvichacks.com"
                                     className={`mt-10 block w-full rounded-xl py-3 text-center text-sm font-bold text-white transition-all duration-200 shadow-md ${config.button}`}
                                 >
                                     Choose {tier.name}

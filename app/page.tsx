@@ -131,10 +131,10 @@ export default function Page() {
         <nav className="mx-auto flex max-w-6xl items-center px-4 py-3 md:px-6">
           {/* Left: Logo */}
           <div className="flex items-center gap-2">
-            <span className="text-lg font-semibold tracking-tight">
-              <span className="text-blue-950">UVic</span>{" "}
-              <span className="text-gold-950">Hacks</span>
-            </span>
+            <Link href="/" className="text-lg font-semibold tracking-tight hover:opacity-80 transition">
+              <span className="text-blue-500">UVic</span>{" "}
+              <span className="text-gold-500">Hacks</span>
+            </Link>
           </div>
 
           {/* Right: Nav links + CTA */}
