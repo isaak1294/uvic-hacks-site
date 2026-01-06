@@ -68,7 +68,7 @@ export default function RecruitmentAnalytics() {
                     </h1>
                     <p className="mt-6 text-lg text-cool-steel-200 leading-relaxed">
                         Don't just collect resumes. Get a deep-dive report that identifies the exact talent
-                        Redbrick needs to grow, backed by 48 hours of hands-on performance data.
+                        your organization needs to grow, backed by 48 hours of hands-on performance data.
                     </p>
                 </div>
             </section>

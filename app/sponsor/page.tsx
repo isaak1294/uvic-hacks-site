@@ -20,7 +20,7 @@ const sponsorshipTiers = [
         description: "Our recruitment-focused tier. Get direct access to the developers and designers building the future.",
         type: "workshop",
         features: [
-            "All Bronze benefits",
+            "All Silver benefits",
             "Access to participant resumes",
             "Instagram story post",
             "Dedicated booth/table in the main hall",
@@ -33,7 +33,7 @@ const sponsorshipTiers = [
         description: "Maximum impact. Take a leading role in the event and mentor the next generation of software engineers.",
         type: "sponsored",
         features: [
-            "All Silver benefits",
+            "All Gold benefits",
             "5-minute Opening or Closing Keynote",
             "Large logo on main stage & t-shirts",
             "Sponsor a custom prize category",
@@ -169,7 +169,7 @@ export default function Sponsorship() {
                 <div className="mt-16 rounded-2xl border border-cool-steel-800 bg-neutral-900/50 p-8 text-center md:p-12">
                     <h2 className="text-2xl font-bold font-display">Need a custom package?</h2>
                     <p className="mt-2 text-cool-steel-300">We love working with companies to create unique challenges or hardware-specific sponsorships.</p>
-                    <Link href="/contact" className="mt-6 inline-block text-blue-400 font-semibold hover:text-blue-300 underline underline-offset-4">
+                    <Link href="mailto:isaak@uvichacks.com" className="mt-6 inline-block text-blue-400 font-semibold hover:text-blue-300 underline underline-offset-4">
                         Let's build something custom &rarr;
                     </Link>
                 </div>
