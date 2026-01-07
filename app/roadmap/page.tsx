@@ -15,7 +15,7 @@ const timelineEvents = [
     },
     {
         month: "JAN",
-        day: "29-30",
+        day: "30-31",
         title: "Inspire Hackathon for Social Impact",
         location: "TBD",
         description: "Create a project that can make a project that can make a difference with Inspire.",

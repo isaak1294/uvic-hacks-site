@@ -292,7 +292,7 @@ export default function HostHackathonPage() {
 
                     <div className="mt-7 flex flex-wrap items-center gap-3">
                         <a
-                            href="mailto:contact@uvichacks.com"
+                            href="mailto:isaak@uvichacks.com"
                             className="rounded-full bg-goldenrod-500 px-6 py-3 text-sm font-semibold text-black shadow-md shadow-yellow-900/50 transition hover:bg-goldenrod-400 hover:shadow-lg"
                         >
                             Email UVic Hacks
