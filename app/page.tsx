@@ -66,6 +66,16 @@ export default function Page() {
       imageUrl: "/images/impact2.png",
       eventUrl: "/events/inspire-2026"
     },
+    {
+      name: "Portfolio Workshop Hackathon",
+      date: "Feb 7, 2026",
+      location: "TBD",
+      tag: "Workshop",
+      description:
+        "Looking to create a new portfolio website, and directly interact with industry professionals while doing it? This Worshop Hackathon is for you!",
+      imageUrl: "/images/events/portfolio.png",
+      eventUrl: "/events/portfolio-workshop"
+    },
   ];
 
   const pastEvents: Event[] = [
