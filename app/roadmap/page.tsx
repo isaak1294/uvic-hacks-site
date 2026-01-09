@@ -25,17 +25,17 @@ const timelineEvents = [
     },
     {
         month: "FEB",
-        day: "15",
-        title: "Workshop Hackathon 1",
+        day: "7",
+        title: "Portfolio Workshop Hackathon",
         location: "TBD",
-        description: "Learn a new skill at this hackathon.",
+        description: "Connect with industry professionals and work on your portfolio website at this immersive workshop hackathon!",
         highlight: false,
         type: "workshop",
-        path: "/events/kickoff"
+        path: "/events/portfolio-workshop"
     },
     {
         month: "FEB",
-        day: "21-22",
+        day: "27",
         title: "Sponsored Hackathon 2",
         location: "TBD",
         description: "This hackathon will have pizza, prizes, and industry professionals present!",
