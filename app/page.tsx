@@ -207,7 +207,7 @@ export default function Page() {
               Join the Club
             </Link>
             <a
-              href="/roadmap"
+              href="/host"
               className="whitespace-nowrap rounded-full bg-gold-950 px-6 py-3 text-sm font-semibold text-black shadow-md shadow-blue-900/60 transition hover:bg-blue-400 hover:shadow-lg"
             >
               Host A Hackathon!
