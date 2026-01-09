@@ -1,4 +1,4 @@
-// app/events/portfolio-sprint/page.tsx
+import Image from 'next/image';
 
 export default function PortfolioSprintPage() {
     return (
@@ -55,7 +55,7 @@ export default function PortfolioSprintPage() {
                             Meet the Mentors
                         </h2>
                         <p className="mt-2 text-cool-steel-300">
-                            Get 1-on-1 help from industry pros who know what gets a resume noticed.
+                            Get 1-on-1 help from industry pros who know what gets a site noticed.
                         </p>
                     </div>
                 </div>
@@ -63,16 +63,33 @@ export default function PortfolioSprintPage() {
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {[
                         {
-                            name: "TBD",
-                            role: "dev",
-                            expert: "things",
-                            img: ":)"
+                            name: "Jacob Ketcheson",
+                            role: "Design Systems Tech Lead // Dropbox",
+                            expert: "UX and Design Systems",
+                            img: "/images/partners/jacob-ketcheson.png"
+                        },
+                        {
+                            name: "Josh",
+                            role: "Staff Engineer // Ocado",
+                            expert: "Frontend UI",
+                            img: "/images/partners/josh.png"
+                        },
+                        {
+                            name: "Jem Bezooyen",
+                            role: "Indie Full-Stack Design Engineer",
+                            expert: "Full-Stack Design",
+                            img: "/images/partners/jam.png"
                         },
 
                     ].map((mentor) => (
                         <div key={mentor.name} className="flex items-center gap-4 rounded-2xl bg-neutral-900/40 p-5 border border-neutral-800/50">
-                            <div className="h-16 w-16 shrink-0 rounded-full bg-neutral-800 flex items-center justify-center text-baltic-blue-300 font-bold border border-neutral-700">
-                                {mentor.img}
+                            <div className="relative h-16 w-16 shrink-0 rounded-full overflow-hidden bg-neutral-800 flex items-center justify-center text-baltic-blue-300 font-bold border border-neutral-700">
+                                <Image
+                                    src={mentor.img}
+                                    alt={mentor.name}
+                                    fill
+                                    className="object-cover"
+                                />
                             </div>
                             <div>
                                 <h3 className="font-semibold text-cool-steel-50">{mentor.name}</h3>
