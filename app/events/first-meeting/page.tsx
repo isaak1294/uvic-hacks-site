@@ -23,7 +23,7 @@ export default function FirstMeetingEventPage() {
 
                     <div className="mt-7 flex flex-wrap items-center gap-3 text-sm text-cool-steel-200">
                         <span className="rounded-full bg-baltic-blue-500/15 px-3 py-1 text-baltic-blue-300">
-                            ECS 123
+                            TBD
                         </span>
                         <span className="rounded-full bg-cool-steel-800/60 px-3 py-1 text-cool-steel-200">
                             Jan 15, 2026
