@@ -70,7 +70,7 @@ export default function PortfolioSprintPage() {
                         },
                         {
                             name: "Josh Stabback",
-                            role: "Staff Engineer // Ocado",
+                            role: "Staff Engineer",
                             expert: "Frontend UI",
                             img: "/images/partners/josh.png"
                         },
