@@ -22,7 +22,7 @@ export default function InspireHackathonPage() {
 
                     <div className="mt-7 flex flex-wrap items-center gap-3 text-sm text-cool-steel-200">
                         <span className="rounded-full bg-baltic-blue-500/15 px-3 py-1 text-baltic-blue-300 border border-baltic-blue-500/30">
-                            Hickman 105
+                            TBD
                         </span>
                         <span className="rounded-full bg-cool-steel-800/50 px-3 py-1 text-cool-steel-200">
                             Jan 30-31, 2026
@@ -217,7 +217,7 @@ export default function InspireHackathonPage() {
 
             {/* Footer */}
             <footer className="py-10 border-t border-neutral-900 text-center text-xs text-cool-steel-500">
-                <p>UVic Hacks &bull; Inspire Hackathon 2026 &bull; Hickman 105</p>
+                <p>UVic Hacks &bull; Inspire Hackathon 2026 &bull; TBD</p>
             </footer>
         </main>
     );
