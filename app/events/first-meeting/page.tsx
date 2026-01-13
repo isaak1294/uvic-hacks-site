@@ -23,13 +23,13 @@ export default function FirstMeetingEventPage() {
 
                     <div className="mt-7 flex flex-wrap items-center gap-3 text-sm text-cool-steel-200">
                         <span className="rounded-full bg-baltic-blue-500/15 px-3 py-1 text-baltic-blue-300">
-                            TBD
+                            ECS 123
                         </span>
                         <span className="rounded-full bg-cool-steel-800/60 px-3 py-1 text-cool-steel-200">
                             Jan 15, 2026
                         </span>
                         <span className="rounded-full bg-cool-steel-800/60 px-3 py-1 text-cool-steel-200">
-                            6:00–7:30 PM
+                            5:30–6:30 PM
                         </span>
                     </div>
 
@@ -140,7 +140,7 @@ export default function FirstMeetingEventPage() {
                             </span>
                             <div>
                                 <p className="font-semibold text-cool-steel-100">
-                                    Icebreaker Bingo & Social
+                                    Icebreaker & Social
                                 </p>
                                 <p className="mt-1 text-cool-steel-300">
                                     A high-energy activity to help you meet people with similar tech interests.

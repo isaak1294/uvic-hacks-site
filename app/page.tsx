@@ -49,7 +49,7 @@ export default function Page() {
     {
       name: "UVic Hacks: First Meeting",
       date: "Jan 15, 2026",
-      location: "TBD",
+      location: "ECS 123",
       tag: "Kickoff",
       description:
         "Come hang out, meet the organizers, and learn what UVic Hacks is all about. We’ll go over upcoming events, form interest groups, and help you find teammates.",
