@@ -21,6 +21,8 @@ function ProfileContent() {
     const [bio, setBio] = useState("");
     const [resume, setResume] = useState<File | null>(null);
 
+    const [registeredEvents, setRegisteredEvents] = useState<any[]>([]);
+
     useEffect(() => {
         if (!authLoading && !user) router.push("/join/login");
         if (user) {
@@ -55,6 +57,31 @@ function ProfileContent() {
             setLoading(false);
         }
     };
+
+
+    useEffect(() => {
+        const fetchEventDetails = async () => {
+            // Only run if the user exists and has event IDs
+            if (user?.registeredEventIds && user.registeredEventIds.length > 0) {
+                try {
+                    const details = await Promise.all(
+                        user.registeredEventIds.map(async (id: number) => {
+                            const res = await fetch(`${API_BASE}/api/events/${id}`);
+                            if (!res.ok) return null;
+                            return res.json();
+                        })
+                    );
+
+                    // Filter out any nulls (in case an event was deleted)
+                    setRegisteredEvents(details.filter(e => e !== null));
+                } catch (err) {
+                    console.error("Failed to fetch event details:", err);
+                }
+            }
+        };
+
+        if (user) fetchEventDetails();
+    }, [user]);
 
     if (authLoading || !user) return null;
 
@@ -126,14 +153,19 @@ function ProfileContent() {
                     <section>
                         <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-gold-500 mb-6">Registered Events</h2>
                         <div className="grid gap-4">
-                            {/* Inspire Card */}
-                            <div className="bg-neutral-900/50 p-6 flex items-center justify-between group hover:bg-neutral-900 transition">
-                                <div>
-                                    <h3 className="text-white font-bold group-hover:text-gold-500 transition">Inspire Hackathon</h3>
-                                    <p className="text-xs text-neutral-500 mt-1">Confirmed Registration • January 2026</p>
-                                </div>
-                                <div className="h-2 w-2 bg-gold-500 rounded-full shadow-[0_0_8px_rgba(234,179,8,0.6)]"></div>
-                            </div>
+                            {registeredEvents.length > 0 ? (
+                                registeredEvents.map((event) => (
+                                    <div key={event.id} className="bg-neutral-900/50 p-6 flex items-center justify-between group hover:bg-neutral-900 transition">
+                                        <div>
+                                            <h3 className="text-white font-bold group-hover:text-gold-500 transition">{event.title || event.name}</h3>
+                                            <p className="text-xs text-neutral-500 mt-1">Confirmed Registration • {event.date || 'TBA'}</p>
+                                        </div>
+                                        <div className="h-2 w-2 bg-gold-500 rounded-full shadow-[0_0_8px_rgba(234,179,8,0.6)]"></div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="text-sm text-neutral-500 italic">No events joined yet.</p>
+                            )}
 
                             <Link href="/" className="text-xs font-bold text-blue-500 hover:text-white transition uppercase tracking-widest">
                                 Browse more events →
