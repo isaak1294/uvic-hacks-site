@@ -21,6 +21,7 @@ export default function Navbar() {
                 <div className="ml-auto flex items-center gap-6 text-xs font-medium">
                     <div className="hidden items-center gap-6 md:flex">
                         {/* Conditional Link: Swap Featured for Login/Profile */}
+                        {/* 
                         {!user ? (
                             <Link
                                 href="/join/login"
@@ -36,6 +37,7 @@ export default function Navbar() {
                                 My Profile
                             </Link>
                         )}
+                            */}
 
                         <a href="#upcoming" className="transition text-cool-steel-100 hover:text-blue-300">
                             Upcoming
