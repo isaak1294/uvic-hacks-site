@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import "./globals.css";
 import { Montserrat, Archivo, Fira_Code } from "next/font/google";
 import type { Metadata } from "next";
+import { AuthProvider } from "./context/AuthContext";
 
 export const metadata: Metadata = {
   title: "UVic Hacks",
@@ -84,7 +85,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body
         className={`${montserrat.variable} ${archivo.variable} ${firaCode.variable} font-sans bg-zinc-950 text-zinc-100 antialiased`}
       >
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

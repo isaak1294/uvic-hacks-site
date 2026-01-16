@@ -37,7 +37,7 @@ export default function InspireHackathonPage() {
 
                     <div className="mt-8 flex flex-wrap gap-4">
                         <a
-                            href="/events/inspire-2026"
+                            href="/join/inspire-2026"
                             className="rounded-full bg-baltic-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-baltic-blue-900/60 transition hover:bg-baltic-blue-400 hover:shadow-lg"
                         >
                             Register Now

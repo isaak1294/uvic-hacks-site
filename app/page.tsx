@@ -3,6 +3,7 @@ import Head from "next/head";
 import HeroSubtitleWithCount from "./components/HeroSubtitleWithCount";
 import AlertBar from "./components/AlertBar";
 import { Metadata } from "next";
+import Navbar from "./components/NavBar";
 
 type Event = {
   name: string;
@@ -138,52 +139,7 @@ export default function Page() {
       </Head>
       {/* Navbar */}
       <header className="sticky top-0 z-20 border-b border-cool-steel-800 bg-neutral-900 backdrop-blur">
-        <nav className="mx-auto flex max-w-6xl items-center px-4 py-3 md:px-6">
-          {/* Left: Logo */}
-          <div className="flex items-center gap-2">
-            <Link href="/" className="text-lg font-semibold tracking-tight hover:opacity-80 transition">
-              <span className="text-blue-500">UVic</span>{" "}
-              <span className="text-gold-500">Hacks</span>
-            </Link>
-          </div>
-
-          {/* Right: Nav links + CTA */}
-          <div className="ml-auto flex items-center gap-6 text-xs font-medium">
-            <div className="hidden items-center gap-6 md:flex">
-              <a
-                href="#featured"
-                className="transition hover:text-blue-300"
-              >
-                Featured
-              </a>
-              <a
-                href="#upcoming"
-                className="transition hover:text-blue-300"
-              >
-                Upcoming
-              </a>
-              <a
-                href="#about"
-                className="transition hover:text-blue-300"
-              >
-                About
-              </a>
-              <a
-                href="#contact"
-                className="transition hover:text-blue-300"
-              >
-                Contact Us
-              </a>
-            </div>
-
-            <Link
-              href="/join"
-              className="rounded-full bg-blue-950 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-blue-900/60 transition hover:bg-blue-400 hover:shadow-lg"
-            >
-              Join Now
-            </Link>
-          </div>
-        </nav>
+        <Navbar />
 
       </header>
 
