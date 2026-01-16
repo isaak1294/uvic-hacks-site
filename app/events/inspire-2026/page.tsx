@@ -1,53 +1,97 @@
+"use client"
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function InspireHackathonPage() {
+
+    const [registrantCount, setRegistrantCount] = useState<number | null>(null);
+
+    useEffect(() => {
+        const isLocal =
+            typeof window !== "undefined" &&
+            window.location.hostname === "localhost";
+
+        const API_BASE = isLocal
+            ? "http://localhost:3002"
+            : "https://strudel-hackathon.onrender.com";
+
+        fetch(`${API_BASE}/api/events/1/count`)
+            .then(res => res.json())
+            .then(data => setRegistrantCount(data.count))
+            .catch(err => console.error(err));
+    }, []);
+
     return (
         <main className="min-h-screen bg-neutral-950 text-cool-steel-50">
             {/* Hero */}
-            <section className="bg-neutral-900/90 py-14 md:py-20">
-                <div className="mx-auto max-w-6xl px-4 md:px-6">
-                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-baltic-blue-300/80">
-                        Upcoming Event • UVic Hacks x Inspire UVic
-                    </p>
+            <section className="bg-neutral-950 py-24 md:py-32 border-y border-neutral-900">
+                <div className="mx-auto max-w-6xl px-6 md:px-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-                    <h1 className="mt-4 text-4xl font-display font-bold tracking-tight md:text-6xl">
-                        Inspire{" "}
-                        <span className="text-goldenrod-400">Hackathon</span>
-                    </h1>
+                        {/* Left Side: Content */}
+                        <div className="lg:col-span-8">
+                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gold-500 mb-6">
+                                Featured Event • Jan 2026
+                            </p>
 
-                    <p className="mt-4 max-w-2xl text-lg text-cool-steel-100 md:text-xl">
-                        A two-day build sprint dedicated to software solutions for social
-                        impact. Team up to create tools that make a difference.
-                    </p>
+                            <h1 className="text-5xl font-bold tracking-tighter md:text-7xl text-white">
+                                Inspire <span className="text-blue-500">Hackathon</span>
+                            </h1>
 
-                    <div className="mt-7 flex flex-wrap items-center gap-3 text-sm text-cool-steel-200">
-                        <span className="rounded-full bg-baltic-blue-500/15 px-3 py-1 text-baltic-blue-300 border border-baltic-blue-500/30">
-                            TBD
-                        </span>
-                        <span className="rounded-full bg-cool-steel-800/50 px-3 py-1 text-cool-steel-200">
-                            Jan 30-31, 2026
-                        </span>
-                        <span className="rounded-full bg-cool-steel-800/50 px-3 py-1 text-cool-steel-200">
-                            2-Day Build Sprint
-                        </span>
-                        <span className="rounded-full bg-gold-950/20 px-3 py-1 text-gold-500 border border-gold-900/30">
-                            Registration Open Soon
-                        </span>
-                    </div>
+                            <p className="mt-6 max-w-xl text-lg text-neutral-400 leading-relaxed">
+                                A high-intensity build sprint focused on social impact.
+                                Join developers at UVic to build the future of civic tech.
+                            </p>
 
-                    <div className="mt-8 flex flex-wrap gap-4">
-                        <a
-                            href="/join/inspire-2026"
-                            className="rounded-full bg-baltic-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-baltic-blue-900/60 transition hover:bg-baltic-blue-400 hover:shadow-lg"
-                        >
-                            Register Now
-                        </a>
-                        <a
-                            href="#schedule"
-                            className="rounded-full bg-neutral-800 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-700"
-                        >
-                            View Schedule
-                        </a>
+                            {/* Status Tags */}
+                            <div className="mt-10 flex flex-wrap items-center gap-4">
+                                <div className="flex items-center gap-2">
+                                    <div className="h-2 w-2 rounded-full bg-gold-500 shadow-[0_0_10px_rgba(234,179,8,0.4)]"></div>
+                                    <span className="text-[10px] font-bold uppercase tracking-widest text-white">Registration Open</span>
+                                </div>
+                                <span className="h-4 w-[1px] bg-neutral-800 hidden md:block"></span>
+                                <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight">Jan 30 - 31</span>
+                                <span className="h-4 w-[1px] bg-neutral-800 hidden md:block"></span>
+                                <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight">Victoria, BC</span>
+                            </div>
+
+                            {/* CTAs */}
+                            <div className="mt-12 flex flex-wrap gap-6">
+                                <Link
+                                    href="/join/inspire-2026"
+                                    className="relative group overflow-hidden bg-blue-600 px-10 py-4 text-xs font-bold uppercase tracking-widest text-white transition hover:bg-blue-500 active:scale-95"
+                                >
+                                    Register Now
+                                </Link>
+                                <a
+                                    href="#schedule"
+                                    className="px-10 py-4 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition border border-neutral-800 hover:border-neutral-700"
+                                >
+                                    View Schedule
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Right Side: Registrant Counter */}
+                        <div className="lg:col-span-4 flex flex-col items-center lg:items-end justify-center">
+                            <div className="text-center lg:text-right p-8 bg-neutral-900/30 rounded-2xl border border-neutral-900/50 backdrop-blur-sm">
+                                <span className="block text-6xl md:text-7xl font-black tracking-tighter text-white">
+                                    {registrantCount !== null ? registrantCount : "0"}
+                                </span>
+                                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.4em] text-gold-500">
+                                    registrations
+                                </p>
+                                <div className="mt-4 w-full h-1 bg-neutral-800 overflow-hidden">
+                                    <div
+                                        className="h-full bg-gold-500 transition-all duration-1000"
+                                        style={{ width: `${Math.min((registrantCount || 0) / 2, 100)}%` }}
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
