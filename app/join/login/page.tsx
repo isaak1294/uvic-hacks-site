@@ -106,7 +106,7 @@ function LoginForm() {
 
                 {!isLogin && (
                     <div>
-                        <label className="text-[10px] font-bold uppercase text-cool-steel-400 tracking-widest">V-Number (Optional)</label>
+                        <label className="text-[10px] font-bold uppercase text-cool-steel-400 tracking-widest">V-Number</label>
                         <input type="text" placeholder="V00123456" className="mt-1 w-full rounded-lg border border-cool-steel-700 bg-neutral-950 px-4 py-2 text-sm outline-none focus:border-blue-500 transition"
                             value={formData.vnumber}
                             onChange={e => setFormData({ ...formData, vnumber: e.target.value })} />
