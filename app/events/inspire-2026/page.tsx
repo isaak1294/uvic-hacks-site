@@ -54,7 +54,7 @@ export default function InspireHackathonPage() {
                                 <span className="h-4 w-[1px] bg-neutral-800 hidden md:block"></span>
                                 <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight">Jan 30 - 31</span>
                                 <span className="h-4 w-[1px] bg-neutral-800 hidden md:block"></span>
-                                <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight">Victoria, BC</span>
+                                <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight">Hickman 105</span>
                             </div>
 
                             {/* CTAs */}

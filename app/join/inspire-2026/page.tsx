@@ -136,7 +136,7 @@ export default function InspireRegisterPage() {
 
                                         {/* Resume Upload Dropzone */}
                                         <div className="pt-2">
-                                            <label className="text-[10px] font-bold uppercase text-neutral-500 tracking-widest block mb-2">Resume (PDF)</label>
+                                            <label className="text-[10px] font-bold uppercase text-neutral-500 tracking-widest block mb-2">Resume (Optional)</label>
                                             <label className={`flex flex-col items-center justify-center w-full h-24 border-2 border-dashed rounded-xl cursor-pointer transition-all ${resume ? 'border-gold-500 bg-gold-500/5' : 'border-neutral-800 hover:border-blue-500/50'}`}>
                                                 <p className="text-xs text-neutral-400 font-medium">{resume ? resume.name : 'Click to upload PDF'}</p>
                                                 <input type="file" accept=".pdf" className="hidden" onChange={handleFileChange} />
