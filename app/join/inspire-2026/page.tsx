@@ -20,7 +20,7 @@ export default function InspireRegisterPage() {
     const [password, setPassword] = useState("");
     const [bio, setBio] = useState("");
     const [resume, setResume] = useState<File | null>(null);
-    const [agreed, setAgreed] = useState(false); // New state for ToS
+    const [agreed, setAgreed] = useState(false);
 
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -42,6 +42,7 @@ export default function InspireRegisterPage() {
             // --- STEP 1: ACCOUNT CREATION (If not logged in) ---
             if (!currentUser) {
                 if (!agreed) throw new Error("You must agree to the terms to register.");
+                if (!vNumber.trim()) throw new Error("V Number is required.");
 
                 const formData = new FormData();
                 formData.append("name", name);
@@ -49,7 +50,7 @@ export default function InspireRegisterPage() {
                 formData.append("password", password);
                 formData.append("vnumber", vNumber.trim());
                 formData.append("bio", bio);
-                formData.append("agreed", String(agreed)); // Send as string for Multer/FormData
+                formData.append("agreed", String(agreed));
                 if (resume) formData.append("resume", resume);
 
                 const regRes = await fetch(`${API_BASE}/api/account-reg`, {
@@ -60,7 +61,6 @@ export default function InspireRegisterPage() {
                 const regData = await regRes.json();
                 if (!regRes.ok) throw new Error(regData.error || "Failed to create account");
 
-                // Your backend now returns the token and user directly!
                 currentToken = regData.token;
                 currentUser = regData.user;
                 login(regData.token, regData.user);
@@ -79,7 +79,6 @@ export default function InspireRegisterPage() {
             const eventData = await eventRes.json();
             if (!eventRes.ok) throw new Error(eventData.error || "Account created, but failed to join event.");
 
-            // Final sync
             const finalUser = {
                 ...currentUser,
                 registeredEventIds: eventData.registeredEventIds || [...(currentUser.registeredEventIds || []), INSPIRE_EVENT_ID]
@@ -122,16 +121,28 @@ export default function InspireRegisterPage() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div>
                                                 <label className="text-[10px] font-bold uppercase text-neutral-500 tracking-widest">Name</label>
-                                                <input required type="text" value={name} onChange={e => setName(e.target.value)} className="mt-1 w-full bg-neutral-950 border border-neutral-800 px-4 py-2 text-sm rounded-lg outline-none focus:border-blue-500 transition" />
+                                                <input required type="text" value={name} onChange={e => setName(e.target.value)} className="mt-1 w-full bg-neutral-950 border border-neutral-800 px-4 py-2 text-sm rounded-lg outline-none focus:border-blue-500 transition" placeholder="Jane Doe" />
                                             </div>
                                             <div>
                                                 <label className="text-[10px] font-bold uppercase text-neutral-500 tracking-widest">Email</label>
-                                                <input required type="email" value={email} onChange={e => setEmail(e.target.value)} className="mt-1 w-full bg-neutral-950 border border-neutral-800 px-4 py-2 text-sm rounded-lg outline-none focus:border-blue-500 transition" />
+                                                <input required type="email" value={email} onChange={e => setEmail(e.target.value)} className="mt-1 w-full bg-neutral-950 border border-neutral-800 px-4 py-2 text-sm rounded-lg outline-none focus:border-blue-500 transition" placeholder="jane@uvic.ca" />
                                             </div>
                                         </div>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="text-[10px] font-bold uppercase text-neutral-500 tracking-widest">V Number</label>
+                                                <input required type="text" value={vNumber} onChange={e => setVNumber(e.target.value)} className="mt-1 w-full bg-neutral-950 border border-neutral-800 px-4 py-2 text-sm rounded-lg outline-none focus:border-blue-500 transition" placeholder="V00xxxxxx" />
+                                            </div>
+                                            <div>
+                                                <label className="text-[10px] font-bold uppercase text-neutral-500 tracking-widest">Password</label>
+                                                <input required type="password" value={password} onChange={e => setPassword(e.target.value)} className="mt-1 w-full bg-neutral-950 border border-neutral-800 px-4 py-2 text-sm rounded-lg outline-none focus:border-blue-500 transition" placeholder="••••••••" />
+                                            </div>
+                                        </div>
+
                                         <div>
-                                            <label className="text-[10px] font-bold uppercase text-neutral-500 tracking-widest">Password</label>
-                                            <input required type="password" value={password} onChange={e => setPassword(e.target.value)} className="mt-1 w-full bg-neutral-950 border border-neutral-800 px-4 py-2 text-sm rounded-lg outline-none focus:border-blue-500 transition" />
+                                            <label className="text-[10px] font-bold uppercase text-neutral-500 tracking-widest">Short Bio</label>
+                                            <textarea value={bio} onChange={e => setBio(e.target.value)} rows={2} className="mt-1 w-full bg-neutral-950 border border-neutral-800 px-4 py-2 text-sm rounded-lg outline-none focus:border-blue-500 transition" placeholder="Tell us about your skills..." />
                                         </div>
 
                                         {/* Resume Upload Dropzone */}
@@ -169,7 +180,7 @@ export default function InspireRegisterPage() {
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full bg-blue-600 py-4 text-xs font-bold uppercase tracking-widest text-white hover:bg-blue-500 transition shadow-lg shadow-blue-900/20 disabled:opacity-50"
+                                    className="w-full bg-blue-600 py-4 text-xs font-bold uppercase tracking-widest text-white hover:bg-blue-500 transition shadow-lg shadow-blue-900/20 disabled:opacity-50 active:scale-95"
                                 >
                                     {loading ? "Registering..." : user ? "Confirm Spot" : "Create Account & Register"}
                                 </button>
