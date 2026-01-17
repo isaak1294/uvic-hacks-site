@@ -4,13 +4,13 @@ import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
+import Navbar from "@/app/components/NavBar";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3002";
 const INSPIRE_EVENT_ID = 1;
 
 export default function InspireRegisterPage() {
     const router = useRouter();
-    // Use the global auth context instead of local state for consistency
     const { user, token, login } = useAuth();
 
     // Form States
@@ -20,6 +20,7 @@ export default function InspireRegisterPage() {
     const [password, setPassword] = useState("");
     const [bio, setBio] = useState("");
     const [resume, setResume] = useState<File | null>(null);
+    const [agreed, setAgreed] = useState(false); // New state for ToS
 
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -40,12 +41,15 @@ export default function InspireRegisterPage() {
 
             // --- STEP 1: ACCOUNT CREATION (If not logged in) ---
             if (!currentUser) {
+                if (!agreed) throw new Error("You must agree to the terms to register.");
+
                 const formData = new FormData();
                 formData.append("name", name);
                 formData.append("email", email);
                 formData.append("password", password);
                 formData.append("vnumber", vNumber.trim());
                 formData.append("bio", bio);
+                formData.append("agreed", String(agreed)); // Send as string for Multer/FormData
                 if (resume) formData.append("resume", resume);
 
                 const regRes = await fetch(`${API_BASE}/api/account-reg`, {
@@ -56,26 +60,13 @@ export default function InspireRegisterPage() {
                 const regData = await regRes.json();
                 if (!regRes.ok) throw new Error(regData.error || "Failed to create account");
 
-                // --- STEP 2: AUTOMATIC LOGIN (To get the token) ---
-                const loginRes = await fetch(`${API_BASE}/api/login`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password }),
-                });
-
-                const loginData = await loginRes.json();
-                if (!loginRes.ok) throw new Error("Account created, but automatic login failed. Please sign in manually.");
-
-                // Update local variables for the next step
-                currentToken = loginData.token;
-                currentUser = loginData.user;
-
-                // Sync with global AuthContext
-                login(loginData.token, loginData.user);
+                // Your backend now returns the token and user directly!
+                currentToken = regData.token;
+                currentUser = regData.user;
+                login(regData.token, regData.user);
             }
 
-            // --- STEP 3: EVENT REGISTRATION ---
-            // We use currentToken/currentUser which are now set whether the user was pre-existing or just created
+            // --- STEP 2: EVENT REGISTRATION ---
             const eventRes = await fetch(`${API_BASE}/api/events/register`, {
                 method: "POST",
                 headers: {
@@ -86,9 +77,9 @@ export default function InspireRegisterPage() {
             });
 
             const eventData = await eventRes.json();
-            if (!eventRes.ok) throw new Error(eventData.error || "Account created, but failed to join the hackathon.");
+            if (!eventRes.ok) throw new Error(eventData.error || "Account created, but failed to join event.");
 
-            // Final sync of the user object to include the new registration
+            // Final sync
             const finalUser = {
                 ...currentUser,
                 registeredEventIds: eventData.registeredEventIds || [...(currentUser.registeredEventIds || []), INSPIRE_EVENT_ID]
@@ -98,111 +89,92 @@ export default function InspireRegisterPage() {
             setSubmitted(true);
 
         } catch (err: any) {
-            console.error("Workflow Error:", err.message);
             setError(err.message);
         } finally {
             setLoading(false);
         }
     };
 
-    // Rest of your UI remains the same...
-
     return (
         <main className="min-h-screen bg-neutral-950 text-cool-steel-50 flex flex-col font-sans">
-            <header className="sticky top-0 z-20 border-b border-cool-steel-800 bg-neutral-900 backdrop-blur">
-                <nav className="mx-auto flex max-w-6xl items-center px-4 py-3 md:px-6">
-                    <div className="flex items-center gap-2">
-                        <Link href="/" className="text-lg font-semibold tracking-tight hover:opacity-80 transition">
-                            <span className="text-blue-500">UVic</span>{" "}
-                            <span className="text-gold-500">Hacks</span>
-                        </Link>
-                    </div>
-                    <div className="ml-auto flex items-center gap-6 text-xs font-medium">
-                        <Link href="/" className="text-cool-steel-300 transition hover:text-blue-300">Back to home</Link>
-                        <span className="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-md shadow-blue-900/60">
-                            Inspire Registration
-                        </span>
-                    </div>
-                </nav>
+            <header className="sticky top-0 z-20 border-b border-cool-steel-800 bg-neutral-950/80 backdrop-blur-md">
+                <Navbar />
             </header>
 
-            <section className="flex flex-1 items-center justify-center px-4 py-16 md:px-6">
+            <section className="flex flex-1 items-center justify-center px-4 py-16">
                 <div className="w-full max-w-xl">
-                    <div className="mb-8 text-center">
-                        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-500 mb-3">Hackathon Event</p>
-                        <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl">
-                            Inspire <span className="text-gold-500">2026</span>
-                        </h1>
-                        <p className="mt-4 text-cool-steel-400 text-sm max-w-md mx-auto leading-relaxed">
-                            Join us for two days of building software for social impact.
-                        </p>
+                    <div className="mb-8 border-l-2 border-gold-500 pl-6">
+                        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gold-500 mb-2">Event Enrollment</p>
+                        <h1 className="text-4xl font-bold tracking-tighter text-white">Inspire <span className="text-blue-500">2026</span></h1>
                     </div>
 
-                    <div className="rounded-xl border border-cool-steel-800 bg-neutral-900/80 p-6 md:p-8 shadow-2xl backdrop-blur-sm">
+                    <div className="bg-neutral-900/40 p-8 rounded-2xl border border-neutral-800 shadow-2xl backdrop-blur-sm">
                         {submitted ? (
                             <div className="text-center py-10">
-                                <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-500/10 text-green-500 border border-green-500/20">
-                                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </div>
-                                <h3 className="text-2xl font-bold text-white mb-2">You&apos;re in!</h3>
-                                <p className="text-cool-steel-300 mb-8 text-sm">Your spot for the Inspire Hackathon is confirmed. Check your profile for details.</p>
-                                <Link href="/profile" className="rounded-full bg-blue-600 px-8 py-3 text-sm font-semibold text-white shadow-md shadow-blue-900/60 transition hover:bg-blue-500">
-                                    Go to My Profile
-                                </Link>
+                                <div className="text-gold-500 text-5xl mb-4 font-black">✓</div>
+                                <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-widest">Registration_Confirmed</h3>
+                                <Link href="/profile" className="mt-6 inline-block bg-white text-black px-8 py-3 text-xs font-bold uppercase tracking-widest hover:bg-gold-500 transition">View_Profile</Link>
                             </div>
                         ) : (
-                            <form onSubmit={handleSubmit} className="space-y-4">
-                                {user ? (
-                                    <div className="bg-blue-600/10 border border-blue-600/20 rounded-lg p-5 mb-4 text-center">
-                                        <p className="text-sm text-cool-steel-100 mb-1">Welcome back, <span className="font-bold text-white">{user.name}</span>!</p>
-                                        <p className="text-xs text-cool-steel-400">Click below to confirm your registration for this event.</p>
-                                    </div>
-                                ) : (
+                            <form onSubmit={handleSubmit} className="space-y-5">
+                                {!user && (
                                     <>
-                                        <div>
-                                            <label className="block text-[10px] font-bold uppercase tracking-widest text-cool-steel-500 mb-1.5">Full Name</label>
-                                            <input required type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full rounded-md border border-cool-steel-800 bg-neutral-950 px-4 py-2.5 text-sm text-white outline-none focus:border-blue-500 transition" placeholder="Jane Doe" />
-                                        </div>
-                                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div>
-                                                <label className="block text-[10px] font-bold uppercase tracking-widest text-cool-steel-500 mb-1.5">Email</label>
-                                                <input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full rounded-md border border-cool-steel-800 bg-neutral-950 px-4 py-2.5 text-sm text-white outline-none focus:border-blue-500 transition" placeholder="you@uvic.ca" />
+                                                <label className="text-[10px] font-bold uppercase text-neutral-500 tracking-widest">Name</label>
+                                                <input required type="text" value={name} onChange={e => setName(e.target.value)} className="mt-1 w-full bg-neutral-950 border border-neutral-800 px-4 py-2 text-sm rounded-lg outline-none focus:border-blue-500 transition" />
                                             </div>
                                             <div>
-                                                <label className="block text-[10px] font-bold uppercase tracking-widest text-cool-steel-500 mb-1.5">V-Number</label>
-                                                <input required type="text" value={vNumber} onChange={(e) => setVNumber(e.target.value)} className="w-full rounded-md border border-cool-steel-800 bg-neutral-950 px-4 py-2.5 text-sm text-white outline-none focus:border-blue-500 transition" placeholder="V00123456" />
+                                                <label className="text-[10px] font-bold uppercase text-neutral-500 tracking-widest">Email</label>
+                                                <input required type="email" value={email} onChange={e => setEmail(e.target.value)} className="mt-1 w-full bg-neutral-950 border border-neutral-800 px-4 py-2 text-sm rounded-lg outline-none focus:border-blue-500 transition" />
                                             </div>
                                         </div>
                                         <div>
-                                            <label className="block text-[10px] font-bold uppercase tracking-widest text-cool-steel-500 mb-1.5">Password</label>
-                                            <input required type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full rounded-md border border-cool-steel-800 bg-neutral-950 px-4 py-2.5 text-sm text-white outline-none focus:border-blue-500 transition" placeholder="••••••••" />
+                                            <label className="text-[10px] font-bold uppercase text-neutral-500 tracking-widest">Password</label>
+                                            <input required type="password" value={password} onChange={e => setPassword(e.target.value)} className="mt-1 w-full bg-neutral-950 border border-neutral-800 px-4 py-2 text-sm rounded-lg outline-none focus:border-blue-500 transition" />
                                         </div>
-                                        <div>
-                                            <label className="block text-[10px] font-bold uppercase tracking-widest text-cool-steel-500 mb-1.5">Bio / Skills</label>
-                                            <textarea rows={2} value={bio} onChange={(e) => setBio(e.target.value)} className="w-full rounded-md border border-cool-steel-800 bg-neutral-950 px-4 py-2.5 text-sm text-white outline-none focus:border-blue-500 transition" placeholder="I build React apps and love UI design..." />
+
+                                        {/* Resume Upload Dropzone */}
+                                        <div className="pt-2">
+                                            <label className="text-[10px] font-bold uppercase text-neutral-500 tracking-widest block mb-2">Resume (PDF)</label>
+                                            <label className={`flex flex-col items-center justify-center w-full h-24 border-2 border-dashed rounded-xl cursor-pointer transition-all ${resume ? 'border-gold-500 bg-gold-500/5' : 'border-neutral-800 hover:border-blue-500/50'}`}>
+                                                <p className="text-xs text-neutral-400 font-medium">{resume ? resume.name : 'Click to upload PDF'}</p>
+                                                <input type="file" accept=".pdf" className="hidden" onChange={handleFileChange} />
+                                            </label>
                                         </div>
-                                        <div>
-                                            <label className="block text-[10px] font-bold uppercase tracking-widest text-cool-steel-500 mb-1.5">Resume (PDF)</label>
-                                            <input type="file" accept=".pdf" onChange={handleFileChange} className="w-full text-xs text-cool-steel-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-[10px] file:font-bold file:uppercase file:bg-blue-600/10 file:text-blue-400 hover:file:bg-blue-600/20 cursor-pointer" />
+
+                                        {/* TERMS OF SERVICE CHECKBOX */}
+                                        <div className="flex items-start gap-3 py-2">
+                                            <input
+                                                type="checkbox"
+                                                id="agreed"
+                                                checked={agreed}
+                                                onChange={e => setAgreed(e.target.checked)}
+                                                className="mt-1 accent-gold-500 h-4 w-4 bg-neutral-950 border-neutral-800"
+                                            />
+                                            <label htmlFor="agreed" className="text-[11px] leading-relaxed text-neutral-400">
+                                                I agree to the <Link href="/terms" target="_blank" className="text-gold-500 underline decoration-gold-500/30 hover:text-gold-400">Terms of Service & Privacy Agreement</Link>,
+                                                including the sharing of my data with recruitment partners.
+                                            </label>
                                         </div>
                                     </>
+                                )}
+
+                                {user && (
+                                    <div className="bg-blue-600/5 border border-blue-500/20 p-4 rounded-xl text-center">
+                                        <p className="text-sm text-blue-300">Logged in as <strong>{user.name}</strong></p>
+                                    </div>
                                 )}
 
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full mt-4 rounded-full bg-blue-600 py-3.5 text-xs font-bold uppercase tracking-widest text-white shadow-lg shadow-blue-900/40 transition hover:bg-blue-500 active:scale-95 disabled:opacity-50"
+                                    className="w-full bg-blue-600 py-4 text-xs font-bold uppercase tracking-widest text-white hover:bg-blue-500 transition shadow-lg shadow-blue-900/20 disabled:opacity-50"
                                 >
-                                    {loading ? "Processing..." : user ? "Confirm Registration" : "Create Account & Register"}
+                                    {loading ? "Registering..." : user ? "Confirm Spot" : "Create Account & Register"}
                                 </button>
 
-                                {error && (
-                                    <div className="mt-4 p-3 rounded bg-red-500/10 border border-red-500/20 text-center">
-                                        <p className="text-xs font-medium text-red-400">{error}</p>
-                                    </div>
-                                )}
+                                {error && <p className="text-center text-xs text-red-400 font-bold uppercase tracking-tighter">{error}</p>}
                             </form>
                         )}
                     </div>
