@@ -33,6 +33,14 @@ function ProfileContent() {
         }
     }, [user, authLoading, router]);
 
+    if (authLoading || !user) {
+        return (
+            <div className="flex items-center justify-center min-h-[60vh] text-neutral-500 uppercase tracking-widest text-xs">
+                Authenticating Session...
+            </div>
+        );
+    }
+
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
