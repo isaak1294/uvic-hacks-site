@@ -41,7 +41,7 @@ export default function Navbar() {
                         <a href="/#upcoming" className="transition text-cool-steel-100 hover:text-blue-300">
                             Upcoming
                         </a>
-                        <a href="/#about" className="transition text-cool-steel-100 hover:text-blue-300">
+                        <a href="/mission" className="transition text-cool-steel-100 hover:text-blue-300">
                             About
                         </a>
                         <a href="/#contact" className="transition text-cool-steel-100 hover:text-blue-300">

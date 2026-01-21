@@ -155,18 +155,33 @@ export default function InspireRegisterPage() {
                                         </div>
 
                                         {/* TERMS OF SERVICE CHECKBOX */}
-                                        <div className="flex items-start gap-3 py-2">
-                                            <input
-                                                type="checkbox"
-                                                id="agreed"
-                                                checked={agreed}
-                                                onChange={e => setAgreed(e.target.checked)}
-                                                className="mt-1 accent-gold-500 h-4 w-4 bg-neutral-950 border-neutral-800"
-                                            />
-                                            <label htmlFor="agreed" className="text-[11px] leading-relaxed text-neutral-400">
-                                                I agree to the <Link href="/terms" target="_blank" className="text-gold-500 underline decoration-gold-500/30 hover:text-gold-400">Terms of Service & Privacy Agreement</Link>,
-                                                including the sharing of my data with recruitment partners.
-                                            </label>
+                                        <div className="py-4 border-t border-neutral-800/50 mt-4">
+                                            <div className="flex items-center justify-between gap-6">
+                                                <div className="flex flex-col gap-1">
+                                                    <label className="text-[11px] font-bold uppercase text-white tracking-widest">
+                                                        Recruitment Opt-In
+                                                    </label>
+                                                    <p className="text-[10px] text-neutral-500 leading-relaxed max-w-[340px]">
+                                                        I want my stats shared with recruiters for potential job opportunities.
+                                                        Read our <Link href="/terms" target="_blank" className="text-gold-500 hover:underline">Terms</Link> for data details.
+                                                    </p>
+                                                </div>
+
+                                                {/* Modern Toggle Switch */}
+                                                <button
+                                                    type="button"
+                                                    role="switch"
+                                                    aria-checked={agreed}
+                                                    onClick={() => setAgreed(!agreed)}
+                                                    className={`relative inline-flex h-5 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${agreed ? 'bg-gold-500' : 'bg-neutral-800'
+                                                        }`}
+                                                >
+                                                    <span
+                                                        className={`pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${agreed ? 'translate-x-5' : 'translate-x-0'
+                                                            }`}
+                                                    />
+                                                </button>
+                                            </div>
                                         </div>
                                     </>
                                 )}
