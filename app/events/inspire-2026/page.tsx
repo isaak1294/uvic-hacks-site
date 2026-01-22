@@ -222,7 +222,6 @@ export default function InspireHackathonPage() {
                             Day 2 - Grind: Saturday, Jan 31
                         </h3>
                         <ul className="mt-3 space-y-2 text-sm text-cool-steel-200">
-                            <li>9:00 AM: Breakfast & Morning Standup</li>
                             <li>12:00 PM: Pizza Lunch</li>
                             <li>3:00 PM: Code Freeze & Slide Submissions</li>
                             <li>4:00 PM: Project Expo & Social Impact Pitch</li>
