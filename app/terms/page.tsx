@@ -128,7 +128,7 @@ export default function TermsPage() {
                         Ready to join the sprint?
                     </p>
                     <Link
-                        href="/join"
+                        href="/join/inspire-2026"
                         className="inline-block bg-white text-black px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-gold-500 transition-colors"
                     >
                         Return to Registration
