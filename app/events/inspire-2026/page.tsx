@@ -112,22 +112,22 @@ export default function InspireHackathonPage() {
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {[
                         {
-                            name: "TBA",
-                            role: "...",
-                            expert: "...",
-                            img: "/images/partners/image.png"
+                            name: "Anthony Estey",
+                            role: "Professor",
+                            expert: "Your courses",
+                            img: "/images/partners/anthony.png"
                         },
                         {
-                            name: "TBA",
-                            role: "...",
-                            expert: "...",
-                            img: "/images/partners/image.png"
+                            name: "Nitin Gupta",
+                            role: "Software Engineer",
+                            expert: "Agentic AI",
+                            img: "/images/partners/nitin.png"
                         },
                         {
-                            name: "TBA",
-                            role: "...",
-                            expert: "...",
-                            img: "/images/partners/image.png"
+                            name: "The Council",
+                            role: "Professional Schemers",
+                            expert: "Dark happenings",
+                            img: "/images/partners/council.png"
                         },
 
                     ].map((mentor) => (
