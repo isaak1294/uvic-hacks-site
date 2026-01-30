@@ -194,10 +194,10 @@ export default function InspireRegisterPage() {
 
                                 <button
                                     type="submit"
-                                    disabled={loading}
-                                    className="w-full bg-blue-600 py-4 text-xs font-bold uppercase tracking-widest text-white hover:bg-blue-500 transition shadow-lg shadow-blue-900/20 disabled:opacity-50 active:scale-95"
+                                    disabled={true}
+                                    className="w-full bg-red-600 py-4 text-xs font-bold uppercase tracking-widest text-white hover:bg-red-600 transition shadow-lg shadow-blue-900/20 disabled:opacity-50 active:scale-95"
                                 >
-                                    {loading ? "Registering..." : user ? "Confirm Spot" : "Create Account & Register"}
+                                    {loading ? "Registering..." : "Registration Closed"}
                                 </button>
 
                                 {error && <p className="text-center text-xs text-red-400 font-bold uppercase tracking-tighter">{error}</p>}
