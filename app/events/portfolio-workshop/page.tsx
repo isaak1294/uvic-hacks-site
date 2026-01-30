@@ -1,4 +1,6 @@
+import Navbar from '@/app/components/NavBar';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function PortfolioSprintPage() {
     return (
@@ -33,16 +35,21 @@ export default function PortfolioSprintPage() {
                             Registration Open Soon
                         </span>
                     </div>
-                    {/*
-                    <div className="mt-8 flex flex-wrap gap-4">
-                        <a
-                            href="/register"
-                            className="rounded-full bg-baltic-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-baltic-blue-900/60 transition hover:bg-baltic-blue-400 hover:shadow-lg"
+                    {/* CTAs */}
+                    <div className="mt-12 flex flex-wrap gap-6">
+                        <Link
+                            href="/join/portfolio-hackathon"
+                            className="relative group overflow-hidden bg-blue-600 px-10 py-4 text-xs font-bold uppercase tracking-widest text-white transition hover:bg-blue-500 active:scale-95"
                         >
-                            Save my spot
+                            Register Now
+                        </Link>
+                        <a
+                            href="#schedule"
+                            className="px-10 py-4 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition border border-neutral-800 hover:border-neutral-700"
+                        >
+                            View Schedule
                         </a>
                     </div>
-                    */}
                 </div>
             </section>
 
