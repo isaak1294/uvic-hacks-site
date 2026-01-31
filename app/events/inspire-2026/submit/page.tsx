@@ -13,7 +13,7 @@ function SubmissionForm() {
     const router = useRouter();
 
     const eventId = searchParams.get("event_id") || "1";
-    const eventName = searchParams.get("name") || "Event";
+    const eventName = searchParams.get("name") || "Inspire Hackthon";
 
     // New State Fields
     const [title, setTitle] = useState("");
