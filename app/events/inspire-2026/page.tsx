@@ -60,10 +60,10 @@ export default function InspireHackathonPage() {
                             {/* CTAs */}
                             <div className="mt-12 flex flex-wrap gap-6">
                                 <Link
-                                    href="/join/inspire-2026"
+                                    href="/events/inspire-2026/prompts"
                                     className="relative group overflow-hidden bg-blue-600 px-10 py-4 text-xs font-bold uppercase tracking-widest text-white transition hover:bg-blue-500 active:scale-95"
                                 >
-                                    Register Now
+                                    Go To Prompts
                                 </Link>
                                 <a
                                     href="#schedule"
