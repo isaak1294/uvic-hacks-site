@@ -167,16 +167,6 @@ export default function PortfolioSprintPage() {
                                     <span>Setup, Template Selection & Deployment Zero</span>
                                 </li>
                                 <li className="flex gap-4">
-                                    <span className="font-mono text-baltic-blue-400">1:00 PM</span>
-                                    <span>The "Recruiter Hook": Writing project descriptions that sell</span>
-                                </li>
-                            </ul>
-                            <ul className="space-y-4 text-sm text-cool-steel-200">
-                                <li className="flex gap-4">
-                                    <span className="font-mono text-baltic-blue-400">03:30 PM</span>
-                                    <span>Deep Work: Building out project pages & bio</span>
-                                </li>
-                                <li className="flex gap-4">
                                     <span className="font-mono text-baltic-blue-400">06:00 PM</span>
                                     <span>Group Judging and Prizes</span>
                                 </li>
