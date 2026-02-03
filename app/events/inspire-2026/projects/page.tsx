@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import Navbar from "@/app/components/NavBar";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3002";
@@ -65,23 +66,25 @@ function SubmissionsGallery() {
                     {projects.length > 0 ? (
                         projects.map((project) => (
                             <div key={project.id} className="flex flex-col overflow-hidden rounded-sm bg-neutral-900/80 shadow-sm border border-cool-steel-800 transition hover:border-gold-500/50">
-                                {/* Header Area */}
-                                <div className="p-6 border-b border-cool-steel-800/50">
-                                    <div className="flex items-center justify-between gap-2 mb-4">
-                                        <span className="rounded-full bg-gold-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-gold-500 border border-gold-500/20">
-                                            Project
-                                        </span>
-                                        <span className="text-[10px] text-cool-steel-400 font-mono">
-                                            ID_{project.id}
-                                        </span>
+                                {/* Header Area - Now clickable to the project page */}
+                                <Link href={`/events/inspire-2026/projects/${project.id}`} className="group cursor-pointer">
+                                    <div className="p-6 border-b border-cool-steel-800/50">
+                                        <div className="flex items-center justify-between gap-2 mb-4">
+                                            <span className="rounded-full bg-gold-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-gold-500 border border-gold-500/20">
+                                                Project
+                                            </span>
+                                            <span className="text-[10px] text-cool-steel-400 font-mono">
+                                                ID_{project.id}
+                                            </span>
+                                        </div>
+                                        <h3 className="text-xl font-display font-bold text-white leading-tight group-hover:text-gold-500 transition-colors">
+                                            {project.title}
+                                        </h3>
+                                        <p className="mt-2 text-xs text-cool-steel-400">
+                                            Submitted by <span className="text-cool-steel-100 font-medium">{project.submitter_name}</span>
+                                        </p>
                                     </div>
-                                    <h3 className="text-xl font-display font-bold text-white leading-tight">
-                                        {project.title}
-                                    </h3>
-                                    <p className="mt-2 text-xs text-cool-steel-400">
-                                        Submitted by <span className="text-cool-steel-100 font-medium">{project.submitter_name}</span>
-                                    </p>
-                                </div>
+                                </Link>
 
                                 {/* Body Area */}
                                 <div className="p-6 flex-1 flex flex-col">
@@ -96,19 +99,28 @@ function SubmissionsGallery() {
                                         </div>
                                     )}
 
-                                    <div className="mt-auto pt-6 flex items-center justify-between">
-                                        <a
-                                            href={project.github_url}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className="text-xs font-bold text-blue-400 hover:text-blue-300 transition flex items-center gap-2"
+                                    <div className="mt-auto pt-6 flex flex-col gap-4">
+                                        {/* Main Action: Grade Project */}
+                                        <Link
+                                            href={`/events/inspire-2026/projects/${project.id}`}
+                                            className="w-full text-center py-2 bg-blue-950 text-white text-[10px] font-bold uppercase tracking-widest rounded-full hover:bg-blue-400 hover:text-black transition-all"
                                         >
-                                            <img src="/github-icon.svg" className="w-4 h-4 invert" alt="" />
-                                            View Source
-                                        </a>
-                                        <span className="text-[10px] text-neutral-600 uppercase font-mono">
-                                            {new Date(project.submitted_at).toLocaleDateString()}
-                                        </span>
+                                            Score Project
+                                        </Link>
+
+                                        <div className="flex items-center justify-between">
+                                            <a
+                                                href={project.github_url}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="text-[10px] font-bold text-neutral-400 hover:text-blue-300 transition flex items-center gap-2 uppercase tracking-tighter"
+                                            >
+                                                View Source
+                                            </a>
+                                            <span className="text-[10px] text-neutral-600 uppercase font-mono">
+                                                {new Date(project.submitted_at).toLocaleDateString()}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
