@@ -13,12 +13,12 @@ import { Storage } from '@google-cloud/storage';
 import dotenv from "dotenv";
 import jwt from 'jsonwebtoken';
 
+
+
 dotenv.config();
 
 const app = express();
 let db: Database;
-
-app.use(express.json());
 
 // CORS
 app.use(
@@ -31,6 +31,10 @@ app.use(
         ],
     })
 );
+
+app.use(express.json());
+
+
 
 // --- DATA DIR / UPLOADS -----------------------------------------------
 
