@@ -5,23 +5,43 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function InspireHackathonPage() {
-
     const [registrantCount, setRegistrantCount] = useState<number | null>(null);
+    const [leaderboard, setLeaderboard] = useState<any[]>([]);
+    const [loadingLeaderboard, setLoadingLeaderboard] = useState(true);
+
+    const isLocal = typeof window !== "undefined" && window.location.hostname === "localhost";
+    const API_BASE = isLocal ? "http://localhost:3002" : "https://strudel-hackathon.onrender.com";
 
     useEffect(() => {
-        const isLocal =
-            typeof window !== "undefined" &&
-            window.location.hostname === "localhost";
-
-        const API_BASE = isLocal
-            ? "http://localhost:3002"
-            : "https://strudel-hackathon.onrender.com";
-
+        // Fetch Registrant Count
         fetch(`${API_BASE}/api/events/1/count`)
             .then(res => res.json())
             .then(data => setRegistrantCount(data.count))
             .catch(err => console.error(err));
-    }, []);
+
+        // Fetch Top 10 Results
+        fetch(`${API_BASE}/api/submissions/1/results`)
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data)) {
+                    const filtered = data
+                        .filter(project =>
+                            // Exclude if "test" is anywhere in the title
+                            !project.title.toLowerCase().includes("test")
+                        )
+                        .slice(0, 10); // Then take the top 10 real projects
+
+                    setLeaderboard(filtered);
+                } else {
+                    setLeaderboard([]);
+                }
+                setLoadingLeaderboard(false);
+            })
+            .catch(err => {
+                console.error(err);
+                setLoadingLeaderboard(false);
+            });
+    }, [API_BASE]);
 
     return (
         <main className="min-h-screen bg-neutral-950 text-cool-steel-50">
@@ -32,8 +52,8 @@ export default function InspireHackathonPage() {
 
                         {/* Left Side: Content */}
                         <div className="lg:col-span-8">
-                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gold-500 mb-6">
-                                Featured Event • Jan 2026
+                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-6">
+                                Completed Event • Jan 2026
                             </p>
 
                             <h1 className="text-5xl font-bold tracking-tighter md:text-7xl text-white">
@@ -41,54 +61,46 @@ export default function InspireHackathonPage() {
                             </h1>
 
                             <p className="mt-6 max-w-xl text-lg text-neutral-400 leading-relaxed">
-                                A high-intensity build sprint focused on social impact.
-                                Join developers at UVic to build the future of civic tech.
+                                The high-intensity build sprint for social impact has concluded.
+                                Browse the solutions built by UVic developers.
                             </p>
 
                             {/* Status Tags */}
                             <div className="mt-10 flex flex-wrap items-center gap-4">
                                 <div className="flex items-center gap-2">
-                                    <div className="h-2 w-2 rounded-full bg-gold-500 shadow-[0_0_10px_rgba(234,179,8,0.4)]"></div>
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-white">Registration Open</span>
+                                    <div className="h-2 w-2 rounded-full bg-neutral-600"></div>
+                                    <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">Event Concluded</span>
                                 </div>
                                 <span className="h-4 w-[1px] bg-neutral-800 hidden md:block"></span>
-                                <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight">Jan 30 - 31</span>
-                                <span className="h-4 w-[1px] bg-neutral-800 hidden md:block"></span>
-                                <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight">Hickman 105</span>
+                                <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight italic">Archived: Jan 31, 2026</span>
                             </div>
 
                             {/* CTAs */}
                             <div className="mt-12 flex flex-wrap gap-6">
                                 <Link
-                                    href="/events/inspire-2026/prompts"
-                                    className="relative group overflow-hidden bg-blue-600 px-10 py-4 text-xs font-bold uppercase tracking-widest text-white transition hover:bg-blue-500 active:scale-95"
+                                    href="/events/inspire-2026/projects"
+                                    className="relative group overflow-hidden bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-gold-500 active:scale-95"
                                 >
-                                    Go To Prompts
+                                    View Projects
                                 </Link>
-                                <a
-                                    href="#schedule"
+                                <Link
+                                    href="/events/inspire-2026/prompts"
                                     className="px-10 py-4 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition border border-neutral-800 hover:border-neutral-700"
                                 >
-                                    View Schedule
-                                </a>
+                                    View Prompts
+                                </Link>
                             </div>
                         </div>
 
-                        {/* Right Side: Registrant Counter */}
+                        {/* Right Side: Final Stats */}
                         <div className="lg:col-span-4 flex flex-col items-center lg:items-end justify-center">
                             <div className="text-center lg:text-right p-8 bg-neutral-900/30 rounded-2xl border border-neutral-900/50 backdrop-blur-sm">
                                 <span className="block text-6xl md:text-7xl font-black tracking-tighter text-white">
-                                    {registrantCount !== null ? registrantCount : "0"}
+                                    {registrantCount !== null ? registrantCount : "--"}
                                 </span>
-                                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.4em] text-gold-500">
-                                    registrations
+                                <p className="mt-2 text-[10px] font-black uppercase tracking-[0.4em] text-blue-500">
+                                    Total Participants
                                 </p>
-                                <div className="mt-4 w-full h-1 bg-neutral-800 overflow-hidden">
-                                    <div
-                                        className="h-full bg-gold-500 transition-all duration-1000"
-                                        style={{ width: `${Math.min((registrantCount || 0) / 2, 100)}%` }}
-                                    ></div>
-                                </div>
                             </div>
                         </div>
 
@@ -96,218 +108,89 @@ export default function InspireHackathonPage() {
                 </div>
             </section>
 
-            {/* Mentors Section */}
-            <section className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-                    <div>
-                        <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
-                            Meet the Judges
+            {/* Leaderboard Section */}
+            <section className="bg-neutral-900/20 border-b border-neutral-900 py-20">
+                <div className="mx-auto max-w-6xl px-4 md:px-6">
+                    <div className="mb-10 text-center md:text-left">
+                        <h2 className="text-3xl font-display font-bold tracking-tight text-white uppercase italic">
+                            Top 10 <span className="text-gold-500">Standings</span>
                         </h2>
-                        <p className="mt-2 text-cool-steel-300">
-                            Get 1-on-1 help from industry pros who know what gets a site noticed.
-                        </p>
+                        <p className="mt-2 text-cool-steel-400">The highest rated builds based on peer and judge evaluations.</p>
                     </div>
-                </div>
 
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {[
-                        {
-                            name: "Anthony Estey",
-                            role: "Professor",
-                            expert: "Your courses",
-                            img: "/images/partners/anthony.png"
-                        },
-                        {
-                            name: "Nitin Gupta",
-                            role: "Software Engineer",
-                            expert: "Agentic AI",
-                            img: "/images/partners/nitin.png"
-                        },
-                        {
-                            name: "The Council",
-                            role: "Professional Schemers",
-                            expert: "Dark happenings",
-                            img: "/images/partners/council.png"
-                        },
-
-                    ].map((mentor) => (
-                        <div key={mentor.name} className="flex items-center gap-4 rounded-2xl bg-neutral-900/40 p-5 border border-neutral-800/50">
-                            <div className="relative h-16 w-16 shrink-0 rounded-full overflow-hidden bg-neutral-800 flex items-center justify-center text-baltic-blue-300 font-bold border border-neutral-700">
-                                <Image
-                                    src={mentor.img}
-                                    alt={mentor.name}
-                                    fill
-                                    className="object-cover"
-                                />
+                    {loadingLeaderboard ? (
+                        <div className="py-10 text-center text-xs uppercase tracking-widest text-neutral-600 animate-pulse">Calculating Standings...</div>
+                    ) : (
+                        <div className="overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/50">
+                            <div className="grid grid-cols-12 bg-neutral-800/50 px-6 py-3 text-[10px] font-black uppercase tracking-widest text-neutral-500">
+                                <div className="col-span-1">Rank</div>
+                                <div className="col-span-7">Project</div>
+                                <div className="col-span-2 text-right">Reviews</div>
+                                <div className="col-span-2 text-right">Avg Score / 100</div>
                             </div>
-                            <div>
-                                <h3 className="font-semibold text-cool-steel-50">{mentor.name}</h3>
-                                <p className="text-xs text-baltic-blue-400">{mentor.role}</p>
-                                <p className="mt-1 text-xs text-cool-steel-400 leading-relaxed">
-                                    Ask about: <span className="text-cool-steel-200">{mentor.expert}</span>
-                                </p>
+                            <div className="divide-y divide-neutral-800">
+                                {leaderboard.map((item, index) => (
+                                    <Link
+                                        key={item.id}
+                                        href={`/events/inspire-2026/projects/${item.id}`}
+                                        className="grid grid-cols-12 px-6 py-4 items-center hover:bg-neutral-800/30 transition-colors group"
+                                    >
+                                        <div className="col-span-1 font-mono text-sm text-neutral-500">
+                                            {index + 1 === 1 ? "🥇" : index + 1 === 2 ? "🥈" : index + 1 === 3 ? "🥉" : `#${index + 1}`}
+                                        </div>
+                                        <div className="col-span-7">
+                                            <p className="font-bold text-white group-hover:text-gold-500 transition-colors">{item.title}</p>
+                                            <p className="text-[10px] text-neutral-500 uppercase">{item.submitter}</p>
+                                        </div>
+                                        <div className="col-span-2 text-right font-mono text-xs text-neutral-400">
+                                            {item.review_count}
+                                        </div>
+                                        <div className="col-span-2 text-right font-bold text-gold-500">
+                                            {Number(item.total_avg * 2).toFixed(1)}
+                                        </div>
+                                    </Link>
+                                ))}
                             </div>
                         </div>
-                    ))}
+                    )}
                 </div>
             </section>
 
-            {/* Overview */}
+            {/* Overview Section */}
             <section className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
                 <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
-                    Build for Social Impact
+                    Impact Summary
                 </h2>
-
                 <p className="mt-4 max-w-3xl text-sm text-cool-steel-200">
-                    The Inspire Hackathon brings together students from all disciplines to
-                    solve pressing social challenges. Whether it's accessibility,
-                    environmental sustainability, or community health, we’re providing
-                    the space and mentorship to turn your ideas into functional prototypes.
+                    The Inspire Hackathon brought together students to
+                    solve pressing social challenges. Over the course of 24 hours, these teams turned ideas into functional prototypes.
                 </p>
 
                 <div className="mt-7 grid gap-6 md:grid-cols-3">
                     <div className="rounded-lg bg-neutral-900/70 p-6 shadow-sm shadow-black/40 border border-neutral-800">
-                        <h3 className="text-lg font-semibold text-baltic-blue-300">
-                            Real-World Problems
+                        <h3 className="text-lg font-semibold text-blue-400">
+                            Civic Engagement
                         </h3>
                         <p className="mt-2 text-sm text-cool-steel-200">
-                            Work on prompts provided by local non-profits and campus
-                            groups to ensure your hack has an immediate impact.
+                            Teams addressed challenges ranging from food security to neurodivergent education accessibility.
                         </p>
                     </div>
 
                     <div className="rounded-lg bg-neutral-900/70 p-6 shadow-sm shadow-black/40 border border-neutral-800">
-                        <h3 className="text-lg font-semibold text-baltic-blue-300">
-                            Collaborative Mentoring
+                        <h3 className="text-lg font-semibold text-blue-400">
+                            Code Quality
                         </h3>
                         <p className="mt-2 text-sm text-cool-steel-200">
-                            Industry experts and senior students will be on-site to help with
-                            everything from backend logic to impact assessment.
+                            A focus on TypeScript, Next.js, and Python FastAPI led to high-fidelity, deployable solutions.
                         </p>
                     </div>
 
                     <div className="rounded-lg bg-neutral-900/70 p-6 shadow-sm shadow-black/40 border border-neutral-800">
-                        <h3 className="text-lg font-semibold text-baltic-blue-300">
-                            Inclusive Environment
+                        <h3 className="text-lg font-semibold text-blue-400">
+                            Community Spirit
                         </h3>
                         <p className="mt-2 text-sm text-cool-steel-200">
-                            We value diverse perspectives. You don't need to be a CS major
-                            to help design a solution that changes lives.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Schedule */}
-            <section id="schedule" className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
-                <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
-                    Hackathon Schedule
-                </h2>
-
-                <div className="mt-6 grid gap-6 md:grid-cols-2">
-                    <div className="rounded-2xl bg-neutral-900/70 p-6 shadow-sm shadow-black/40 border border-neutral-800">
-                        <h3 className="text-lg font-semibold text-cool-steel-50">
-                            Day 1 - Intro: Friday, Jan 30
-                        </h3>
-                        <ul className="mt-3 space-y-2 text-sm text-cool-steel-200">
-                            <li>5:00 PM: Check-in & Networking</li>
-                            <li>5:30 PM: Opening Ceremony + Inspire Prompts</li>
-                            <li>6:00 PM: Team Formation & Ideation</li>
-                            <li>6:30 PM: Hacking Commences</li>
-                        </ul>
-                    </div>
-
-                    <div className="rounded-2xl bg-neutral-900/70 p-6 shadow-sm shadow-black/40 border border-neutral-800">
-                        <h3 className="text-lg font-semibold text-cool-steel-50">
-                            Day 2 - Grind: Saturday, Jan 31
-                        </h3>
-                        <ul className="mt-3 space-y-2 text-sm text-cool-steel-200">
-                            <li>12:00 PM: Pizza Lunch</li>
-                            <li>3:00 PM: Code Freeze & Slide Submissions</li>
-                            <li>4:00 PM: Project Expo & Social Impact Pitch</li>
-                            <li>6:00 PM: Awards Ceremony</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            {/* What to Bring */}
-            <section className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
-                <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
-                    The Essentials
-                </h2>
-
-                <div className="mt-4 grid gap-6 md:grid-cols-2">
-                    <div className="rounded-2xl bg-neutral-900/70 p-6 shadow-sm shadow-black/40">
-                        <h3 className="text-lg font-semibold text-cool-steel-50">
-                            Hardware & Gear
-                        </h3>
-                        <ul className="mt-2 list-disc pl-5 text-sm text-cool-steel-200 space-y-1">
-                            <li>Laptop and chargers</li>
-                            <li>Reusable water bottle</li>
-                            <li>A positive, collaborative mindset</li>
-                            <li>Optional: External monitor or keyboard</li>
-                        </ul>
-                    </div>
-
-                    <div className="rounded-2xl bg-neutral-900/70 p-6 shadow-sm shadow-black/40">
-                        <h3 className="text-lg font-semibold text-cool-steel-50">
-                            The Teams
-                        </h3>
-                        <p className="mt-2 text-sm text-cool-steel-200">
-                            Build in teams of 2–4. No team? No problem. We have a
-                            dedicated team-matching session right after the opening ceremony
-                            to help you find partners with complementary skills.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Judging Criteria */}
-            <section className="mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14 border-t border-neutral-900">
-                <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
-                    Impact Criteria
-                </h2>
-
-                <div className="mt-5 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-                    {[
-                        { title: "Social Utility", desc: "Potential to improve lives." },
-                        { title: "Execution", desc: "How functional is the build?" },
-                        { title: "User Experience", desc: "Ease of use and accessibility." },
-                        { title: "Innovation", desc: "Creative use of technology." }
-                    ].map((item, i) => (
-                        <div key={i} className="rounded-xl bg-neutral-900/70 p-5 shadow-sm border border-neutral-800">
-                            <p className="text-sm font-semibold text-cool-steel-50">{item.title}</p>
-                            <p className="mt-2 text-xs text-cool-steel-300">{item.desc}</p>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* FAQ */}
-            <section className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
-                <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl">
-                    Common Questions
-                </h2>
-
-                <div className="mt-6 space-y-6 text-sm text-cool-steel-200">
-                    <div>
-                        <p className="font-semibold text-cool-steel-100">
-                            What if I can't code?
-                        </p>
-                        <p className="mt-1 text-cool-steel-300">
-                            Impact projects need designers, researchers, and project
-                            managers just as much as developers. Your skills are needed!
-                        </p>
-                    </div>
-
-                    <div>
-                        <p className="font-semibold text-cool-steel-100">
-                            Is this an overnight event?
-                        </p>
-                        <p className="mt-1 text-cool-steel-300">
-                            No. We wrap up Day 1 in the evening and resume on Friday morning
-                            to ensure everyone stays rested and productive.
+                            Collaborative mentorship helped bridge the gap between ideation and technical execution.
                         </p>
                     </div>
                 </div>
@@ -315,7 +198,7 @@ export default function InspireHackathonPage() {
 
             {/* Footer */}
             <footer className="py-10 border-t border-neutral-900 text-center text-xs text-cool-steel-500">
-                <p>UVic Hacks &bull; Inspire Hackathon 2026 &bull; TBD</p>
+                <p>UVic Hacks &bull; Inspire Hackathon 2026 Archive</p>
             </footer>
         </main>
     );

@@ -1,0 +1,91 @@
+import { query } from "./hack-db";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const init = async () => {
+    // We split the SQL into an array to ensure the 'pg' library 
+    // executes each block correctly.
+    const statements = [
+        // 1. Users Table
+        `CREATE TABLE IF NOT EXISTS users (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255),
+            email VARCHAR(255) UNIQUE NOT NULL,
+            vnumber VARCHAR(20) UNIQUE NOT NULL,
+            password_hash TEXT NOT NULL,
+            resume_path TEXT,
+            bio TEXT,
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+        );`,
+
+        // 2. Events Table
+        `CREATE TABLE IF NOT EXISTS events (
+            id SERIAL PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            description TEXT,
+            event_date TIMESTAMP WITH TIME ZONE,
+            is_active BOOLEAN DEFAULT true
+        );`,
+
+        // 3. Junction Table (Many-to-Many)
+        `CREATE TABLE IF NOT EXISTS event_registrations (
+            id SERIAL PRIMARY KEY,
+            user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+            event_id INTEGER REFERENCES events(id) ON DELETE CASCADE,
+            status VARCHAR(50) DEFAULT 'registered', -- Useful for waitlists!
+            registered_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            UNIQUE(user_id, event_id) 
+        );`,
+
+        // 4. Submissions Table
+        `CREATE TABLE IF NOT EXISTS submissions (
+            id SERIAL PRIMARY KEY,
+            user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+            event_id INTEGER REFERENCES events(id) ON DELETE CASCADE,
+            github_url TEXT NOT NULL,
+            submitted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            UNIQUE(user_id, event_id)
+        );`,
+
+        `ALTER TABLE submissions ADD COLUMN IF NOT EXISTS title VARCHAR(255);`,
+        `ALTER TABLE submissions ADD COLUMN IF NOT EXISTS description TEXT;`,
+        `ALTER TABLE submissions ADD COLUMN IF NOT EXISTS team_members TEXT;`,
+
+        // 5. Scoring table
+        `CREATE TABLE IF NOT EXISTS scores (
+        id SERIAL PRIMARY KEY,
+        submission_id INTEGER REFERENCES submissions(id) ON DELETE CASCADE,
+        scorer_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        role VARCHAR(20) CHECK (role IN ('peer', 'judge')),
+        
+        -- Individual Criteria
+        innovation_score INTEGER CHECK (innovation_score <= 5),
+        technical_score INTEGER CHECK (technical_score <= 5),
+        impact_score INTEGER CHECK (impact_score <= 10),
+        design_score INTEGER CHECK (design_score <= 10),
+        presentation_score INTEGER CHECK (presentation_score <= 20),
+        
+        comments TEXT,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        UNIQUE(submission_id, scorer_id) -- One score per person per project
+    );`
+    ];
+
+    try {
+        console.log("Starting migration...");
+
+        for (const sql of statements) {
+            await query(sql);
+        }
+
+        console.log("Database schema updated and seed data inserted.");
+        process.exit(0);
+    } catch (err) {
+        console.error("Migration failed!");
+        console.error(err);
+        process.exit(1);
+    }
+};
+
+init();
