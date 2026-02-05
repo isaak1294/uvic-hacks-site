@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Added useEffect
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import Navbar from "@/app/components/NavBar";
@@ -9,7 +9,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3002";
 const EVENT_ID = 2;
 
 export default function PortfolioSubmitPage() {
-    const { token, user } = useAuth();
+    const { token, user, loading: authLoading } = useAuth(); // Added authLoading
     const router = useRouter();
 
     const [loading, setLoading] = useState(false);
@@ -19,6 +19,13 @@ export default function PortfolioSubmitPage() {
         description: "",
         github_url: "",
     });
+
+    // Handle Redirect if not logged in
+    useEffect(() => {
+        if (!authLoading && !token) {
+            router.push("/join/login");
+        }
+    }, [token, authLoading, router]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -52,6 +59,11 @@ export default function PortfolioSubmitPage() {
             setLoading(false);
         }
     };
+
+    // Prevent rendering form content while checking auth or if unauthenticated
+    if (authLoading || !token) {
+        return <div className="min-h-screen bg-neutral-950" />;
+    }
 
     return (
         <main className="min-h-screen bg-neutral-950 text-cool-steel-50">
