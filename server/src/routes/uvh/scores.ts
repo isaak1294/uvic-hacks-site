@@ -5,7 +5,7 @@ import { authenticate } from "../../auth";
 
 const router = express.Router();
 
-// Give Score Route
+// Give Score Route /api/scores/score-project/:id
 router.post("/score-project/:id", authenticate, async (req: any, res) => {
     try {
         const submissionId = req.params.id;

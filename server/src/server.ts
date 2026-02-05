@@ -8,10 +8,11 @@ import { pool, query } from "./hack-db";
 import dotenv from "dotenv";
 import { initSqlite } from "./strudel-db";
 
-import userRoutes from "./routes/uvh/users"
-import eventRoutes from "./routes/uvh/events"
-import submissionRoutes from "./routes/uvh/submissions"
-import strudelRoutes from "./routes/strudel"
+import userRoutes from "./routes/uvh/users";
+import eventRoutes from "./routes/uvh/events";
+import submissionRoutes from "./routes/uvh/submissions";
+import strudelRoutes from "./routes/strudel";
+import scoreRoutes from "./routes/uvh/scores";
 
 
 
@@ -61,6 +62,8 @@ app.use("/api/events", eventRoutes);
 app.use("/api/submissions", submissionRoutes);
 
 app.use("/api/strudel", strudelRoutes);
+
+app.use("/api/scores", scoreRoutes);
 
 // register UVic Hacks member for counting
 // RETIRE NEXT SEM :: REPLACE WITH ACTIVE ACCOUNTS
