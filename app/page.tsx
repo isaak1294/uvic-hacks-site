@@ -47,26 +47,36 @@ export default function Page() {
   const year = new Date().getFullYear();
 
   const upcomingEvents: Event[] = [
-    {
-      name: "UVic Hacks: First Meeting",
-      date: "Jan 15, 2026",
-      location: "ECS 123",
-      tag: "Kickoff",
-      description:
-        "Come hang out, meet the organizers, and learn what UVic Hacks is all about. We’ll go over upcoming events, form interest groups, and help you find teammates.",
-      imageUrl: "/images/ecs123.png",
-      eventUrl: "/events/first-meeting"
-    },
 
     {
-      name: "Portfolio Workshop Hackathon",
+      name: "Portfolio Workshop",
       date: "Feb 7, 2026",
-      location: "TBD",
+      location: "Hickman 105",
       tag: "Workshop",
       description:
         "Looking to create a new portfolio website, and directly interact with industry professionals while doing it? This Worshop Hackathon is for you!",
       imageUrl: "/images/events/portfolio.png",
       eventUrl: "/events/portfolio-workshop"
+    },
+    {
+      name: "Portfolio Competition",
+      date: "Feb 15, 2026",
+      location: "Remote",
+      tag: "Contest",
+      description:
+        "Think your portfolio is fine shyt? See how your portfolio stacks up against others and get professional feedback here!",
+      imageUrl: "/images/events/portfolio-comp.png",
+      eventUrl: "/events/portfolio-workshop/submit"
+    },
+    {
+      name: "Major Event 2",
+      date: "Feb 27-28, 2026",
+      location: "TBD",
+      tag: "Sponsored Event",
+      description:
+        "Keep an eye out for details on this event.",
+      imageUrl: "/images/events/secret.png",
+      eventUrl: "/"
     },
   ];
 
@@ -90,6 +100,16 @@ export default function Page() {
         "A one-day creative coding sprint to build generative music with Strudel and friends.",
       imageUrl: "/images/strudel.png",
       eventUrl: "https://jimmer.dev/strudel"
+    },
+    {
+      name: "UVic Hacks: First Meeting",
+      date: "Jan 15, 2026",
+      location: "ECS 123",
+      tag: "Kickoff",
+      description:
+        "Come hang out, meet the organizers, and learn what UVic Hacks is all about. We’ll go over upcoming events, form interest groups, and help you find teammates.",
+      imageUrl: "/images/ecs123.png",
+      eventUrl: "/events/first-meeting"
     },
     {
       name: "Inspire Hackathon",
