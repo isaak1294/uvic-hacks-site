@@ -15,7 +15,7 @@ export default function HeroSubtitleWithCount() {
             ? "http://localhost:3002"
             : "https://strudel-hackathon.onrender.com";
 
-        fetch(`${API_BASE}/api/registrations/count`)
+        fetch(`${API_BASE}/api/users/registrations/count`)
             .then(r => r.json())
             .then(d => setCount(d.count ?? 0))
             .catch(() => setFailed(true));
