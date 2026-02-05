@@ -38,7 +38,7 @@ function LoginForm() {
 
         try {
             if (isLogin) {
-                const res = await fetch(`${API_BASE}/api/login`, {
+                const res = await fetch(`${API_BASE}/api/users/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email: formData.email, password: formData.password }),
@@ -57,7 +57,7 @@ function LoginForm() {
                 // Always send the choice, even if false
                 fd.append("agreed", String(shareStats));
 
-                const res = await fetch(`${API_BASE}/api/account-reg`, {
+                const res = await fetch(`${API_BASE}/api/users/account-reg`, {
                     method: "POST",
                     body: fd,
                 });
