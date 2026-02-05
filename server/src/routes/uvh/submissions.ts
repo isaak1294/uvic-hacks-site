@@ -39,9 +39,6 @@ router.get("/details/:id", async (req, res) => {
             return res.status(404).json({ error: "Submission not found" });
         }
 
-        // Log this to your terminal to see if the fields exist before sending to the client
-        console.log("DB Result for Project:", rows[0]);
-
         res.json({
             success: true,
             submission: rows[0]
