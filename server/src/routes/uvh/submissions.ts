@@ -14,7 +14,19 @@ router.get("/details/:id", async (req, res) => {
                 s.*, 
                 u.name as submitter_name,
                 COUNT(sc.id)::int as review_count,
-                ROUND(AVG(sc.innovation_score + sc.technical_score + sc.impact_score + sc.design_score + sc.presentation_score), 1) as avg_total_score
+                -- We explicitly alias these so they show up in your JSON response
+                ROUND(AVG(sc.innovation_score)::numeric, 1) as avg_innovation,
+                ROUND(AVG(sc.technical_score)::numeric, 1) as avg_technical,
+                ROUND(AVG(sc.impact_score)::numeric, 1) as avg_impact,
+                ROUND(AVG(sc.design_score)::numeric, 1) as avg_design,
+                ROUND(AVG(sc.presentation_score)::numeric, 1) as avg_presentation,
+                ROUND(AVG(
+                    COALESCE(sc.innovation_score, 0) + 
+                    COALESCE(sc.technical_score, 0) + 
+                    COALESCE(sc.impact_score, 0) + 
+                    COALESCE(sc.design_score, 0) + 
+                    COALESCE(sc.presentation_score, 0)
+                )::numeric, 1) as avg_total_score
              FROM submissions s
              JOIN users u ON s.user_id = u.id
              LEFT JOIN scores sc ON s.id = sc.submission_id
@@ -26,6 +38,9 @@ router.get("/details/:id", async (req, res) => {
         if (rows.length === 0) {
             return res.status(404).json({ error: "Submission not found" });
         }
+
+        // Log this to your terminal to see if the fields exist before sending to the client
+        console.log("DB Result for Project:", rows[0]);
 
         res.json({
             success: true,

@@ -105,7 +105,7 @@ function SubmissionsGallery() {
                                             href={`/events/inspire-2026/projects/${project.id}`}
                                             className="w-full text-center py-2 bg-blue-950 text-white text-[10px] font-bold uppercase tracking-widest rounded-full hover:bg-blue-400 hover:text-black transition-all"
                                         >
-                                            Score Project
+                                            View Project
                                         </Link>
 
                                         <div className="flex items-center justify-between">
