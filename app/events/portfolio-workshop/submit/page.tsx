@@ -26,7 +26,7 @@ export default function PortfolioSubmitPage() {
 
         setLoading(true);
         try {
-            const res = await fetch(`${API_BASE}/api/submissions`, {
+            const res = await fetch(`${API_BASE}/api/events/submit`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export default function PortfolioSubmitPage() {
             const data = await res.json();
             if (res.ok) {
                 setStatus({ type: "success", msg: "Portfolio registered in the vault." });
-                setTimeout(() => router.push("/events/portfolio-2026"), 1500);
+                setTimeout(() => router.push("/events/portfolio-workshop/projects"), 1500);
             } else {
                 throw new Error(data.error || "Submission failed.");
             }
