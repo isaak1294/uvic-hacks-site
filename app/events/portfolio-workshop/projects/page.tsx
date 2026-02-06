@@ -43,10 +43,20 @@ function ShowcaseContent() {
         <div className="bg-neutral-950 text-cool-steel-50">
             <header className="px-6 py-24 md:py-32 border-b border-neutral-900">
                 <div className="max-w-7xl mx-auto">
-                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-500 mb-4">UVic Hacks: Portfolio Awards</p>
-                    <h1 className="text-6xl md:text-9xl font-bold tracking-tighter uppercase italic leading-none">
-                        Sites of the <span className="text-goldenrod-400">sem</span>
-                    </h1>
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+                        <div>
+                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-500 mb-4">UVic Hacks: Portfolio Awards</p>
+                            <h1 className="text-6xl md:text-9xl font-bold tracking-tighter uppercase italic leading-none">
+                                Sites of the <span className="text-goldenrod-400">sem</span>
+                            </h1>
+                        </div>
+                        <Link
+                            href="/events/portfolio-workshop/submit"
+                            className="inline-block bg-white text-black px-10 py-4 text-[10px] font-black uppercase tracking-[0.2em] hover:bg-gold-500 transition-colors active:scale-95"
+                        >
+                            Submit Your Site
+                        </Link>
+                    </div>
                 </div>
             </header>
 

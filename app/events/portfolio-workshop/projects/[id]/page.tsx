@@ -122,7 +122,7 @@ function ProjectContent() {
                             </div>
                             <div className="bg-neutral-950 p-4 border border-neutral-800 rounded-xl">
                                 <span className="block text-xs font-black text-neutral-600 uppercase mb-1">Open Date</span>
-                                <span className="text-xs font-bold text-white uppercase tracking-widest italic">FEB 06</span>
+                                <span className="text-xs font-bold text-white uppercase tracking-widest italic">FEB 15</span>
                             </div>
                         </div>
                     </div>
