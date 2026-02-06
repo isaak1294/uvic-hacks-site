@@ -51,21 +51,6 @@ if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// serve images
-app.use("/uploads", express.static(uploadDir));
-
-// --- ROUTES -----------------------------------------------------------
-app.use("/api/users", userRoutes);
-
-app.use("/api/events", eventRoutes);
-
-app.use("/api/submissions", submissionRoutes);
-
-app.use("/api/strudel", strudelRoutes);
-
-app.use("/api/scores", scoreRoutes);
-
-// register UVic Hacks member for counting
 // RETIRE NEXT SEM :: REPLACE WITH ACTIVE ACCOUNTS
 app.post("/api/registrations", async (req, res) => {
     try {
@@ -89,6 +74,23 @@ app.post("/api/registrations", async (req, res) => {
         res.status(500).json({ error: "Server error" });
     }
 });
+
+// serve images
+app.use("/uploads", express.static(uploadDir));
+
+// --- ROUTES -----------------------------------------------------------
+app.use("/api/users", userRoutes);
+
+app.use("/api/events", eventRoutes);
+
+app.use("/api/submissions", submissionRoutes);
+
+app.use("/api/strudel", strudelRoutes);
+
+app.use("/api/scores", scoreRoutes);
+
+// register UVic Hacks member for counting
+
 
 // --- STARTUP ----------------------------------------------------------
 
