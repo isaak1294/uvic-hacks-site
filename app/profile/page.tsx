@@ -54,7 +54,7 @@ function ProfileContent() {
         if (resume) fd.append("resume", resume);
 
         try {
-            const res = await fetch(`${API_BASE}/api/profile`, {
+            const res = await fetch(`${API_BASE}/api/users/profile`, {
                 method: "PUT",
                 headers: { "Authorization": `Bearer ${token}` },
                 body: fd
