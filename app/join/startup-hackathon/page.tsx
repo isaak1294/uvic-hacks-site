@@ -112,7 +112,7 @@ export default function StartupRegisterPage() {
                             <div className="text-center py-10">
                                 <div className="text-emerald-500 text-5xl mb-4 font-black animate-bounce">✓</div>
                                 <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-widest italic">Equity_Reserved</h3>
-                                <p className="text-neutral-500 text-xs mb-6 tracking-tight">Your founder profile has been indexed for the March sprint.</p>
+                                <p className="text-neutral-500 text-xs mb-6 tracking-tight">You have been registered.</p>
                                 <Link href="/profile" className="mt-6 inline-block bg-white text-black px-8 py-3 text-xs font-black uppercase tracking-widest hover:bg-emerald-500 transition active:scale-95 shadow-lg shadow-emerald-500/10">View_Profile</Link>
                             </div>
                         ) : (
@@ -158,10 +158,10 @@ export default function StartupRegisterPage() {
                                             <div className="flex items-center justify-between gap-6">
                                                 <div className="flex flex-col gap-1">
                                                     <label className="text-[11px] font-bold uppercase text-white tracking-widest">
-                                                        Founder's Agreement
+                                                        Privacy Agreement
                                                     </label>
                                                     <p className="text-[10px] text-neutral-500 leading-relaxed max-w-[340px] italic">
-                                                        I agree to build ethically, share IP within my team, and compete fairly for funding.
+                                                        I agree to share my account data with potential employers.
                                                     </p>
                                                 </div>
 
@@ -185,7 +185,7 @@ export default function StartupRegisterPage() {
 
                                 {user && (
                                     <div className="bg-emerald-600/5 border border-emerald-500/20 p-6 rounded-xl text-center">
-                                        <p className="text-sm text-emerald-300">Ready to pivot, <strong>{user.name}</strong>?</p>
+                                        <p className="text-sm text-emerald-300">Ready to join, <strong>{user.name}</strong>?</p>
                                         <p className="text-[10px] text-neutral-600 uppercase mt-1">Founders are already logged in.</p>
                                     </div>
                                 )}
