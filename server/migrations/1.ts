@@ -1,4 +1,4 @@
-import { query } from "./hack-db";
+import { query } from "../src/hack-db"
 import dotenv from "dotenv";
 
 dotenv.config();
