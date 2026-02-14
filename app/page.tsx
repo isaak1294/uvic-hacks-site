@@ -47,17 +47,6 @@ export default function Page() {
   const year = new Date().getFullYear();
 
   const upcomingEvents: Event[] = [
-
-    {
-      name: "Portfolio Workshop",
-      date: "Feb 7, 2026",
-      location: "Hickman 105",
-      tag: "Workshop",
-      description:
-        "Looking to create a new portfolio website, and directly interact with industry professionals while doing it? This Worshop Hackathon is for you!",
-      imageUrl: "/images/events/portfolio.png",
-      eventUrl: "/events/portfolio-workshop"
-    },
     {
       name: "Portfolio Competition",
       date: "Feb 15, 2026",
@@ -69,18 +58,28 @@ export default function Page() {
       eventUrl: "/events/portfolio-workshop/submit"
     },
     {
-      name: "Major Event 2",
+      name: "Startup Hackathon",
       date: "Feb 27-28, 2026",
-      location: "TBD",
+      location: "Hickman 105",
       tag: "Sponsored Event",
       description:
-        "Keep an eye out for details on this event.",
-      imageUrl: "/images/events/secret.png",
-      eventUrl: "/"
+        "Go from 0 to MVP in this 2 day hackathon. Get tips and learn how to deploy your fullstack app from the founder of a local startup.",
+      imageUrl: "/images/events/startup2.png",
+      eventUrl: "/events/startup-hackathon"
     },
   ];
 
   const pastEvents: Event[] = [
+    {
+      name: "Portfolio Workshop",
+      date: "Feb 7, 2026",
+      location: "Hickman 105",
+      tag: "Workshop",
+      description:
+        "Looking to create a new portfolio website, and directly interact with industry professionals while doing it? This Worshop Hackathon is for you!",
+      imageUrl: "/images/events/portfolio.png",
+      eventUrl: "/events/portfolio-workshop"
+    },
     {
       name: "Inspire: 2026 Kickoff",
       date: "Jan 30-31, 2026",
