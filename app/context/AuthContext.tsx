@@ -5,7 +5,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 interface AuthContextType {
     user: any | null;
     token: string | null;
-    login: (token: string, userData: any) => void;
+    login: (token: string, userData: any, skipRedirect: boolean) => void;
     logout: () => void;
     loading: boolean;
 }
@@ -57,16 +57,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setLoading(false);
     }, []);
 
-    const login = (newToken: string, userData: any) => {
+    // Inside AuthProvider in AuthContext.tsx
+    const login = (newToken: string, userData: any, skipRedirect: boolean = false) => {
         localStorage.setItem("token", newToken);
         localStorage.setItem("user", JSON.stringify(userData));
         setToken(newToken);
         setUser(userData);
 
-        // Check for a redirect parameter in the URL
-        const redirectTo = searchParams.get("redirect");
+        if (skipRedirect) return; // Exit early, stay on current page
 
-        // If it exists, send them back there; otherwise, send to profile
+        const params = new URLSearchParams(window.location.search);
+        const redirectTo = params.get("redirect");
+
         if (redirectTo) {
             router.push(decodeURIComponent(redirectTo));
         } else {

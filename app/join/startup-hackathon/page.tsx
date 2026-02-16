@@ -63,7 +63,7 @@ export default function StartupRegisterPage() {
 
                 currentToken = regData.token;
                 currentUser = regData.user;
-                login(regData.token, regData.user);
+                login(regData.token, regData.user, true);
             }
 
             // --- STEP 2: EVENT REGISTRATION ---
@@ -84,7 +84,7 @@ export default function StartupRegisterPage() {
                 registeredEventIds: eventData.registeredEventIds || [...(currentUser.registeredEventIds || []), STARTUP_EVENT_ID]
             };
 
-            login(currentToken!, finalUser);
+            login(currentToken!, finalUser, true);
             setSubmitted(true);
 
         } catch (err: any) {
