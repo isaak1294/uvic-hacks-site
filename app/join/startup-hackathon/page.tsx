@@ -111,7 +111,7 @@ export default function StartupRegisterPage() {
                         {submitted ? (
                             <div className="text-center py-10">
                                 <div className="text-emerald-500 text-5xl mb-4 font-black animate-bounce">✓</div>
-                                <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-widest italic">Equity_Reserved</h3>
+                                <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-widest italic">Registered.</h3>
                                 <p className="text-neutral-500 text-xs mb-6 tracking-tight">You have been registered.</p>
                                 <Link href="/profile" className="mt-6 inline-block bg-white text-black px-8 py-3 text-xs font-black uppercase tracking-widest hover:bg-emerald-500 transition active:scale-95 shadow-lg shadow-emerald-500/10">View_Profile</Link>
                             </div>

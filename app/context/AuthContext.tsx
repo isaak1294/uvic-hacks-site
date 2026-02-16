@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { useRouter } from "next/navigation"; // Changed from next/router for App Router compatibility
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 interface AuthContextType {
     user: any | null;
@@ -16,14 +16,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<any | null>(null);
     const [token, setToken] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
+
     const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
 
     const logout = () => {
+        // Capture the current path so we can return after logging back in
+        const currentPath = window.location.pathname + window.location.search;
+
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         setToken(null);
         setUser(null);
-        router.push("/join/login");
+
+        // Redirect to login with a returnUrl parameter
+        // We use encodeURIComponent to ensure special characters in the URL don't break the query string
+        router.push(`/join/login?redirect=${encodeURIComponent(currentPath)}`);
     };
 
     useEffect(() => {
@@ -32,7 +41,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         if (savedToken && savedUser) {
             try {
-                // Proactive Expiry Check: Decode JWT payload
                 const payload = JSON.parse(atob(savedToken.split('.')[1]));
                 const isExpired = Date.now() >= payload.exp * 1000;
 
@@ -43,7 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                     setUser(JSON.parse(savedUser));
                 }
             } catch (e) {
-                logout(); // Clear malformed data
+                logout();
             }
         }
         setLoading(false);
@@ -54,6 +62,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.setItem("user", JSON.stringify(userData));
         setToken(newToken);
         setUser(userData);
+
+        // Check for a redirect parameter in the URL
+        const redirectTo = searchParams.get("redirect");
+
+        // If it exists, send them back there; otherwise, send to profile
+        if (redirectTo) {
+            router.push(decodeURIComponent(redirectTo));
+        } else {
+            router.push("/profile");
+        }
     };
 
     return (
