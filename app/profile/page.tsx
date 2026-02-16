@@ -64,7 +64,7 @@ function ProfileContent() {
             if (!res.ok) throw new Error(data.error || "Update failed");
 
             // Update the global context with the fresh data from the DB
-            login(token!, data.user);
+            login(token!, data.user, false);
 
             setMessage("Profile updated successfully");
             setIsEditing(false);

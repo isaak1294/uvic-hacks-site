@@ -49,7 +49,7 @@ export default function StartupHackathonPage() {
                                     <span className="text-[10px] font-bold uppercase tracking-widest text-white">Accepting Registrants</span>
                                 </div>
                                 <span className="h-4 w-[1px] bg-neutral-800 hidden md:block"></span>
-                                <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight italic text-emerald-100/50">March 20 - 22</span>
+                                <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight italic text-emerald-100/50">Feb 27 - 28</span>
                             </div>
 
                             {/* CTAs */}
@@ -76,7 +76,7 @@ export default function StartupHackathonPage() {
                                     {registrantCount !== null ? registrantCount : "--"}
                                 </span>
                                 <p className="mt-2 text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500">
-                                    Regisrations
+                                    Registrations
                                 </p>
                                 <div className="mt-4 w-full h-1 bg-neutral-800 overflow-hidden">
                                     <div
@@ -129,6 +129,81 @@ export default function StartupHackathonPage() {
                                 </p>
                             </div>
                         ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Strategic Timeline (Schedule) Section */}
+            <section className="bg-neutral-950 py-24 border-b border-neutral-900">
+                <div className="mx-auto max-w-6xl px-4 md:px-6">
+                    <div className="text-center md:text-left mb-16">
+                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-neutral-600 mb-2">The Sprint Cycle</h2>
+                        <h3 className="text-3xl font-bold italic uppercase tracking-tighter text-white">Strategic <span className="text-emerald-500">Timeline</span></h3>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        {/* Friday */}
+                        <div className="bg-neutral-900/30 border border-neutral-800 rounded-2xl p-8">
+                            <h4 className="text-emerald-500 text-[10px] font-black uppercase tracking-widest mb-6 pb-2 border-b border-neutral-800">Day 01 // Feb 27</h4>
+                            <ul className="space-y-6">
+                                <li className="flex gap-4">
+                                    <span className="text-xs font-mono text-neutral-500 pt-1">17:30</span>
+                                    <div>
+                                        <p className="text-sm font-bold text-white uppercase italic">Opening Bell</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase">Check-in & Networking</p>
+                                    </div>
+                                </li>
+                                <li className="flex gap-4">
+                                    <span className="text-xs font-mono text-emerald-500 pt-1">18:00</span>
+                                    <div>
+                                        <p className="text-sm font-bold text-white uppercase italic">Deployment Seminar</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase">Mastering Fullstack Deployments</p>
+                                    </div>
+                                </li>
+                                <li className="flex gap-4">
+                                    <span className="text-xs font-mono text-neutral-500 pt-1">19:00</span>
+                                    <div>
+                                        <p className="text-sm font-bold text-white uppercase italic">Active Development</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase">Late-night build window</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* Saturday */}
+                        <div className="bg-neutral-900/30 border border-neutral-800 rounded-2xl p-8">
+                            <h4 className="text-emerald-500 text-[10px] font-black uppercase tracking-widest mb-6 pb-2 border-b border-neutral-800">Day 02 // Feb 28</h4>
+                            <ul className="space-y-6">
+                                <li className="flex gap-4">
+                                    <span className="text-xs font-mono text-neutral-500 pt-1">12:00</span>
+                                    <div>
+                                        <p className="text-sm font-bold text-white uppercase italic">Regroup</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase">Come back to campus</p>
+                                    </div>
+                                </li>
+                                <li className="flex gap-4">
+                                    <span className="text-xs font-mono text-emerald-500 pt-1">15:30</span>
+                                    <div>
+                                        <p className="text-sm font-bold text-emerald-500 uppercase italic">Code Freeze</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase font-black">Submission Deadline</p>
+                                    </div>
+                                </li>
+                                <li className="flex gap-4">
+                                    <span className="text-xs font-mono text-neutral-500 pt-1">16:00</span>
+                                    <div>
+                                        <p className="text-sm font-bold text-white uppercase italic">Presentations & Pizza</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase">Pitch to the board</p>
+                                    </div>
+                                </li>
+                                <li className="flex gap-4">
+                                    <span className="text-xs font-mono text-emerald-500 pt-1">18:00</span>
+                                    <div>
+                                        <p className="text-sm font-bold text-white uppercase italic">Closing & Prizes</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase">$$$</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </section>

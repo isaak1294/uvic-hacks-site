@@ -63,7 +63,7 @@ export default function InspireRegisterPage() {
 
                 currentToken = regData.token;
                 currentUser = regData.user;
-                login(regData.token, regData.user);
+                login(regData.token, regData.user, true);
             }
 
             // --- STEP 2: EVENT REGISTRATION ---
@@ -84,7 +84,7 @@ export default function InspireRegisterPage() {
                 registeredEventIds: eventData.registeredEventIds || [...(currentUser.registeredEventIds || []), INSPIRE_EVENT_ID]
             };
 
-            login(currentToken!, finalUser);
+            login(currentToken!, finalUser, true);
             setSubmitted(true);
 
         } catch (err: any) {

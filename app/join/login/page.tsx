@@ -45,7 +45,7 @@ function LoginForm() {
                 });
                 const data = await res.json();
                 if (!res.ok) throw new Error(data.error || "Login failed");
-                login(data.token, data.user);
+                login(data.token, data.user, false);
                 router.push("/profile");
             } else {
                 const fd = new FormData();

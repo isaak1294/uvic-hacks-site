@@ -63,7 +63,7 @@ export default function PortfolioSprintRegisterPage() {
 
                 currentToken = regData.token;
                 currentUser = regData.user;
-                login(regData.token, regData.user);
+                login(regData.token, regData.user, true);
             }
 
             // --- STEP 2: EVENT REGISTRATION ---
@@ -84,7 +84,7 @@ export default function PortfolioSprintRegisterPage() {
                 registeredEventIds: eventData.registeredEventIds || [...(currentUser.registeredEventIds || []), PORTFOLIO_EVENT_ID]
             };
 
-            login(currentToken!, finalUser);
+            login(currentToken!, finalUser, true);
             setSubmitted(true);
 
         } catch (err: any) {
