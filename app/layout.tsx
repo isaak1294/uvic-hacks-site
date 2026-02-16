@@ -1,4 +1,5 @@
-import type { ReactNode, Suspense } from "react";
+import type { ReactNode } from "react";
+import { Suspense } from "react";
 import "./globals.css";
 import { Montserrat, Archivo, Fira_Code } from "next/font/google";
 import type { Metadata } from "next";
