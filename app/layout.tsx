@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode, Suspense } from "react";
 import "./globals.css";
 import { Montserrat, Archivo, Fira_Code } from "next/font/google";
 import type { Metadata } from "next";
@@ -85,9 +85,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body
         className={`${montserrat.variable} ${archivo.variable} ${firaCode.variable} font-sans bg-zinc-950 text-zinc-100 antialiased`}
       >
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <Suspense fallback={<div className="min-h-screen bg-neutral-950" />}>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </Suspense>
       </body>
     </html>
   );
