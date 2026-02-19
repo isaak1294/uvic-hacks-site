@@ -48,20 +48,10 @@ export default function Page() {
 
   const upcomingEvents: Event[] = [
     {
-      name: "Portfolio Competition",
-      date: "Feb 15, 2026",
-      location: "Remote",
-      tag: "Contest",
-      description:
-        "Think your portfolio is fine shyt? See how your portfolio stacks up against others and get professional feedback here!",
-      imageUrl: "/images/events/portfolio-comp.png",
-      eventUrl: "/events/portfolio-workshop/submit"
-    },
-    {
       name: "Startup Hackathon",
       date: "Feb 27-28, 2026",
       location: "Hickman 105",
-      tag: "Sponsored Event",
+      tag: "$500 in Prizes",
       description:
         "Go from 0 to MVP in this 2 day hackathon. Get tips and learn how to deploy your fullstack app from the founder of a local startup.",
       imageUrl: "/images/events/startup2.png",
@@ -119,6 +109,16 @@ export default function Page() {
         "Team up with Inspire UVic to work on software projects for social impact in this two-day hackathon!",
       imageUrl: "/images/inspire.png",
       eventUrl: "/events/inspire-hackathon"
+    },
+    {
+      name: "Portfolio Competition",
+      date: "Feb 15, 2026",
+      location: "Remote",
+      tag: "Contest",
+      description:
+        "Think your portfolio is fine shyt? See how your portfolio stacks up against others and get professional feedback here!",
+      imageUrl: "/images/events/portfolio-comp.png",
+      eventUrl: "/events/portfolio-workshop/submit"
     },
   ];
 
