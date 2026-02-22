@@ -13,24 +13,21 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.post("/account-reg", upload.single('resume'), async (req: any, res) => {
     const client = await pool.connect();
     try {
-        const { name, email, vnumber, password, bio, agreed } = req.body;
+        const { name, email, vnumber, password, bio, agreed, role, job_title, linkedin_url, personal_website } = req.body;
 
-        // Convert string "true"/"false" from FormData to actual boolean
         const hasAgreed = agreed === 'true' || agreed === true;
+        const userRole = ['student', 'industry', 'judge', 'external'].includes(role) ? role : 'student';
 
         const JWT_SECRET = process.env.JWT_SECRET || 'hackathon-super-secret';
         let resumePath = null;
         let resumeUrl = null;
 
-        // 1. Upload to GCS
         if (req.file) {
             resumePath = `resumes/${Date.now()}-${req.file.originalname.replace(/\s+/g, '_')}`;
             await bucket.file(resumePath).save(req.file.buffer, {
                 contentType: req.file.mimetype,
                 resumable: false
             });
-
-            // Generate a signed URL so the user sees it immediately
             const [url] = await bucket.file(resumePath).getSignedUrl({
                 version: 'v4',
                 action: 'read',
@@ -41,19 +38,22 @@ router.post("/account-reg", upload.single('resume'), async (req: any, res) => {
 
         await client.query('BEGIN');
 
-        // 2. Insert User (MAKE SURE resume_path IS IN THE VALUES LIST)
         const userResult = await client.query(
-            `INSERT INTO users (name, email, vnumber, password_hash, bio, resume_path, agreed_to_terms)
-             VALUES ($1, $2, $3, $4, $5, $6, $7) 
-             RETURNING id, name, email, agreed_to_terms`,
+            `INSERT INTO users (name, email, vnumber, password_hash, bio, resume_path, agreed_to_terms, role, job_title, linkedin_url, personal_website)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+             RETURNING id, name, email, agreed_to_terms, role, job_title, linkedin_url, personal_website, is_verified`,
             [
                 name,
                 email,
-                vnumber,
+                userRole === 'student' ? (vnumber || null) : null,
                 crypto.createHash("sha256").update(password).digest("hex"),
                 bio,
                 resumePath,
-                hasAgreed
+                hasAgreed,
+                userRole,
+                job_title || null,
+                linkedin_url || null,
+                personal_website || null,
             ]
         );
         const newUser = userResult.rows[0];
@@ -158,6 +158,12 @@ router.post("/login", async (req, res) => {
                 bio: user.bio,
                 resume_path: user.resume_path,
                 resume_url: resumeUrl,
+                agreed_to_terms: user.agreed_to_terms,
+                role: user.role,
+                job_title: user.job_title,
+                linkedin_url: user.linkedin_url,
+                personal_website: user.personal_website,
+                is_verified: user.is_verified,
                 registeredEventIds
             }
         });
