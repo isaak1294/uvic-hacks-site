@@ -15,7 +15,6 @@ export default function StartupHackathonPage() {
     const isRegistered = user?.registeredEventIds?.includes(EVENT_ID);
 
     useEffect(() => {
-        // Fetch Registrant Count for Startup Hackathon
         fetch(`${API_BASE}/api/events/${EVENT_ID}/count`)
             .then(res => res.json())
             .then(data => setRegistrantCount(data.count))
@@ -31,7 +30,7 @@ export default function StartupHackathonPage() {
                 <div className="mx-auto max-w-6xl px-6 md:px-8">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-                        {/* Left Side: Pitch */}
+                        {/* Left Side */}
                         <div className="lg:col-span-8">
                             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-500 mb-6">
                                 Main Event // Feb 2026
@@ -42,7 +41,7 @@ export default function StartupHackathonPage() {
                             </h1>
 
                             <p className="mt-6 max-w-xl text-lg text-neutral-400 leading-relaxed font-light">
-                                48 hours to build, scale, and pitch. We aren't just looking for code; we're looking for founders. Turn your MVP into a venture-ready asset.
+                                48 hours to build something real. Come with an idea, leave with a project. Build whatever you want — then pitch it to a panel of judges.
                             </p>
 
                             {/* Status Tags */}
@@ -71,15 +70,15 @@ export default function StartupHackathonPage() {
                                     </Link>
                                 )}
                                 <Link
-                                    href="#tracks"
+                                    href="#schedule"
                                     className="px-10 py-4 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition border border-neutral-800 hover:border-neutral-700"
                                 >
-                                    View Tracks
+                                    See Schedule
                                 </Link>
                             </div>
                         </div>
 
-                        {/* Right Side: Traction Counter */}
+                        {/* Right Side: Registrant Count */}
                         <div className="lg:col-span-4 flex flex-col items-center lg:items-end justify-center">
                             <div className="text-center lg:text-right p-8 bg-neutral-900/30 rounded-2xl border border-neutral-900/50 backdrop-blur-sm">
                                 <span className="block text-6xl md:text-7xl font-black tracking-tighter text-white tabular-nums">
@@ -101,41 +100,43 @@ export default function StartupHackathonPage() {
                 </div>
             </section>
 
-            {/* Value Props / Tracks Section */}
-            <section id="tracks" className="bg-neutral-900/20 border-b border-neutral-900 py-20">
+            {/* What to Build Section */}
+            <section className="bg-neutral-900/20 border-b border-neutral-900 py-20">
                 <div className="mx-auto max-w-6xl px-4 md:px-6">
                     <div className="mb-12 text-center md:text-left">
                         <h2 className="text-3xl font-display font-bold tracking-tight text-white uppercase italic">
-                            Venture <span className="text-emerald-500">Tracks</span>
+                            Build <span className="text-emerald-500">Anything</span>
                         </h2>
-                        <p className="mt-2 text-cool-steel-400">Choose your vertical and build a defensible technical moat.</p>
+                        <p className="mt-2 text-cool-steel-400 max-w-xl">
+                            There's no theme. Build whatever you want — a web app, a game, a tool, a hardware project. The only rule is that it has to be something you made this weekend.
+                        </p>
                     </div>
 
                     <div className="grid gap-6 md:grid-cols-3">
                         {[
                             {
-                                title: "FinTech & De-Fi",
-                                icon: "💳",
-                                desc: "Reimagining the future of transactions, trust, and decentralization."
+                                icon: "🛠",
+                                title: "A useful tool",
+                                desc: "Scratch your own itch. Build something that solves a problem you actually have."
                             },
                             {
-                                title: "AI & Automation",
                                 icon: "🤖",
-                                desc: "Agentic workflows and large-scale model implementations for industry."
+                                title: "Something with AI",
+                                desc: "Use a model, build an agent, make something that feels a little like magic."
                             },
                             {
-                                title: "Consumer Tech",
-                                icon: "📱",
-                                desc: "Next-gen social, commerce, and utility apps for the modern user."
+                                icon: "🎮",
+                                title: "A game or experience",
+                                desc: "Fun counts. Make something people want to play with."
                             }
-                        ].map((track, i) => (
+                        ].map((idea, i) => (
                             <div key={i} className="rounded-2xl bg-neutral-950 border border-neutral-800 p-8 hover:border-emerald-500/50 transition-all group cursor-default">
-                                <div className="text-3xl mb-4 group-hover:scale-110 transition-transform inline-block">{track.icon}</div>
+                                <div className="text-3xl mb-4 group-hover:scale-110 transition-transform inline-block">{idea.icon}</div>
                                 <h3 className="text-lg font-bold text-white uppercase italic mb-3 tracking-tighter group-hover:text-emerald-400 transition-colors">
-                                    {track.title}
+                                    {idea.title}
                                 </h3>
-                                <p className="text-sm text-neutral-500 leading-relaxed italic">
-                                    "{track.desc}"
+                                <p className="text-sm text-neutral-500 leading-relaxed">
+                                    {idea.desc}
                                 </p>
                             </div>
                         ))}
@@ -143,12 +144,12 @@ export default function StartupHackathonPage() {
                 </div>
             </section>
 
-            {/* Strategic Timeline (Schedule) Section */}
-            <section className="bg-neutral-950 py-24 border-b border-neutral-900">
+            {/* Schedule Section */}
+            <section id="schedule" className="bg-neutral-950 py-24 border-b border-neutral-900">
                 <div className="mx-auto max-w-6xl px-4 md:px-6">
                     <div className="text-center md:text-left mb-16">
-                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-neutral-600 mb-2">The Sprint Cycle</h2>
-                        <h3 className="text-3xl font-bold italic uppercase tracking-tighter text-white">Strategic <span className="text-emerald-500">Timeline</span></h3>
+                        <h2 className="text-xs font-black uppercase tracking-[0.5em] text-neutral-600 mb-2">The Plan</h2>
+                        <h3 className="text-3xl font-bold italic uppercase tracking-tighter text-white">Event <span className="text-emerald-500">Schedule</span></h3>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -159,22 +160,22 @@ export default function StartupHackathonPage() {
                                 <li className="flex gap-4">
                                     <span className="text-xs font-mono text-neutral-500 pt-1">17:30</span>
                                     <div>
-                                        <p className="text-sm font-bold text-white uppercase italic">Opening Bell</p>
-                                        <p className="text-[10px] text-neutral-500 uppercase">Check-in & Networking</p>
+                                        <p className="text-sm font-bold text-white uppercase italic">Check-in</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase">Arrive, meet people</p>
                                     </div>
                                 </li>
                                 <li className="flex gap-4">
                                     <span className="text-xs font-mono text-emerald-500 pt-1">18:00</span>
                                     <div>
-                                        <p className="text-sm font-bold text-white uppercase italic">Deployment Seminar</p>
-                                        <p className="text-[10px] text-neutral-500 uppercase">Mastering Fullstack Deployments</p>
+                                        <p className="text-sm font-bold text-white uppercase italic">Deployment Workshop</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase">Fullstack deployments, start to finish</p>
                                     </div>
                                 </li>
                                 <li className="flex gap-4">
                                     <span className="text-xs font-mono text-neutral-500 pt-1">19:00</span>
                                     <div>
-                                        <p className="text-sm font-bold text-white uppercase italic">Active Development</p>
-                                        <p className="text-[10px] text-neutral-500 uppercase">Late-night build window</p>
+                                        <p className="text-sm font-bold text-white uppercase italic">Hacking Begins</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase">Build through the night</p>
                                     </div>
                                 </li>
                             </ul>
@@ -188,28 +189,28 @@ export default function StartupHackathonPage() {
                                     <span className="text-xs font-mono text-neutral-500 pt-1">12:00</span>
                                     <div>
                                         <p className="text-sm font-bold text-white uppercase italic">Regroup</p>
-                                        <p className="text-[10px] text-neutral-500 uppercase">Come back to campus</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase">Back to campus, final push</p>
                                     </div>
                                 </li>
                                 <li className="flex gap-4">
                                     <span className="text-xs font-mono text-emerald-500 pt-1">15:30</span>
                                     <div>
-                                        <p className="text-sm font-bold text-emerald-500 uppercase italic">Code Freeze</p>
-                                        <p className="text-[10px] text-neutral-500 uppercase font-black">Submission Deadline</p>
+                                        <p className="text-sm font-bold text-emerald-500 uppercase italic">Submissions Close</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase font-black">Hard deadline</p>
                                     </div>
                                 </li>
                                 <li className="flex gap-4">
                                     <span className="text-xs font-mono text-neutral-500 pt-1">16:00</span>
                                     <div>
                                         <p className="text-sm font-bold text-white uppercase italic">Presentations & Pizza</p>
-                                        <p className="text-[10px] text-neutral-500 uppercase">Pitch to the board</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase">Show what you built</p>
                                     </div>
                                 </li>
                                 <li className="flex gap-4">
                                     <span className="text-xs font-mono text-emerald-500 pt-1">18:00</span>
                                     <div>
                                         <p className="text-sm font-bold text-white uppercase italic">Closing & Prizes</p>
-                                        <p className="text-[10px] text-neutral-500 uppercase">$$$</p>
+                                        <p className="text-[10px] text-neutral-500 uppercase">Winners announced</p>
                                     </div>
                                 </li>
                             </ul>
@@ -218,40 +219,40 @@ export default function StartupHackathonPage() {
                 </div>
             </section>
 
-            {/* Overview Section */}
+            {/* What we're judging on */}
             <section className="mx-auto max-w-6xl px-4 py-12 md:px-6 md:py-16">
                 <h2 className="text-2xl font-display font-semibold tracking-tight md:text-3xl uppercase italic tracking-tighter">
-                    Move Fast. Build Things.
+                    What We're Looking For
                 </h2>
                 <p className="mt-4 max-w-3xl text-sm text-cool-steel-200">
-                    This isn't a classroom exercise. We provide the mentorship, and the stage. You provide the vision and the execution.
+                    Projects are scored by judges and fellow participants. You don't need to build a company — just build something you're proud of and can explain clearly.
                 </p>
 
                 <div className="mt-10 grid gap-6 md:grid-cols-3">
                     <div className="rounded-lg bg-neutral-900/40 p-6 border border-neutral-800">
                         <h3 className="text-lg font-semibold text-emerald-400">
-                            Technical Moat
+                            Did it work?
                         </h3>
-                        <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed uppercase tracking-tighter">
-                            Is the tech defensible? We evaluate architectural scaling and unique IP implementation.
+                        <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed">
+                            Does it do the thing it's supposed to do? A working demo beats a polished deck.
                         </p>
                     </div>
 
                     <div className="rounded-lg bg-neutral-900/40 p-6 border border-neutral-800">
                         <h3 className="text-lg font-semibold text-emerald-400">
-                            Market Fit
+                            Is it interesting?
                         </h3>
-                        <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed uppercase tracking-tighter">
-                            Does this solve a real problem, or is it a feature looking for a product?
+                        <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed">
+                            Does it solve a real problem, or is it just fun? Either is fine.
                         </p>
                     </div>
 
                     <div className="rounded-lg bg-neutral-900/40 p-6 border border-neutral-800">
                         <h3 className="text-lg font-semibold text-emerald-400">
-                            The Pitch
+                            Can you explain it?
                         </h3>
-                        <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed uppercase tracking-tighter">
-                            Can you sell the vision? 5 minutes on stage to convince the room and the board.
+                        <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed">
+                            You'll get a few minutes to show it off. Tell us what it does and why you built it.
                         </p>
                     </div>
                 </div>
@@ -259,7 +260,7 @@ export default function StartupHackathonPage() {
 
             {/* Footer */}
             <footer className="py-10 border-t border-neutral-900 text-center text-[10px] font-black uppercase tracking-[0.5em] text-neutral-600">
-                <p>UVic Hacks &bull; Startup Hackathon 2026 &bull; Founders Welcome</p>
+                <p>UVic Hacks &bull; Startup Hackathon 2026</p>
             </footer>
         </main>
     );
