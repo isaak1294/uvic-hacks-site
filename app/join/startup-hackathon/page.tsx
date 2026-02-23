@@ -20,6 +20,13 @@ const ROLE_LABELS: Record<Role, string> = {
 export default function StartupRegisterPage() {
     const { user, token, login } = useAuth();
 
+    const [mode, setMode] = useState<"login" | "register">("login");
+
+    // Login fields
+    const [loginEmail, setLoginEmail] = useState("");
+    const [loginPassword, setLoginPassword] = useState("");
+
+    // Register fields
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [vNumber, setVNumber] = useState("");
@@ -39,77 +46,100 @@ export default function StartupRegisterPage() {
         if (e.target.files?.[0]) setResume(e.target.files[0]);
     };
 
-    const handleSubmit = async (e: FormEvent) => {
+    // Shared step 2: register for the event with a given token+user
+    const registerForEvent = async (currentToken: string, currentUser: any) => {
+        const eventRes = await fetch(`${API_BASE}/api/events/register`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${currentToken}`,
+            },
+            body: JSON.stringify({ userId: currentUser.id, eventId: STARTUP_EVENT_ID }),
+        });
+        const eventData = await eventRes.json();
+        if (!eventRes.ok) throw new Error(eventData.error || "Failed to join event.");
+
+        const finalUser = {
+            ...currentUser,
+            registeredEventIds: eventData.registeredEventIds || [...(currentUser.registeredEventIds || []), STARTUP_EVENT_ID],
+        };
+        login(currentToken, finalUser, true);
+        setSubmitted(true);
+    };
+
+    const handleLogin = async (e: FormEvent) => {
         e.preventDefault();
         setError(null);
         setLoading(true);
-
         try {
-            let currentToken = token;
-            let currentUser = user;
-
-            // --- STEP 1: ACCOUNT CREATION (if not logged in) ---
-            if (!currentUser) {
-                if (!agreed) throw new Error("You must agree to the terms to register.");
-
-                const formData = new FormData();
-                formData.append("name", name);
-                formData.append("email", email);
-                formData.append("password", password);
-                formData.append("bio", bio);
-                formData.append("role", role);
-                formData.append("agreed", String(agreed));
-
-                if (role === "student") {
-                    if (!vNumber.trim()) throw new Error("V-Number is required for students.");
-                    formData.append("vnumber", vNumber.trim());
-                } else if (role === "industry") {
-                    if (!jobTitle.trim()) throw new Error("Job title is required.");
-                    if (!linkedinUrl.trim()) throw new Error("LinkedIn URL is required.");
-                    formData.append("job_title", jobTitle);
-                    formData.append("linkedin_url", linkedinUrl);
-                }
-
-                if (resume) formData.append("resume", resume);
-
-                const regRes = await fetch(`${API_BASE}/api/users/account-reg`, {
-                    method: "POST",
-                    body: formData,
-                });
-
-                const contentType = regRes.headers.get("content-type") || "";
-                if (!contentType.includes("application/json")) {
-                    throw new Error("Server error: unexpected response. Please try again.");
-                }
-                const regData = await regRes.json();
-                if (!regRes.ok) throw new Error(regData.error || "Failed to create account");
-
-                currentToken = regData.token;
-                currentUser = regData.user;
-                login(regData.token, regData.user, true);
-            }
-
-            // --- STEP 2: EVENT REGISTRATION ---
-            const eventRes = await fetch(`${API_BASE}/api/events/register`, {
+            const res = await fetch(`${API_BASE}/api/users/login`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${currentToken}`
-                },
-                body: JSON.stringify({ userId: currentUser.id, eventId: STARTUP_EVENT_ID }),
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: loginEmail, password: loginPassword }),
             });
+            const contentType = res.headers.get("content-type") || "";
+            if (!contentType.includes("application/json")) throw new Error("Server error. Please try again.");
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || "Login failed");
 
-            const eventData = await eventRes.json();
-            if (!eventRes.ok) throw new Error(eventData.error || "Account created, but failed to join event.");
+            await registerForEvent(data.token, data.user);
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-            const finalUser = {
-                ...currentUser,
-                registeredEventIds: eventData.registeredEventIds || [...(currentUser.registeredEventIds || []), STARTUP_EVENT_ID]
-            };
+    const handleRegister = async (e: FormEvent) => {
+        e.preventDefault();
+        setError(null);
+        setLoading(true);
+        try {
+            if (!agreed) throw new Error("You must agree to the terms to register.");
 
-            login(currentToken!, finalUser, true);
-            setSubmitted(true);
+            const formData = new FormData();
+            formData.append("name", name);
+            formData.append("email", email);
+            formData.append("password", password);
+            formData.append("bio", bio);
+            formData.append("role", role);
+            formData.append("agreed", String(agreed));
 
+            if (role === "student") {
+                if (!vNumber.trim()) throw new Error("V-Number is required for students.");
+                formData.append("vnumber", vNumber.trim());
+            } else if (role === "industry") {
+                if (!jobTitle.trim()) throw new Error("Job title is required.");
+                if (!linkedinUrl.trim()) throw new Error("LinkedIn URL is required.");
+                formData.append("job_title", jobTitle);
+                formData.append("linkedin_url", linkedinUrl);
+            }
+            if (resume) formData.append("resume", resume);
+
+            const regRes = await fetch(`${API_BASE}/api/users/account-reg`, {
+                method: "POST",
+                body: formData,
+            });
+            const contentType = regRes.headers.get("content-type") || "";
+            if (!contentType.includes("application/json")) throw new Error("Server error. Please try again.");
+            const regData = await regRes.json();
+            if (!regRes.ok) throw new Error(regData.error || "Failed to create account");
+
+            await registerForEvent(regData.token, regData.user);
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Already logged in — just register for the event
+    const handleAlreadyLoggedIn = async (e: FormEvent) => {
+        e.preventDefault();
+        setError(null);
+        setLoading(true);
+        try {
+            await registerForEvent(token!, user);
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -137,9 +167,9 @@ export default function StartupRegisterPage() {
                         </p>
                     </div>
 
-                    <div className="rounded-sm bg-neutral-900/70 p-6 shadow-sm shadow-black/40">
+                    <div className="rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40">
                         {submitted ? (
-                            <div className="text-center py-10">
+                            <div className="text-center py-12 px-6">
                                 <div className="text-blue-400 text-5xl mb-4">✓</div>
                                 <h3 className="text-xl font-display font-semibold text-white mb-2">You're registered!</h3>
                                 <p className="text-cool-steel-400 text-sm mb-6">We'll see you Feb 27–28 at Hickman 105.</p>
@@ -147,10 +177,65 @@ export default function StartupRegisterPage() {
                                     View Profile
                                 </Link>
                             </div>
+                        ) : user ? (
+                            /* Already logged in */
+                            <form onSubmit={handleAlreadyLoggedIn} className="p-6 space-y-4">
+                                <div className="rounded-md bg-neutral-900 p-4 text-center">
+                                    <p className="text-sm text-cool-steel-200">Logged in as <strong>{user.name}</strong></p>
+                                    <p className="text-xs text-cool-steel-500 mt-1">{user.email}</p>
+                                </div>
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="w-full rounded-full bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-400 transition shadow-md shadow-blue-900/60 disabled:opacity-50"
+                                >
+                                    {loading ? "Registering..." : "Register for This Event"}
+                                </button>
+                                {error && <p className="text-center text-xs text-red-400">{error}</p>}
+                            </form>
                         ) : (
-                            <form onSubmit={handleSubmit} className="space-y-4">
-                                {!user && (
-                                    <>
+                            <>
+                                {/* Tabs */}
+                                <div className="flex border-b border-cool-steel-800">
+                                    <button
+                                        onClick={() => { setMode("login"); setError(null); }}
+                                        className={`flex-1 py-3 text-xs font-semibold tracking-widest uppercase transition ${mode === "login" ? "text-blue-400 border-b-2 border-blue-500" : "text-cool-steel-500 hover:text-cool-steel-300"}`}
+                                    >
+                                        Log In
+                                    </button>
+                                    <button
+                                        onClick={() => { setMode("register"); setError(null); }}
+                                        className={`flex-1 py-3 text-xs font-semibold tracking-widest uppercase transition ${mode === "register" ? "text-blue-400 border-b-2 border-blue-500" : "text-cool-steel-500 hover:text-cool-steel-300"}`}
+                                    >
+                                        New Account
+                                    </button>
+                                </div>
+
+                                {/* Login form */}
+                                {mode === "login" && (
+                                    <form onSubmit={handleLogin} className="p-6 space-y-4">
+                                        <div>
+                                            <label className={labelClass}>Email</label>
+                                            <input required type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} className={inputClass} placeholder="you@uvic.ca" />
+                                        </div>
+                                        <div>
+                                            <label className={labelClass}>Password</label>
+                                            <input required type="password" value={loginPassword} onChange={e => setLoginPassword(e.target.value)} className={inputClass} placeholder="••••••••" />
+                                        </div>
+                                        <button
+                                            type="submit"
+                                            disabled={loading}
+                                            className="w-full rounded-full bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-400 transition shadow-md shadow-blue-900/60 disabled:opacity-50"
+                                        >
+                                            {loading ? "Signing in..." : "Sign In & Register"}
+                                        </button>
+                                        {error && <p className="text-center text-xs text-red-400">{error}</p>}
+                                    </form>
+                                )}
+
+                                {/* Register form */}
+                                {mode === "register" && (
+                                    <form onSubmit={handleRegister} className="p-6 space-y-4">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div>
                                                 <label className={labelClass}>Full Name</label>
@@ -162,24 +247,18 @@ export default function StartupRegisterPage() {
                                             </div>
                                         </div>
 
-                                        {/* Role selector */}
                                         <div>
                                             <label className={labelClass}>I am a...</label>
                                             <div className="grid grid-cols-4 gap-2">
                                                 {(Object.keys(ROLE_LABELS) as Role[]).map(r => (
-                                                    <button
-                                                        key={r}
-                                                        type="button"
-                                                        onClick={() => setRole(r)}
-                                                        className={`rounded-md py-2 text-xs font-semibold border transition ${role === r ? "border-blue-500 bg-blue-500/10 text-blue-300" : "border-cool-steel-700 text-cool-steel-400 hover:border-cool-steel-500"}`}
-                                                    >
+                                                    <button key={r} type="button" onClick={() => setRole(r)}
+                                                        className={`rounded-md py-2 text-xs font-semibold border transition ${role === r ? "border-blue-500 bg-blue-500/10 text-blue-300" : "border-cool-steel-700 text-cool-steel-400 hover:border-cool-steel-500"}`}>
                                                         {ROLE_LABELS[r]}
                                                     </button>
                                                 ))}
                                             </div>
                                         </div>
 
-                                        {/* Role-conditional fields */}
                                         {role === "student" && (
                                             <div>
                                                 <label className={labelClass}>V-Number</label>
@@ -217,7 +296,6 @@ export default function StartupRegisterPage() {
                                             </label>
                                         </div>
 
-                                        {/* Privacy toggle */}
                                         <div className="rounded-md border border-cool-steel-800 bg-neutral-950 p-4">
                                             <div className="flex items-center justify-between gap-4">
                                                 <div>
@@ -226,37 +304,24 @@ export default function StartupRegisterPage() {
                                                         I agree to share my account data with potential employers.
                                                     </p>
                                                 </div>
-                                                <button
-                                                    type="button"
-                                                    role="switch"
-                                                    aria-checked={agreed}
-                                                    onClick={() => setAgreed(!agreed)}
-                                                    className={`relative inline-flex h-5 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ${agreed ? "bg-blue-600" : "bg-neutral-800"}`}
-                                                >
+                                                <button type="button" role="switch" aria-checked={agreed} onClick={() => setAgreed(!agreed)}
+                                                    className={`relative inline-flex h-5 w-10 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ${agreed ? "bg-blue-600" : "bg-neutral-800"}`}>
                                                     <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition duration-200 ${agreed ? "translate-x-5" : "translate-x-0"}`} />
                                                 </button>
                                             </div>
                                         </div>
-                                    </>
+
+                                        <button
+                                            type="submit"
+                                            disabled={loading}
+                                            className="w-full rounded-full bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-400 transition shadow-md shadow-blue-900/60 disabled:opacity-50"
+                                        >
+                                            {loading ? "Registering..." : "Create Account & Register"}
+                                        </button>
+                                        {error && <p className="text-center text-xs text-red-400">{error}</p>}
+                                    </form>
                                 )}
-
-                                {user && (
-                                    <div className="rounded-md bg-neutral-900 p-4 text-center">
-                                        <p className="text-sm text-cool-steel-200">You're logged in as <strong>{user.name}</strong>.</p>
-                                        <p className="text-xs text-cool-steel-500 mt-1">Click below to register for this event.</p>
-                                    </div>
-                                )}
-
-                                <button
-                                    type="submit"
-                                    disabled={loading}
-                                    className="w-full rounded-full bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-400 transition shadow-md shadow-blue-900/60 disabled:opacity-50"
-                                >
-                                    {loading ? "Registering..." : "Register"}
-                                </button>
-
-                                {error && <p className="text-center text-xs text-red-400">{error}</p>}
-                            </form>
+                            </>
                         )}
                     </div>
                 </div>
