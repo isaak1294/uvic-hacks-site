@@ -3,13 +3,16 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Navbar from "@/app/components/NavBar";
+import { useAuth } from "@/app/context/AuthContext";
 
 export default function StartupHackathonPage() {
+    const { user } = useAuth();
     const [registrantCount, setRegistrantCount] = useState<number | null>(null);
 
     const isLocal = typeof window !== "undefined" && window.location.hostname === "localhost";
     const API_BASE = isLocal ? "http://localhost:3002" : "https://strudel-hackathon.onrender.com";
     const EVENT_ID = 3;
+    const isRegistered = user?.registeredEventIds?.includes(EVENT_ID);
 
     useEffect(() => {
         // Fetch Registrant Count for Startup Hackathon
@@ -54,12 +57,19 @@ export default function StartupHackathonPage() {
 
                             {/* CTAs */}
                             <div className="mt-12 flex flex-wrap gap-6">
-                                <Link
-                                    href={`/join/startup-hackathon`}
-                                    className="relative group overflow-hidden bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-emerald-500 active:scale-95"
-                                >
-                                    Register Now
-                                </Link>
+                                {isRegistered ? (
+                                    <div className="flex items-center gap-2.5 px-10 py-4 bg-emerald-500/10 border border-emerald-500/30 rounded-sm">
+                                        <span className="text-emerald-400 text-sm">✓</span>
+                                        <span className="text-xs font-bold uppercase tracking-widest text-emerald-400">Registered</span>
+                                    </div>
+                                ) : (
+                                    <Link
+                                        href="/join/startup-hackathon"
+                                        className="relative group overflow-hidden bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-emerald-500 active:scale-95"
+                                    >
+                                        Register Now
+                                    </Link>
+                                )}
                                 <Link
                                     href="#tracks"
                                     className="px-10 py-4 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition border border-neutral-800 hover:border-neutral-700"
