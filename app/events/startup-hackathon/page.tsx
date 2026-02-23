@@ -5,22 +5,34 @@ import Link from "next/link";
 import Navbar from "@/app/components/NavBar";
 import { useAuth } from "@/app/context/AuthContext";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3002";
+const EVENT_ID = 3;
+
 export default function StartupHackathonPage() {
     const { user } = useAuth();
     const [registrantCount, setRegistrantCount] = useState<number | null>(null);
+    const [leaderboard, setLeaderboard] = useState<any[]>([]);
+    const [loadingLeaderboard, setLoadingLeaderboard] = useState(true);
 
-    const isLocal = typeof window !== "undefined" && window.location.hostname === "localhost";
-    const API_BASE = isLocal ? "http://localhost:3002" : "https://strudel-hackathon.onrender.com";
-    const EVENT_ID = 3;
     const isRegistered = user?.registeredEventIds?.includes(EVENT_ID);
+    const isJudge = user?.role === "judge";
 
     useEffect(() => {
-        // Fetch Registrant Count for Startup Hackathon
         fetch(`${API_BASE}/api/events/${EVENT_ID}/count`)
             .then(res => res.json())
             .then(data => setRegistrantCount(data.count))
             .catch(err => console.error(err));
-    }, [API_BASE]);
+
+        fetch(`${API_BASE}/api/submissions/${EVENT_ID}/results`)
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setLeaderboard(data.filter(p => p.title && !p.title.toLowerCase().includes("test")).slice(0, 10));
+                }
+            })
+            .catch(console.error)
+            .finally(() => setLoadingLeaderboard(false));
+    }, []);
 
     return (
         <main className="min-h-screen bg-neutral-950 text-cool-steel-50">
@@ -56,25 +68,36 @@ export default function StartupHackathonPage() {
                             </div>
 
                             {/* CTAs */}
-                            <div className="mt-12 flex flex-wrap gap-6">
-                                {isRegistered ? (
-                                    <div className="flex items-center gap-2.5 px-10 py-4 bg-emerald-500/10 border border-emerald-500/30 rounded-sm">
-                                        <span className="text-emerald-400 text-sm">✓</span>
-                                        <span className="text-xs font-bold uppercase tracking-widest text-emerald-400">Registered</span>
-                                    </div>
+                            <div className="mt-12 flex flex-wrap gap-4">
+                                {isJudge ? (
+                                    <Link href="/events/startup-hackathon/projects"
+                                        className="bg-white px-8 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-emerald-500 active:scale-95">
+                                        Grade Projects
+                                    </Link>
+                                ) : isRegistered ? (
+                                    <>
+                                        <div className="flex items-center gap-2.5 px-8 py-4 bg-emerald-500/10 border border-emerald-500/30 rounded-sm">
+                                            <span className="text-emerald-400 text-sm">✓</span>
+                                            <span className="text-xs font-bold uppercase tracking-widest text-emerald-400">Registered</span>
+                                        </div>
+                                        <Link href="/events/startup-hackathon/submit"
+                                            className="bg-white px-8 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-emerald-500 active:scale-95">
+                                            Submit Project
+                                        </Link>
+                                    </>
                                 ) : (
-                                    <Link
-                                        href="/join/startup-hackathon"
-                                        className="relative group overflow-hidden bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-emerald-500 active:scale-95"
-                                    >
+                                    <Link href="/join/startup-hackathon"
+                                        className="bg-white px-8 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-emerald-500 active:scale-95">
                                         Register Now
                                     </Link>
                                 )}
-                                <Link
-                                    href="#tracks"
-                                    className="px-10 py-4 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition border border-neutral-800 hover:border-neutral-700"
-                                >
-                                    View Tracks
+                                <Link href="/events/startup-hackathon/projects"
+                                    className="px-8 py-4 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition border border-neutral-800 hover:border-neutral-700">
+                                    View Projects
+                                </Link>
+                                <Link href="#schedule"
+                                    className="px-8 py-4 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition border border-neutral-800 hover:border-neutral-700">
+                                    Schedule
                                 </Link>
                             </div>
                         </div>
@@ -98,6 +121,59 @@ export default function StartupHackathonPage() {
                         </div>
 
                     </div>
+                </div>
+            </section>
+
+            {/* Leaderboard */}
+            <section className="bg-neutral-900/20 border-b border-neutral-900 py-20">
+                <div className="mx-auto max-w-6xl px-4 md:px-6">
+                    <div className="mb-10 flex items-end justify-between gap-4 flex-wrap">
+                        <div>
+                            <h2 className="text-3xl font-display font-bold tracking-tight text-white uppercase italic">
+                                Live <span className="text-emerald-500">Standings</span>
+                            </h2>
+                            <p className="mt-2 text-cool-steel-400 text-sm">Rankings based on peer and judge scores. Updates in real time.</p>
+                        </div>
+                        <Link href="/events/startup-hackathon/projects"
+                            className="text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition border border-neutral-800 hover:border-neutral-700 px-6 py-3">
+                            View All Projects
+                        </Link>
+                    </div>
+
+                    {loadingLeaderboard ? (
+                        <div className="py-10 text-center text-xs uppercase tracking-widest text-neutral-600 animate-pulse">Calculating standings...</div>
+                    ) : leaderboard.length === 0 ? (
+                        <div className="py-10 text-center text-sm text-cool-steel-500 border-2 border-dashed border-neutral-800 rounded-sm">
+                            No scored projects yet. Standings will appear here once judging begins.
+                        </div>
+                    ) : (
+                        <div className="overflow-hidden rounded-sm border border-neutral-800 bg-neutral-900/50">
+                            <div className="grid grid-cols-12 bg-neutral-800/50 px-6 py-3 text-[10px] font-black uppercase tracking-widest text-neutral-500">
+                                <div className="col-span-1">Rank</div>
+                                <div className="col-span-7">Project</div>
+                                <div className="col-span-2 text-right">Reviews</div>
+                                <div className="col-span-2 text-right">Score / 100</div>
+                            </div>
+                            <div className="divide-y divide-neutral-800">
+                                {leaderboard.map((item, index) => (
+                                    <Link key={item.id} href={`/events/startup-hackathon/projects/${item.id}`}
+                                        className="grid grid-cols-12 px-6 py-4 items-center hover:bg-neutral-800/30 transition-colors group">
+                                        <div className="col-span-1 font-mono text-sm text-neutral-500">
+                                            {index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : `#${index + 1}`}
+                                        </div>
+                                        <div className="col-span-7">
+                                            <p className="font-bold text-white group-hover:text-emerald-400 transition-colors">{item.title}</p>
+                                            <p className="text-[10px] text-neutral-500 uppercase">{item.submitter}</p>
+                                        </div>
+                                        <div className="col-span-2 text-right font-mono text-xs text-neutral-400">{item.review_count}</div>
+                                        <div className="col-span-2 text-right font-bold text-emerald-400">
+                                            {item.total_avg ? (Number(item.total_avg) * 2).toFixed(1) : "—"}
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </section>
 
@@ -144,7 +220,7 @@ export default function StartupHackathonPage() {
             </section>
 
             {/* Strategic Timeline (Schedule) Section */}
-            <section className="bg-neutral-950 py-24 border-b border-neutral-900">
+            <section id="schedule" className="bg-neutral-950 py-24 border-b border-neutral-900">
                 <div className="mx-auto max-w-6xl px-4 md:px-6">
                     <div className="text-center md:text-left mb-16">
                         <h2 className="text-xs font-black uppercase tracking-[0.5em] text-neutral-600 mb-2">The Sprint Cycle</h2>

@@ -10,23 +10,55 @@ router.get("/details/:id", async (req, res) => {
         const { id } = req.params;
 
         const { rows } = await query(
-            `SELECT 
-                s.*, 
+            `SELECT
+                s.*,
                 u.name as submitter_name,
+
+                -- Overall counts and averages
                 COUNT(sc.id)::int as review_count,
-                -- We explicitly alias these so they show up in your JSON response
                 ROUND(AVG(sc.innovation_score)::numeric, 1) as avg_innovation,
                 ROUND(AVG(sc.technical_score)::numeric, 1) as avg_technical,
                 ROUND(AVG(sc.impact_score)::numeric, 1) as avg_impact,
                 ROUND(AVG(sc.design_score)::numeric, 1) as avg_design,
                 ROUND(AVG(sc.presentation_score)::numeric, 1) as avg_presentation,
                 ROUND(AVG(
-                    COALESCE(sc.innovation_score, 0) + 
-                    COALESCE(sc.technical_score, 0) + 
-                    COALESCE(sc.impact_score, 0) + 
-                    COALESCE(sc.design_score, 0) + 
+                    COALESCE(sc.innovation_score, 0) +
+                    COALESCE(sc.technical_score, 0) +
+                    COALESCE(sc.impact_score, 0) +
+                    COALESCE(sc.design_score, 0) +
                     COALESCE(sc.presentation_score, 0)
-                )::numeric, 1) as avg_total_score
+                )::numeric, 1) as avg_total_score,
+
+                -- Judge-only averages
+                COUNT(sc.id) FILTER (WHERE sc.role = 'judge')::int as judge_review_count,
+                ROUND(AVG(sc.innovation_score) FILTER (WHERE sc.role = 'judge')::numeric, 1) as judge_avg_innovation,
+                ROUND(AVG(sc.technical_score) FILTER (WHERE sc.role = 'judge')::numeric, 1) as judge_avg_technical,
+                ROUND(AVG(sc.impact_score) FILTER (WHERE sc.role = 'judge')::numeric, 1) as judge_avg_impact,
+                ROUND(AVG(sc.design_score) FILTER (WHERE sc.role = 'judge')::numeric, 1) as judge_avg_design,
+                ROUND(AVG(sc.presentation_score) FILTER (WHERE sc.role = 'judge')::numeric, 1) as judge_avg_presentation,
+                ROUND(AVG(
+                    COALESCE(sc.innovation_score, 0) +
+                    COALESCE(sc.technical_score, 0) +
+                    COALESCE(sc.impact_score, 0) +
+                    COALESCE(sc.design_score, 0) +
+                    COALESCE(sc.presentation_score, 0)
+                ) FILTER (WHERE sc.role = 'judge')::numeric, 1) as judge_avg_total,
+
+                -- Peer-only averages
+                COUNT(sc.id) FILTER (WHERE sc.role = 'peer')::int as peer_review_count,
+                ROUND(AVG(sc.innovation_score) FILTER (WHERE sc.role = 'peer')::numeric, 1) as peer_avg_innovation,
+                ROUND(AVG(sc.technical_score) FILTER (WHERE sc.role = 'peer')::numeric, 1) as peer_avg_technical,
+                ROUND(AVG(sc.impact_score) FILTER (WHERE sc.role = 'peer')::numeric, 1) as peer_avg_impact,
+                ROUND(AVG(sc.design_score) FILTER (WHERE sc.role = 'peer')::numeric, 1) as peer_avg_design,
+                ROUND(AVG(sc.presentation_score) FILTER (WHERE sc.role = 'peer')::numeric, 1) as peer_avg_presentation,
+                ROUND(AVG(
+                    COALESCE(sc.innovation_score, 0) +
+                    COALESCE(sc.technical_score, 0) +
+                    COALESCE(sc.impact_score, 0) +
+                    COALESCE(sc.design_score, 0) +
+                    COALESCE(sc.presentation_score, 0)
+                ) FILTER (WHERE sc.role = 'peer')::numeric, 1) as peer_avg_total
+
              FROM submissions s
              JOIN users u ON s.user_id = u.id
              LEFT JOIN scores sc ON s.id = sc.submission_id
@@ -72,6 +104,27 @@ router.get("/:eventId/results", async (req, res) => {
         res.json(rows);
     } catch (e) {
         res.status(500).json({ error: "Could not calculate results." });
+    }
+});
+
+// GET /api/submissions/my-submission/:eventId — caller's own submission for an event
+router.get("/my-submission/:eventId", authenticate, async (req: any, res) => {
+    try {
+        const { eventId } = req.params;
+        const userId = req.user.userId;
+
+        const { rows } = await query(
+            `SELECT s.*, u.name as submitter_name
+             FROM submissions s
+             JOIN users u ON s.user_id = u.id
+             WHERE s.event_id = $1 AND s.user_id = $2`,
+            [eventId, userId]
+        );
+
+        res.json({ success: true, submission: rows[0] || null });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ error: "Failed to fetch submission." });
     }
 });
 

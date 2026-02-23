@@ -45,4 +45,22 @@ router.post("/score-project/:id", authenticate, async (req: any, res) => {
     }
 });
 
+// GET /api/scores/my-score/:submissionId — caller's existing score for a submission
+router.get("/my-score/:submissionId", authenticate, async (req: any, res) => {
+    try {
+        const { submissionId } = req.params;
+        const scorerId = req.user.userId;
+
+        const { rows } = await query(
+            `SELECT * FROM scores WHERE submission_id = $1 AND scorer_id = $2`,
+            [submissionId, scorerId]
+        );
+
+        res.json({ success: true, score: rows[0] || null });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ error: "Failed to fetch score." });
+    }
+});
+
 export default router
