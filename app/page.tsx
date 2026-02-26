@@ -187,7 +187,7 @@ export default function Page() {
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
-              href="/join"
+              href="/join/login"
               className="rounded-full bg-blue-950 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-blue-900/60 transition hover:bg-blue-400 hover:shadow-lg"
             >
               Join the Club
