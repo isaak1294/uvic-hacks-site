@@ -38,6 +38,7 @@ function LoginForm() {
         job_title: "",
         linkedin_url: "",
         personal_website: "",
+        code: "",
     });
 
     useEffect(() => {
@@ -75,6 +76,8 @@ function LoginForm() {
                 } else if (role === "industry") {
                     fd.append("job_title", formData.job_title);
                     fd.append("linkedin_url", formData.linkedin_url);
+                } else if (role === "judge") {
+                    fd.append("code", formData.code)
                 }
                 if (formData.personal_website) {
                     fd.append("personal_website", formData.personal_website);
@@ -175,6 +178,7 @@ function LoginForm() {
                                 {field("LinkedIn URL", "linkedin_url", "url", "https://linkedin.com/in/you")}
                             </>
                         )}
+                        {role === "judge" && field("Secret Code", "code", "text", "secret judge code")}
                     </>
                 )}
 
@@ -186,6 +190,7 @@ function LoginForm() {
                 {!isLogin && (
                     <>
                         {optionalField("Personal Website (optional)", "personal_website", "url", "https://yoursite.com")}
+
 
                         {/* Recruitment toggle */}
                         <div className="rounded-md border border-cool-steel-800 bg-neutral-950 p-4 mt-2">

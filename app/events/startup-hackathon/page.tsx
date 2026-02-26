@@ -5,21 +5,34 @@ import Link from "next/link";
 import Navbar from "@/app/components/NavBar";
 import { useAuth } from "@/app/context/AuthContext";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3002";
+const EVENT_ID = 3;
+
 export default function StartupHackathonPage() {
     const { user } = useAuth();
     const [registrantCount, setRegistrantCount] = useState<number | null>(null);
+    const [leaderboard, setLeaderboard] = useState<any[]>([]);
+    const [loadingLeaderboard, setLoadingLeaderboard] = useState(true);
 
-    const isLocal = typeof window !== "undefined" && window.location.hostname === "localhost";
-    const API_BASE = isLocal ? "http://localhost:3002" : "https://strudel-hackathon.onrender.com";
-    const EVENT_ID = 3;
     const isRegistered = user?.registeredEventIds?.includes(EVENT_ID);
+    const isJudge = user?.role === "judge";
 
     useEffect(() => {
         fetch(`${API_BASE}/api/events/${EVENT_ID}/count`)
             .then(res => res.json())
             .then(data => setRegistrantCount(data.count))
             .catch(err => console.error(err));
-    }, [API_BASE]);
+
+        fetch(`${API_BASE}/api/submissions/${EVENT_ID}/results`)
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setLeaderboard(data.filter(p => p.title && !p.title.toLowerCase().includes("test")).slice(0, 10));
+                }
+            })
+            .catch(console.error)
+            .finally(() => setLoadingLeaderboard(false));
+    }, []);
 
     return (
         <main className="min-h-screen bg-neutral-950 text-cool-steel-50">
@@ -55,17 +68,26 @@ export default function StartupHackathonPage() {
                             </div>
 
                             {/* CTAs */}
-                            <div className="mt-12 flex flex-wrap gap-6">
-                                {isRegistered ? (
-                                    <div className="flex items-center gap-2.5 px-10 py-4 bg-emerald-500/10 border border-emerald-500/30 rounded-sm">
-                                        <span className="text-emerald-400 text-sm">✓</span>
-                                        <span className="text-xs font-bold uppercase tracking-widest text-emerald-400">Registered</span>
-                                    </div>
+                            <div className="mt-12 flex flex-wrap gap-4">
+                                {isJudge ? (
+                                    <Link href="/events/startup-hackathon/projects"
+                                        className="bg-white px-8 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-emerald-500 active:scale-95">
+                                        Grade Projects
+                                    </Link>
+                                ) : isRegistered ? (
+                                    <>
+                                        <div className="flex items-center gap-2.5 px-8 py-4 bg-emerald-500/10 border border-emerald-500/30 rounded-sm">
+                                            <span className="text-emerald-400 text-sm">✓</span>
+                                            <span className="text-xs font-bold uppercase tracking-widest text-emerald-400">Registered</span>
+                                        </div>
+                                        <Link href="/events/startup-hackathon/submit"
+                                            className="bg-white px-8 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-emerald-500 active:scale-95">
+                                            Submit Project
+                                        </Link>
+                                    </>
                                 ) : (
-                                    <Link
-                                        href="/join/startup-hackathon"
-                                        className="relative group overflow-hidden bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-emerald-500 active:scale-95"
-                                    >
+                                    <Link href="/join/startup-hackathon"
+                                        className="bg-white px-8 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-emerald-500 active:scale-95">
                                         Register Now
                                     </Link>
                                 )}
