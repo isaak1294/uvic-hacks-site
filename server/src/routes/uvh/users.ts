@@ -13,7 +13,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.post("/account-reg", upload.single('resume'), async (req: any, res) => {
     const client = await pool.connect();
     try {
-        const { name, email, vnumber, password, bio, agreed, role, job_title, linkedin_url, personal_website } = req.body;
+        const { name, email, vnumber, password, bio, agreed, role, job_title, linkedin_url, personal_website, code } = req.body;
 
         const hasAgreed = agreed === 'true' || agreed === true;
         const userRole = ['student', 'industry', 'judge', 'external'].includes(role) ? role : 'student';
@@ -34,6 +34,11 @@ router.post("/account-reg", upload.single('resume'), async (req: any, res) => {
                 expires: Date.now() + 24 * 60 * 60 * 1000,
             });
             resumeUrl = url;
+        }
+
+        if (role === 'judge' && code != process.env.JUDGE_CODE) {
+            res.status(502).json({ error: "incorrect code" });
+            return;
         }
 
         await client.query('BEGIN');
