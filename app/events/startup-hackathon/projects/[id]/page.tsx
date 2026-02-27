@@ -10,10 +10,10 @@ const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3002";
 
 const RUBRIC = [
     { key: "innovation", label: "Innovation", max: 5, description: "Originality and creativity of the idea" },
-    { key: "technical", label: "Technical Execution", max: 5, description: "Code quality, architecture, and completeness" },
-    { key: "impact", label: "Impact / Business Value", max: 10, description: "Real-world applicability and market potential" },
+    { key: "technical", label: "Technical Execution", max: 15, description: "Code quality, architecture, and completeness of the working product" },
+    { key: "impact", label: "Market Potential", max: 10, description: "Is there a real problem being solved? Is there a clear customer and viable market?" },
     { key: "design", label: "Design / UX", max: 10, description: "User experience, polish, and visual quality" },
-    { key: "presentation", label: "Presentation", max: 20, description: "Clarity of pitch and ability to sell the vision" },
+    { key: "presentation", label: "Presentation", max: 10, description: "Clarity of pitch and ability to sell the vision" },
 ] as const;
 
 type RubricKey = typeof RUBRIC[number]["key"];
