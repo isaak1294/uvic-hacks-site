@@ -53,7 +53,7 @@ function ScoreSection({ title, subtitle, accentClass, borderClass, total, review
             </div>
             <div className="px-6 py-4 text-center border-b border-neutral-800">
                 <div className={`text-5xl font-bold tracking-tight ${total != null ? "text-white" : "text-cool-steel-600"}`}>
-                    {total != null ? (total * 2).toFixed(1) : "—"}
+                    {total != null ? (Number(total) * 2).toFixed(1) : "—"}
                     <span className="text-xl text-cool-steel-600"> / 100</span>
                 </div>
                 <p className="mt-1 text-xs text-cool-steel-500">
@@ -135,11 +135,11 @@ function ProjectContent() {
                 if (data.score) {
                     setHasExistingScore(true);
                     setScores({
-                        innovation: data.score.innovation_score ?? 0,
-                        technical: data.score.technical_score ?? 0,
-                        impact: data.score.impact_score ?? 0,
-                        design: data.score.design_score ?? 0,
-                        presentation: data.score.presentation_score ?? 0,
+                        innovation: parseFloat(data.score.innovation_score) || 0,
+                        technical: parseFloat(data.score.technical_score) || 0,
+                        impact: parseFloat(data.score.impact_score) || 0,
+                        design: parseFloat(data.score.design_score) || 0,
+                        presentation: parseFloat(data.score.presentation_score) || 0,
                     });
                     setComments(data.score.comments ?? "");
                 }
@@ -329,7 +329,7 @@ function ProjectContent() {
                                             </div>
                                             <div className="flex items-baseline gap-0.5 shrink-0 ml-4">
                                                 <span className={`text-2xl font-bold tabular-nums ${textColors[key]}`}>
-                                                    {Number.isInteger(scores[key]) ? scores[key] : scores[key].toFixed(1)}
+                                                    {Number(scores[key]) % 1 === 0 ? Number(scores[key]) : Number(scores[key]).toFixed(1)}
                                                 </span>
                                                 <span className="text-xs text-cool-steel-500">/{max}</span>
                                             </div>
@@ -364,7 +364,7 @@ function ProjectContent() {
                                 <div className="flex items-center justify-between pt-1">
                                     <p className="text-xs text-cool-steel-500">
                                         Total: <span className="text-cool-steel-200 font-semibold">
-                                            {totalScore % 1 === 0 ? totalScore : totalScore.toFixed(1)} / 50
+                                            {Number(totalScore) % 1 === 0 ? Number(totalScore) : Number(totalScore).toFixed(1)} / 50
                                         </span>
                                     </p>
                                     <button type="submit" disabled={scoreLoading}
