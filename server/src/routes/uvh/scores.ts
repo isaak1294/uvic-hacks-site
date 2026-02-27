@@ -2,11 +2,17 @@
 import express from "express";
 import { query, pool } from "../../hack-db";
 import { authenticate } from "../../auth";
+import { settings } from "../../settings";
 
 const router = express.Router();
 
 // Give Score Route /api/scores/score-project/:id
 router.post("/score-project/:id", authenticate, async (req: any, res) => {
+    // Judges can always score; non-judges only when scoringOpen
+    if (!settings.scoringOpen && req.user.role !== 'judge') {
+        return res.status(403).json({ error: "Scoring is not open yet." });
+    }
+
     try {
         const submissionId = req.params.id;
         const scorerId = req.user.userId;

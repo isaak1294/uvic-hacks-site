@@ -3,15 +3,25 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "@/app/components/NavBar";
+import { useAuth } from "@/app/context/AuthContext";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:3002";
 
 export default function StartupProjectsPage() {
+    const { user } = useAuth();
     const [projects, setProjects] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [scoringOpen, setScoringOpen] = useState(false);
+
+    const isJudge = user?.role === "judge";
 
     useEffect(() => {
+        fetch(`${API_BASE}/api/admin/settings`)
+            .then(r => r.json())
+            .then(data => setScoringOpen(data.scoringOpen ?? false))
+            .catch(console.error);
+
         fetch(`${API_BASE}/api/submissions/3`)
             .then(r => r.json())
             .then(data => {
@@ -21,6 +31,8 @@ export default function StartupProjectsPage() {
             .catch(err => setError(err.message))
             .finally(() => setLoading(false));
     }, []);
+
+    const canScore = isJudge || scoringOpen;
 
     return (
         <main className="min-h-screen bg-neutral-950 text-cool-steel-50">
@@ -91,7 +103,7 @@ export default function StartupProjectsPage() {
                                     </p>
 
                                     <span className="mt-4 text-xs font-semibold text-blue-400 group-hover:underline underline-offset-2">
-                                        View & Score →
+                                        {canScore ? "View & Score →" : "View →"}
                                     </span>
                                 </div>
                             </Link>
