@@ -322,34 +322,47 @@ export default function StartupHackathonPage() {
                     What We're Looking For
                 </h2>
                 <p className="mt-4 max-w-3xl text-sm text-cool-steel-200">
-                    Projects are scored by judges and fellow participants. You don't need to build a company — just build something you're proud of and can explain clearly.
+                    Projects are judged on technical execution, market potential, and how well you pitch the vision. Build something real, deploy it, and be ready to sell it.
                 </p>
 
-                <div className="mt-10 grid gap-6 md:grid-cols-3">
+                <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                     <div className="rounded-lg bg-neutral-900/40 p-6 border border-neutral-800">
+                        <p className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2">15 pts</p>
                         <h3 className="text-lg font-semibold text-emerald-400">
-                            Did it work?
+                            Technical Execution
                         </h3>
                         <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed">
-                            Does it do the thing it's supposed to do? A working demo beats a polished deck.
+                            Does it work? Is it deployed? Clean code and a live demo speak louder than a mockup.
                         </p>
                     </div>
 
                     <div className="rounded-lg bg-neutral-900/40 p-6 border border-neutral-800">
+                        <p className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2">10 pts</p>
                         <h3 className="text-lg font-semibold text-emerald-400">
-                            Is it interesting?
+                            Market Potential
                         </h3>
                         <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed">
-                            Does it solve a real problem, or is it just fun? Either is fine.
+                            Is there a real problem being solved? Who's the customer, and would they pay for this?
                         </p>
                     </div>
 
                     <div className="rounded-lg bg-neutral-900/40 p-6 border border-neutral-800">
+                        <p className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2">10 pts</p>
                         <h3 className="text-lg font-semibold text-emerald-400">
-                            Can you explain it?
+                            Design / UX
                         </h3>
                         <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed">
-                            You'll get a few minutes to show it off. Tell us what it does and why you built it.
+                            Is it easy to use? Does it feel polished? First impressions matter.
+                        </p>
+                    </div>
+
+                    <div className="rounded-lg bg-neutral-900/40 p-6 border border-neutral-800">
+                        <p className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2">10 pts</p>
+                        <h3 className="text-lg font-semibold text-emerald-400">
+                            Presentation
+                        </h3>
+                        <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed">
+                            Can you sell it? You'll get a few minutes — make every second count.
                         </p>
                     </div>
                 </div>
