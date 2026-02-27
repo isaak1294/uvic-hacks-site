@@ -48,23 +48,24 @@ router.post("/register", authenticate, async (req: any, res) => {
 router.post("/submit", authenticate, async (req: any, res) => {
     try {
         const userId = req.user.userId;
-        const { event_id, github_url, title, description, team_members } = req.body;
+        const { event_id, live_url, github_url, title, description, team_members } = req.body;
 
-        if (!github_url || !title) {
-            return res.status(400).json({ error: "Title and GitHub URL are required." });
+        if (!live_url || !title) {
+            return res.status(400).json({ error: "Title and live URL are required." });
         }
 
         await query(
-            `INSERT INTO submissions (user_id, event_id, github_url, title, description, team_members, submitted_at)
-             VALUES ($1, $2, $3, $4, $5, $6, NOW())
-             ON CONFLICT (user_id, event_id) 
-             DO UPDATE SET 
+            `INSERT INTO submissions (user_id, event_id, live_url, github_url, title, description, team_members, submitted_at)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+             ON CONFLICT (user_id, event_id)
+             DO UPDATE SET
+                live_url = EXCLUDED.live_url,
                 github_url = EXCLUDED.github_url,
                 title = EXCLUDED.title,
                 description = EXCLUDED.description,
                 team_members = EXCLUDED.team_members,
                 submitted_at = NOW()`,
-            [userId, event_id, github_url, title, description, team_members]
+            [userId, event_id, live_url, github_url || null, title, description, team_members]
         );
 
         res.json({ success: true, message: "Project details saved!" });

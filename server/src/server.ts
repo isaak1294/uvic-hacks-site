@@ -13,6 +13,7 @@ import eventRoutes from "./routes/uvh/events";
 import submissionRoutes from "./routes/uvh/submissions";
 import strudelRoutes from "./routes/strudel";
 import scoreRoutes from "./routes/uvh/scores";
+import { settings } from "./settings";
 
 
 
@@ -121,6 +122,35 @@ app.use("/api/submissions", submissionRoutes);
 app.use("/api/strudel", strudelRoutes);
 
 app.use("/api/scores", scoreRoutes);
+
+// --- ADMIN SETTINGS ---------------------------------------------------
+
+// GET /api/admin/settings — public, frontend polls this to check feature flags
+app.get("/api/admin/settings", (req, res) => {
+    res.json(settings);
+});
+
+// POST /api/admin/settings — protected by API key
+// Body: { scoringOpen?: boolean, scoresVisible?: boolean }
+app.post("/api/admin/settings", (req, res) => {
+    const incomingKey = req.headers['x-api-key'];
+    const secretKey = process.env.API_KEY;
+
+    if (!secretKey) {
+        console.error("CRITICAL: API_KEY is not set.");
+        return res.status(500).json({ error: "Server configuration error" });
+    }
+    if (incomingKey !== secretKey) {
+        return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const { scoringOpen, scoresVisible } = req.body;
+    if (scoringOpen !== undefined) settings.scoringOpen = Boolean(scoringOpen);
+    if (scoresVisible !== undefined) settings.scoresVisible = Boolean(scoresVisible);
+
+    console.log("Admin updated settings:", settings);
+    res.json({ success: true, settings });
+});
 
 // register UVic Hacks member for counting
 

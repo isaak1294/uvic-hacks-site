@@ -163,11 +163,24 @@ export default function StartupRegisterPage() {
                             Startup <span className="text-blue-400">Hackathon</span>
                         </h1>
                         <p className="mt-2 text-sm text-cool-steel-300">
-                            Register for the Feb 27–28 event. Takes about 2 minutes.
+                            Registration is now closed.
                         </p>
                     </div>
 
-                    <div className="rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40">
+                    <div className="rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40 p-8 text-center">
+                        <p className="text-neutral-400 text-sm mb-2">Registration for the Feb 27–28 event has closed.</p>
+                        <p className="text-neutral-500 text-xs mb-6">If you registered, check your profile or head to the event page.</p>
+                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                            <Link href="/events/startup-hackathon" className="rounded-full bg-neutral-800 px-6 py-2.5 text-sm font-semibold text-cool-steel-200 hover:bg-neutral-700 transition">
+                                Event Page
+                            </Link>
+                            <Link href="/profile" className="rounded-full bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-blue-400 transition shadow-md shadow-blue-900/60">
+                                My Profile
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40 hidden">
                         {submitted ? (
                             <div className="text-center py-12 px-6">
                                 <div className="text-blue-400 text-5xl mb-4">✓</div>

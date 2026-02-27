@@ -86,6 +86,12 @@ function ProjectContent() {
     const [project, setProject] = useState<any>(null);
     const [loadingProject, setLoadingProject] = useState(true);
 
+    // Feature flags from server
+    const [scoringOpen, setScoringOpen] = useState(false);
+    const [scoresVisible, setScoresVisible] = useState(false);
+
+    const isJudge = user?.role === "judge";
+
     // Scoring state — floats allowed
     const [scores, setScores] = useState<Record<RubricKey, number>>({
         innovation: 0, technical: 0, impact: 0, design: 0, presentation: 0,
@@ -94,6 +100,17 @@ function ProjectContent() {
     const [scoreLoading, setScoreLoading] = useState(false);
     const [scoreMessage, setScoreMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
     const [hasExistingScore, setHasExistingScore] = useState(false);
+
+    // Fetch settings + project in parallel
+    useEffect(() => {
+        fetch(`${API_BASE}/api/admin/settings`)
+            .then(r => r.json())
+            .then(data => {
+                setScoringOpen(data.scoringOpen ?? false);
+                setScoresVisible(data.scoresVisible ?? false);
+            })
+            .catch(console.error);
+    }, []);
 
     // Fetch project
     useEffect(() => {
@@ -135,7 +152,7 @@ function ProjectContent() {
         setScoreLoading(true);
         setScoreMessage(null);
 
-        const scoreRole = user?.role === "judge" ? "judge" : "peer";
+        const scoreRole = isJudge ? "judge" : "peer";
 
         try {
             const res = await fetch(`${API_BASE}/api/scores/score-project/${submissionId}`, {
@@ -180,6 +197,10 @@ function ProjectContent() {
     }
 
     const isOwnProject = user && project.user_id === user.id;
+
+    // Judges can always see/give scores; others only when flags are set
+    const canScore = isJudge || scoringOpen;
+    const canSeeScores = isJudge || scoresVisible;
 
     const barColors: Record<RubricKey, string> = {
         innovation: "bg-blue-500",
@@ -252,23 +273,33 @@ function ProjectContent() {
                         <p className="text-sm text-cool-steel-200 leading-relaxed">
                             {project.description || <span className="italic text-cool-steel-500">No description provided.</span>}
                         </p>
-                        {project.github_url && (
-                            <a href={project.github_url} target="_blank" rel="noreferrer"
-                                className="mt-4 inline-flex items-center gap-2 rounded-full bg-blue-950 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-400 transition shadow-sm shadow-blue-900/60">
-                                View Project →
-                            </a>
-                        )}
+                        <div className="mt-4 flex flex-wrap gap-3">
+                            {project.live_url && (
+                                <a href={project.live_url} target="_blank" rel="noreferrer"
+                                    className="inline-flex items-center gap-2 rounded-full bg-emerald-950 px-4 py-2 text-xs font-semibold text-emerald-300 hover:bg-emerald-900 transition shadow-sm">
+                                    Live Demo →
+                                </a>
+                            )}
+                            {project.github_url && (
+                                <a href={project.github_url} target="_blank" rel="noreferrer"
+                                    className="inline-flex items-center gap-2 rounded-full bg-blue-950 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-400 transition shadow-sm shadow-blue-900/60">
+                                    GitHub →
+                                </a>
+                            )}
+                        </div>
                     </div>
 
                     {/* Scoring form */}
                     {!user ? (
-                        <div className="rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40 p-6 text-center">
-                            <p className="text-sm text-cool-steel-400 mb-4">Sign in to score this project.</p>
-                            <Link href={`/join/login?redirect=/events/startup-hackathon/projects/${submissionId}`}
-                                className="rounded-full bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-400 transition shadow-md shadow-blue-900/60">
-                                Sign In
-                            </Link>
-                        </div>
+                        canScore ? (
+                            <div className="rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40 p-6 text-center">
+                                <p className="text-sm text-cool-steel-400 mb-4">Sign in to score this project.</p>
+                                <Link href={`/join/login?redirect=/events/startup-hackathon/projects/${submissionId}`}
+                                    className="rounded-full bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-400 transition shadow-md shadow-blue-900/60">
+                                    Sign In
+                                </Link>
+                            </div>
+                        ) : null
                     ) : isOwnProject ? (
                         <div className="rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40 p-6">
                             <p className="text-sm text-cool-steel-400">This is your project.</p>
@@ -277,14 +308,14 @@ function ProjectContent() {
                                 Edit submission →
                             </Link>
                         </div>
-                    ) : (
+                    ) : canScore ? (
                         <div className="rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40 p-6">
                             <div className="flex items-center justify-between mb-6">
                                 <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-cool-steel-400">
                                     {hasExistingScore ? "Update Your Score" : "Score This Project"}
                                 </h2>
-                                <span className={`text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full border ${user.role === "judge" ? "text-amber-400 bg-amber-500/10 border-amber-500/20" : "text-cool-steel-400 bg-neutral-800 border-neutral-700"}`}>
-                                    {user.role === "judge" ? "Judge" : "Peer"}
+                                <span className={`text-[10px] font-semibold uppercase tracking-widest px-2 py-0.5 rounded-full border ${isJudge ? "text-amber-400 bg-amber-500/10 border-amber-500/20" : "text-cool-steel-400 bg-neutral-800 border-neutral-700"}`}>
+                                    {isJudge ? "Judge" : "Peer"}
                                 </span>
                             </div>
 
@@ -349,31 +380,44 @@ function ProjectContent() {
                                 )}
                             </form>
                         </div>
+                    ) : (
+                        <div className="rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40 p-6 text-center">
+                            <p className="text-sm text-cool-steel-500">Scoring will open during judging.</p>
+                        </div>
                     )}
                 </div>
 
                 {/* Right: Judge Scores + People's Choice */}
                 <div className="lg:col-span-5 space-y-6">
-                    <ScoreSection
-                        title="Judge Scores"
-                        subtitle="Official scores from designated judges"
-                        accentClass="text-amber-400"
-                        borderClass="border-amber-500/20"
-                        total={project.judge_avg_total != null ? Number(project.judge_avg_total) : null}
-                        reviewCount={project.judge_review_count ?? 0}
-                        avgMap={judgeAvgMap}
-                        barColors={barColors}
-                    />
-                    <ScoreSection
-                        title="People's Choice"
-                        subtitle="Scores from fellow participants"
-                        accentClass="text-blue-400"
-                        borderClass="border-blue-500/20"
-                        total={project.peer_avg_total != null ? Number(project.peer_avg_total) : null}
-                        reviewCount={project.peer_review_count ?? 0}
-                        avgMap={peerAvgMap}
-                        barColors={barColors}
-                    />
+                    {canSeeScores ? (
+                        <>
+                            <ScoreSection
+                                title="Judge Scores"
+                                subtitle="Official scores from designated judges"
+                                accentClass="text-amber-400"
+                                borderClass="border-amber-500/20"
+                                total={project.judge_avg_total != null ? Number(project.judge_avg_total) : null}
+                                reviewCount={project.judge_review_count ?? 0}
+                                avgMap={judgeAvgMap}
+                                barColors={barColors}
+                            />
+                            <ScoreSection
+                                title="People's Choice"
+                                subtitle="Scores from fellow participants"
+                                accentClass="text-blue-400"
+                                borderClass="border-blue-500/20"
+                                total={project.peer_avg_total != null ? Number(project.peer_avg_total) : null}
+                                reviewCount={project.peer_review_count ?? 0}
+                                avgMap={peerAvgMap}
+                                barColors={barColors}
+                            />
+                        </>
+                    ) : (
+                        <div className="rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40 border border-neutral-800 p-8 text-center">
+                            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cool-steel-500 mb-2">Scores</p>
+                            <p className="text-sm text-cool-steel-400">Results will be revealed after judging.</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

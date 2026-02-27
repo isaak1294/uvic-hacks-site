@@ -14,7 +14,8 @@ function SubmitForm() {
     const router = useRouter();
 
     const [title, setTitle] = useState("");
-    const [projectUrl, setProjectUrl] = useState("");
+    const [liveUrl, setLiveUrl] = useState("");
+    const [githubUrl, setGithubUrl] = useState("");
     const [description, setDescription] = useState("");
     const [teamMembers, setTeamMembers] = useState("");
 
@@ -33,12 +34,13 @@ function SubmitForm() {
             .then(data => {
                 if (data.submission) {
                     setTitle(data.submission.title || "");
-                    setProjectUrl(data.submission.github_url || "");
+                    setLiveUrl(data.submission.live_url || "");
+                    setGithubUrl(data.submission.github_url || "");
                     setDescription(data.submission.description || "");
                     setTeamMembers(data.submission.team_members || "");
                 }
             })
-            .catch(() => {})
+            .catch(() => { })
             .finally(() => setPrefilling(false));
     }, [token]);
 
@@ -57,7 +59,8 @@ function SubmitForm() {
                 body: JSON.stringify({
                     event_id: EVENT_ID,
                     title,
-                    github_url: projectUrl,
+                    live_url: liveUrl,
+                    github_url: githubUrl || undefined,
                     description,
                     team_members: teamMembers,
                 }),
@@ -123,16 +126,25 @@ function SubmitForm() {
                 </div>
 
                 <div>
-                    <label className={labelClass}>Project / Demo URL</label>
-                    <input required type="url" value={projectUrl} onChange={e => setProjectUrl(e.target.value)}
-                        className={inputClass} placeholder="https://github.com/you/project or https://your-demo.com" />
-                    <p className="mt-1 text-xs text-cool-steel-500">GitHub repo, deployed app, or any public URL.</p>
+                    <label className={labelClass}>
+                        Live / Demo URL <span className="text-red-400">*</span>
+                    </label>
+                    <input required type="url" value={liveUrl} onChange={e => setLiveUrl(e.target.value)}
+                        className={inputClass} placeholder="https://your-deployed-app.com" />
+                    <p className="mt-1 text-xs text-cool-steel-500">Must be a live, deployed URL. Judges need to be able to visit and use your project.</p>
                 </div>
 
                 <div>
-                    <label className={labelClass}>Team Members (optional)</label>
+                    <label className={labelClass}>GitHub Repo URL</label>
+                    <input type="url" value={githubUrl} onChange={e => setGithubUrl(e.target.value)}
+                        className={inputClass} placeholder="https://github.com/you/project" />
+                </div>
+
+                <div>
+                    <label className={labelClass}>Team Members (encouraged: first and last name)</label>
                     <input type="text" value={teamMembers} onChange={e => setTeamMembers(e.target.value)}
-                        className={inputClass} placeholder="Alice, Bob, Charlie" />
+                        className={inputClass} placeholder="Alice Smith, Bob Jones, Charlie Lee" />
+                    <p className="mt-1 text-xs text-cool-steel-500">Include full names so judges know who to credit.</p>
                 </div>
 
                 <div>
