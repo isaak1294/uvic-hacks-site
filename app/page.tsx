@@ -48,6 +48,19 @@ export default function Page() {
 
   const upcomingEvents: Event[] = [
     {
+      name: "Pitch Competition: Study Tools",
+      date: "March 14, 2026",
+      location: "TBD",
+      tag: "$300 in Prizes",
+      description:
+        "Have an idea to make student's lives easier? Pitch it here and win awesome prizes!",
+      imageUrl: "/images/events/pitch-competition.png",
+      eventUrl: "/events/study-tool-pitch"
+    },
+  ];
+
+  const pastEvents: Event[] = [
+    {
       name: "Startup Hackathon",
       date: "Feb 27-28, 2026",
       location: "Hickman 105",
@@ -57,9 +70,6 @@ export default function Page() {
       imageUrl: "/images/events/startup2.png",
       eventUrl: "/events/startup-hackathon"
     },
-  ];
-
-  const pastEvents: Event[] = [
     {
       name: "Portfolio Workshop",
       date: "Feb 7, 2026",
