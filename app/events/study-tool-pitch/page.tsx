@@ -52,7 +52,7 @@ export default function StudyToolPitchPage() {
                                     <span className="text-[10px] font-bold uppercase tracking-widest text-blue-400">Registration Open</span>
                                 </div>
                                 <span className="h-4 w-[1px] bg-neutral-800 hidden md:block"></span>
-                                <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight italic">March 14, 2026 // 6:00 PM</span>
+                                <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight italic">March 14, 2026 // Noon</span>
                                 <span className="h-4 w-[1px] bg-neutral-800 hidden md:block"></span>
                                 <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight italic">Beginner Friendly</span>
                             </div>
