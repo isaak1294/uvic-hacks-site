@@ -17,6 +17,18 @@ router.post("/register", authenticate, async (req: any, res) => {
     }
 
     try {
+        // Claude Hackathon (event 5): UVic students only
+        if (parseInt(eventId) === 5) {
+            const { rows } = await query(
+                "SELECT role, vnumber FROM users WHERE id = $1",
+                [userId]
+            );
+            const u = rows[0];
+            if (!u || u.role !== "student" || !u.vnumber) {
+                return res.status(403).json({ error: "The Claude Hackathon is open to UVic students only. A valid V-number is required." });
+            }
+        }
+
         // 1. Insert the new registration
         await query(
             `INSERT INTO event_registrations (user_id, event_id) 
@@ -40,6 +52,35 @@ router.post("/register", authenticate, async (req: any, res) => {
         });
     } catch (e: any) {
         console.error("Event Registration Error:", e);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
+router.delete("/register", authenticate, async (req: any, res) => {
+    const { userId, eventId } = req.body;
+
+    if (req.user.userId !== parseInt(userId)) {
+        return res.status(403).json({ error: "Unauthorized." });
+    }
+
+    try {
+        await query(
+            "DELETE FROM event_registrations WHERE user_id = $1 AND event_id = $2",
+            [userId, eventId]
+        );
+
+        const { rows } = await query(
+            "SELECT event_id FROM event_registrations WHERE user_id = $1",
+            [userId]
+        );
+
+        res.json({
+            success: true,
+            message: "Unregistered successfully.",
+            registeredEventIds: rows.map(r => r.event_id),
+        });
+    } catch (e) {
+        console.error("Unregister error:", e);
         res.status(500).json({ error: "Server error" });
     }
 });

@@ -50,12 +50,22 @@ export default function Page() {
     {
       name: "Pitch Competition: Study Tools",
       date: "March 14, 2026",
-      location: "TBD",
+      location: "ECS 130",
       tag: "$300 in Prizes",
       description:
         "Have an idea to make student's lives easier? Pitch it here and win awesome prizes!",
       imageUrl: "/images/events/pitch-competition.png",
       eventUrl: "/events/study-tool-pitch"
+    },
+    {
+      name: "Claude Hackathon",
+      date: "March 21, 2026",
+      location: "Hickman 105",
+      tag: "Sponsored",
+      description:
+        "Bring your ideas to life with free Claude credits for the event!",
+      imageUrl: "/images/events/claude.png",
+      eventUrl: "/events/claude-hackathon"
     },
   ];
 
