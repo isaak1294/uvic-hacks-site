@@ -142,7 +142,7 @@ export default function ClaudeHackathonRegisterPage() {
                         <h1 className="text-4xl font-bold tracking-tighter text-white italic uppercase">
                             Claude <span className="text-orange-500">Hackathon</span>
                         </h1>
-                        <p className="mt-2 text-sm text-cool-steel-400">March 21, 2026 &bull; Teams of 2–4 &bull; $1,500 in API Credits</p>
+                        <p className="mt-2 text-sm text-cool-steel-400">March 21, 2026 | Hickman 105 &bull; Teams of 2–4 &bull; $1,500 in API Credits</p>
                     </div>
 
                     <div className="rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40">
