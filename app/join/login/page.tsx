@@ -184,7 +184,24 @@ function LoginForm() {
 
                 {/* Email + Password (always shown) */}
                 {field("Email", "email", "email", "you@uvic.ca")}
-                {field("Password", "password", "password", "••••••••")}
+                <div>
+                    <label className="block text-xs font-medium text-cool-steel-300 mb-1">Password</label>
+                    <input
+                        required
+                        type="password"
+                        placeholder="••••••••"
+                        value={formData.password}
+                        onChange={e => setFormData({ ...formData, password: e.target.value })}
+                        className="w-full rounded-md border border-cool-steel-700 bg-neutral-950 px-3 py-2 text-sm text-cool-steel-50 outline-none placeholder:text-cool-steel-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40 transition"
+                    />
+                    {isLogin && (
+                        <div className="mt-1 text-right">
+                            <Link href="/join/forgot-password" className="text-xs text-cool-steel-500 hover:text-blue-400 transition">
+                                Forgot password?
+                            </Link>
+                        </div>
+                    )}
+                </div>
 
                 {/* ── SIGN UP EXTRAS ── */}
                 {!isLogin && (
