@@ -5,6 +5,7 @@ import { query, pool } from "../../hack-db";
 import { bucket, generateV4ReadSignedUrl } from "../../storage";
 import multer from "multer";
 import { authenticate } from "../../auth";
+import { Resend } from "resend";
 
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
@@ -237,6 +238,90 @@ router.put("/profile", authenticate, upload.single('resume'), async (req: any, r
     } catch (e: any) {
         console.error("DETAILED ERROR LOG:", e);
         res.status(500).json({ error: "Update failed", details: e.message });
+    }
+});
+
+// Forgot password — generate token and send reset email
+router.post("/forgot-password", async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) return res.status(400).json({ error: "Email required" });
+
+        const { rows } = await query("SELECT id FROM users WHERE email = $1", [email]);
+
+        // Always return success so we don't leak whether an email is registered
+        if (rows.length === 0) {
+            return res.json({ success: true });
+        }
+
+        const userId = rows[0].id;
+        const rawToken = crypto.randomBytes(32).toString("hex");
+        const hashedToken = crypto.createHash("sha256").update(rawToken).digest("hex");
+        const expires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+        await query(
+            `UPDATE users SET password_reset_token = $1, password_reset_expires = $2 WHERE id = $3`,
+            [hashedToken, expires, userId]
+        );
+
+        const FRONTEND_URL = process.env.FRONTEND_URL || "https://uvichacks.com";
+        const resetLink = `${FRONTEND_URL}/join/reset-password?token=${rawToken}`;
+
+        const resend = new Resend(process.env.RESEND_KEY);
+        await resend.emails.send({
+            from: "UVic Hacks <noreply@uvichacks.com>",
+            to: email,
+            subject: "Reset your UVic Hacks password",
+            html: `
+                <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:24px">
+                    <h2 style="margin-bottom:8px">Reset your password</h2>
+                    <p style="color:#555">Click the button below to set a new password. This link expires in 1 hour.</p>
+                    <a href="${resetLink}"
+                       style="display:inline-block;margin:16px 0;padding:12px 24px;background:#1d4ed8;color:#fff;border-radius:9999px;text-decoration:none;font-weight:600">
+                        Reset Password
+                    </a>
+                    <p style="color:#999;font-size:12px">If you didn't request this, you can safely ignore this email.</p>
+                </div>
+            `,
+        });
+
+        res.json({ success: true });
+    } catch (e: any) {
+        console.error("FORGOT PASSWORD ERROR:", e);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
+// Reset password — validate token and update password
+router.post("/reset-password", async (req, res) => {
+    try {
+        const { token, password } = req.body;
+        if (!token || !password) return res.status(400).json({ error: "Token and password required" });
+        if (password.length < 8) return res.status(400).json({ error: "Password must be at least 8 characters" });
+
+        const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+        const { rows } = await query(
+            `SELECT id FROM users WHERE password_reset_token = $1 AND password_reset_expires > NOW()`,
+            [hashedToken]
+        );
+
+        if (rows.length === 0) {
+            return res.status(400).json({ error: "Invalid or expired reset link" });
+        }
+
+        const userId = rows[0].id;
+        const newHash = crypto.createHash("sha256").update(password).digest("hex");
+
+        await query(
+            `UPDATE users SET password_hash = $1, password_reset_token = NULL, password_reset_expires = NULL WHERE id = $2`,
+            [newHash, userId]
+        );
+
+        res.json({ success: true });
+    } catch (e: any) {
+        console.error("RESET PASSWORD ERROR:", e);
+        res.status(500).json({ error: "Server error" });
     }
 });
 
