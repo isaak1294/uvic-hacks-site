@@ -48,16 +48,6 @@ export default function Page() {
 
   const upcomingEvents: Event[] = [
     {
-      name: "Pitch Competition: Study Tools",
-      date: "March 14, 2026",
-      location: "ECS 130",
-      tag: "$300 in Prizes",
-      description:
-        "Have an idea to make student's lives easier? Pitch it here and win awesome prizes!",
-      imageUrl: "/images/events/pitch-competition.png",
-      eventUrl: "/events/study-tool-pitch"
-    },
-    {
       name: "Claude Hackathon",
       date: "March 21, 2026",
       location: "Hickman 105",
