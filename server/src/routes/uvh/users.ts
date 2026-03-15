@@ -268,8 +268,8 @@ router.post("/forgot-password", async (req, res) => {
         const resetLink = `${FRONTEND_URL}/join/reset-password?token=${rawToken}`;
 
         const resend = new Resend(process.env.RESEND_KEY);
-        await resend.emails.send({
-            from: "UVic Hacks <noreply@uvichacks.com>",
+        const { error: sendError } = await resend.emails.send({
+            from: "UVic Hacks <noreply@contact.uvichacks.com>",
             to: email,
             subject: "Reset your UVic Hacks password",
             html: `
@@ -284,6 +284,11 @@ router.post("/forgot-password", async (req, res) => {
                 </div>
             `,
         });
+
+        if (sendError) {
+            console.error("RESEND ERROR:", sendError);
+            return res.status(500).json({ error: "Failed to send email", details: sendError.message });
+        }
 
         res.json({ success: true });
     } catch (e: any) {
