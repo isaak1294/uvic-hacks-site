@@ -21,6 +21,7 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-router-dom": "^7.13.0",
+    "resend": "^6.9.3",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.0.2"
   },
