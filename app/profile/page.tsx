@@ -15,6 +15,8 @@ function ProfileContent() {
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const [deleteLoading, setDeleteLoading] = useState(false);
 
     const [name, setName] = useState("");
     const [bio, setBio] = useState("");
@@ -93,6 +95,24 @@ function ProfileContent() {
         }
     };
 
+    const handleDeleteAccount = async () => {
+        setDeleteLoading(true);
+        try {
+            const res = await fetch(`${API_BASE}/api/users/account`, {
+                method: "DELETE",
+                headers: { "Authorization": `Bearer ${token}` },
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || "Delete failed");
+            logout();
+        } catch (err: any) {
+            setMessage(`Error: ${err.message}`);
+            setConfirmDelete(false);
+        } finally {
+            setDeleteLoading(false);
+        }
+    };
+
     const initial = user.name?.charAt(0)?.toUpperCase() ?? "?";
 
     return (
@@ -144,6 +164,34 @@ function ProfileContent() {
                         >
                             Sign Out
                         </button>
+
+                        {!confirmDelete ? (
+                            <button
+                                onClick={() => setConfirmDelete(true)}
+                                className="w-full rounded-full border border-cool-steel-800 px-4 py-2 text-sm text-cool-steel-600 hover:border-red-800 hover:text-red-500 transition"
+                            >
+                                Delete Account
+                            </button>
+                        ) : (
+                            <div className="rounded-md border border-red-900 bg-red-950/30 p-3 space-y-2">
+                                <p className="text-xs text-red-300">This is permanent and cannot be undone.</p>
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={handleDeleteAccount}
+                                        disabled={deleteLoading}
+                                        className="flex-1 rounded-full bg-red-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-600 transition disabled:opacity-50"
+                                    >
+                                        {deleteLoading ? "Deleting..." : "Yes, delete"}
+                                    </button>
+                                    <button
+                                        onClick={() => setConfirmDelete(false)}
+                                        className="flex-1 rounded-full border border-cool-steel-700 px-3 py-1.5 text-xs text-cool-steel-400 hover:border-cool-steel-500 transition"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </aside>
 

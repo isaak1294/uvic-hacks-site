@@ -315,6 +315,18 @@ router.post("/reset-password", async (req, res) => {
     }
 });
 
+// Delete account
+router.delete("/account", authenticate, async (req: any, res) => {
+    try {
+        const userId = req.user.userId;
+        await query("DELETE FROM users WHERE id = $1", [userId]);
+        res.json({ success: true });
+    } catch (e: any) {
+        console.error("DELETE ACCOUNT ERROR:", e);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
 // registrations count (Postgres)
 router.get("/registrations/count", async (_req, res) => {
     try {
