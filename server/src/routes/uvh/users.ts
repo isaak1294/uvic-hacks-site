@@ -95,24 +95,10 @@ router.get("/admin/registrations", async (req, res) => {
         }
 
         const { rows: users } = await query(
-            `SELECT id, name, email, vnumber, resume_path, createdat 
-             FROM users ORDER BY createdat DESC`
+            `SELECT name, email FROM users ORDER BY id DESC`
         );
 
-        // Map over users and add a temporary signed link if they have a resume
-        const usersWithLinks = await Promise.all(users.map(async (user) => {
-            if (user.resume_path) {
-                try {
-                    user.resume_url = await generateV4ReadSignedUrl(user.resume_path);
-                } catch (err) {
-                    console.error(`Error signing URL for ${user.resume_path}`, err);
-                    user.resume_url = null;
-                }
-            }
-            return user;
-        }));
-
-        res.json(usersWithLinks);
+        res.json(users);
     } catch (e) {
         console.error(e);
         res.status(500).json({ error: "Failed to fetch registrations" });
@@ -249,9 +235,8 @@ router.post("/forgot-password", async (req, res) => {
 
         const { rows } = await query("SELECT id FROM users WHERE email = $1", [email]);
 
-        // Always return success so we don't leak whether an email is registered
         if (rows.length === 0) {
-            return res.json({ success: true });
+            return res.status(404).json({ error: "No account found with that email" });
         }
 
         const userId = rows[0].id;
