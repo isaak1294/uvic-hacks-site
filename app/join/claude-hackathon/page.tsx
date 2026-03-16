@@ -145,6 +145,43 @@ export default function ClaudeHackathonRegisterPage() {
                         <p className="mt-2 text-sm text-cool-steel-400">March 21, 2026 | Hickman 105 &bull; Teams of 2–4 &bull; $1,500 in API Credits</p>
                     </div>
 
+                    {/* Judging criteria */}
+                    <div className="mb-8 space-y-4">
+                        <p className="text-sm text-cool-steel-300 leading-relaxed">
+                            Projects are judged on how well you use Claude, the real-world impact of your idea, your approach to ethical considerations, and how clearly you can communicate what you built and why it matters.
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {[
+                                {
+                                    pts: "30 PTS",
+                                    title: "Technical Execution",
+                                    body: "Does it work? Is it well-built? Is Claude used in a meaningful and purposeful way, or does it feel tacked on?",
+                                },
+                                {
+                                    pts: "25 PTS",
+                                    title: "Impact Potential",
+                                    body: "Does this solve a real problem for specific people? Who benefits and how? Could it scale beyond today?",
+                                },
+                                {
+                                    pts: "25 PTS",
+                                    title: "Ethical Alignment",
+                                    body: "Did your team wrestle with who might be harmed and what safeguards are needed? Does your project empower people rather than replace them?",
+                                },
+                                {
+                                    pts: "20 PTS",
+                                    title: "Presentation",
+                                    body: "Can you clearly explain what you built, why it matters, and what comes next? Judges will visit your table before finals, so every conversation counts.",
+                                },
+                            ].map(({ pts, title, body }) => (
+                                <div key={title} className="rounded-sm bg-neutral-900/70 border border-cool-steel-800 p-4 shadow-sm shadow-black/30">
+                                    <p className="text-[10px] font-black tracking-[0.2em] text-orange-500 mb-1">{pts}</p>
+                                    <p className="text-sm font-semibold text-cool-steel-50 mb-1">{title}</p>
+                                    <p className="text-xs text-cool-steel-400 leading-relaxed">{body}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                     <div className="rounded-sm bg-neutral-900/70 shadow-sm shadow-black/40">
                         {submitted ? (
                             <div className="text-center py-12 px-6">

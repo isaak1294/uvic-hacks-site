@@ -272,48 +272,39 @@ export default function ClaudeHackathonPage() {
                     What We're Looking For
                 </h2>
                 <p className="mt-4 max-w-3xl text-sm text-cool-steel-200">
-                    Projects are judged on how well you use Claude, the quality of your build, and how clearly you can communicate
-                    what you made and why it matters.
+                    Projects are judged on how well you use Claude, the real-world impact of your idea, your approach to ethical considerations, and how clearly you can communicate what you built and why it matters.
                 </p>
 
                 <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                     <div className="rounded-lg bg-neutral-900/40 p-6 border border-neutral-800">
                         <p className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2">30 pts</p>
-                        <h3 className="text-lg font-semibold text-orange-400">
-                            Technical Execution
-                        </h3>
+                        <h3 className="text-lg font-semibold text-orange-400">Technical Execution</h3>
                         <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed">
-                            Does it work? Is it deployed and usable? Clean code and a live demo speak louder than a mockup.
+                            Does it work? Is it well-built? Is Claude used in a meaningful and purposeful way, or does it feel tacked on?
                         </p>
                     </div>
 
                     <div className="rounded-lg bg-neutral-900/40 p-6 border border-neutral-800">
                         <p className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2">25 pts</p>
-                        <h3 className="text-lg font-semibold text-orange-400">
-                            Claude Integration
-                        </h3>
+                        <h3 className="text-lg font-semibold text-orange-400">Impact Potential</h3>
                         <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed">
-                            How creatively and effectively did you use Claude? Is Claude central to the experience or just bolted on?
+                            Does this solve a real problem for specific people? Who benefits and how? Could it scale beyond today?
                         </p>
                     </div>
 
                     <div className="rounded-lg bg-neutral-900/40 p-6 border border-neutral-800">
                         <p className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2">25 pts</p>
-                        <h3 className="text-lg font-semibold text-orange-400">
-                            Impact & Idea
-                        </h3>
+                        <h3 className="text-lg font-semibold text-orange-400">Ethical Alignment</h3>
                         <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed">
-                            Is there a real problem being solved? Would people actually use this? Originality counts.
+                            Did your team wrestle with who might be harmed and what safeguards are needed? Does your project empower people rather than replace them?
                         </p>
                     </div>
 
                     <div className="rounded-lg bg-neutral-900/40 p-6 border border-neutral-800">
                         <p className="text-[10px] font-black uppercase tracking-widest text-neutral-500 mb-2">20 pts</p>
-                        <h3 className="text-lg font-semibold text-orange-400">
-                            Presentation
-                        </h3>
+                        <h3 className="text-lg font-semibold text-orange-400">Presentation</h3>
                         <p className="mt-2 text-xs text-cool-steel-300 leading-relaxed">
-                            Can you sell it? Five minutes to show the room what you built. Make every second count.
+                            Can you clearly explain what you built, why it matters, and what comes next? Judges will visit your table before finals, so every conversation counts.
                         </p>
                     </div>
                 </div>
