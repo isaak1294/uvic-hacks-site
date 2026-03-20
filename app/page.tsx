@@ -58,7 +58,7 @@ export default function Page() {
       eventUrl: "/events/claude-hackathon"
     },
     {
-      name: "Healthcare Hacathon",
+      name: "Healthcare Hackathon",
       date: "March 27-28, 2026",
       location: "ECS First Floor",
       tag: "Sponsored",
