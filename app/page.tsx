@@ -57,6 +57,16 @@ export default function Page() {
       imageUrl: "/images/events/claude.png",
       eventUrl: "/events/claude-hackathon"
     },
+    {
+      name: "Healthcare Hacathon",
+      date: "March 27-28, 2026",
+      location: "ECS First Floor",
+      tag: "Sponsored",
+      description:
+        "Build solutions to make a real difference in the field of healthcare and medicine!",
+      imageUrl: "/images/events/healthcare.png",
+      eventUrl: "/events/healthcare-hackathon"
+    },
   ];
 
   const pastEvents: Event[] = [
