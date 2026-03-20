@@ -252,7 +252,7 @@ export default function HealthcareHackathonPage() {
                 <div className="mx-auto max-w-6xl px-4 md:px-6">
                     <div className="text-center mb-12">
                         <h2 className="text-xs font-black uppercase tracking-[0.5em] text-neutral-600 mb-2">Made Possible By</h2>
-                        <h3 className="text-3xl font-bold italic uppercase tracking-tighter text-white">Our <span className="text-teal-500">Sponsors</span></h3>
+                        <h3 className="text-3xl font-bold italic uppercase tracking-tighter text-white">Our <span className="text-teal-500">Partners</span></h3>
                     </div>
 
                     <div className="flex flex-wrap justify-center items-center gap-6">
@@ -264,6 +264,11 @@ export default function HealthcareHackathonPage() {
                         {/* Trelent */}
                         <div className="flex flex-col items-center justify-center rounded-xl border border-neutral-800 bg-neutral-900/40 px-12 py-8 hover:border-teal-500/40 transition w-56">
                             <img src="/images/logos/Trelent.png" alt="Trelent" className="h-14 w-auto object-contain" />
+                        </div>
+
+                        {/* Builder Vault */}
+                        <div className="flex flex-col items-center justify-center rounded-xl border border-neutral-800 bg-neutral-900/40 px-12 py-8 hover:border-teal-500/40 transition w-56">
+                            <img src="/images/logos/bv.png" alt="Builder Vault" className="h-14 w-auto object-contain" />
                         </div>
                     </div>
 
