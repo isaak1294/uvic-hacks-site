@@ -39,7 +39,7 @@ export default function HealthcareHackathonPage() {
                                 <span className="h-4 w-[1px] bg-neutral-800 hidden md:block"></span>
                                 <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight italic">ECS First Floor</span>
                                 <span className="h-4 w-[1px] bg-neutral-800 hidden md:block"></span>
-                                <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight italic">Teams of 2–4</span>
+                                <span className="text-xs font-medium text-neutral-500 uppercase tracking-tight italic">Teams of 2</span>
                             </div>
 
                             <div className="mt-12 flex flex-wrap gap-4">
