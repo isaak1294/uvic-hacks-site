@@ -1,9 +1,9 @@
 // src/server.ts
 import express from "express";
+import cors from "cors";
 import path from "path";
 import fs from "fs";
 import type { Database } from "sqlite";
-import cors from "cors";
 import { pool, query } from "./hack-db";
 import dotenv from "dotenv";
 import { initSqlite } from "./strudel-db";
@@ -13,6 +13,7 @@ import eventRoutes from "./routes/uvh/events";
 import submissionRoutes from "./routes/uvh/submissions";
 import strudelRoutes from "./routes/strudel";
 import scoreRoutes from "./routes/uvh/scores";
+import healthcareRoutes from "./routes/uvh/healthcare";
 import { settings } from "./settings";
 
 
@@ -27,6 +28,7 @@ app.use(
     cors({
         origin: [
             "http://localhost:3000",
+            "http://localhost:3001",
             "https://strudel.jimmer.dev",
             "https://uvichacks.com",
             "https://www.uvichacks.com",
@@ -123,6 +125,8 @@ app.use("/api/strudel", strudelRoutes);
 
 app.use("/api/scores", scoreRoutes);
 
+app.use("/api/healthcare", healthcareRoutes);
+
 // --- ADMIN SETTINGS ---------------------------------------------------
 
 // GET /api/admin/settings — public, frontend polls this to check feature flags
@@ -181,6 +185,38 @@ async function start() {
     } catch (err) {
         console.error("Failed to start server:", err);
         process.exit(1);
+    }
+
+    // Healthcare tables — created after server is listening so a failure here
+    // doesn't prevent the rest of the API from starting.
+    try {
+        await query(`
+            CREATE TABLE IF NOT EXISTS healthcare_submissions (
+                id SERIAL PRIMARY KEY,
+                title TEXT NOT NULL,
+                team_members TEXT NOT NULL,
+                github_url TEXT NOT NULL UNIQUE,
+                slides_url TEXT,
+                description TEXT,
+                submitted_at TIMESTAMP DEFAULT NOW()
+            );
+        `);
+        await query(`
+            CREATE TABLE IF NOT EXISTS healthcare_scores (
+                id SERIAL PRIMARY KEY,
+                submission_id INT NOT NULL REFERENCES healthcare_submissions(id) ON DELETE CASCADE,
+                scorer_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                clinical_score NUMERIC,
+                technical_score NUMERIC,
+                feasibility_score NUMERIC,
+                presentation_score NUMERIC,
+                comments TEXT,
+                scored_at TIMESTAMP DEFAULT NOW(),
+                UNIQUE(submission_id, scorer_id)
+            );
+        `);
+    } catch (err) {
+        console.error("Warning: could not create healthcare tables (run migration manually if needed):", err);
     }
 }
 start();

@@ -48,16 +48,6 @@ export default function Page() {
 
   const upcomingEvents: Event[] = [
     {
-      name: "Claude Hackathon",
-      date: "March 21, 2026",
-      location: "Hickman 105",
-      tag: "Sponsored",
-      description:
-        "Bring your ideas to life with free Claude credits for the event!",
-      imageUrl: "/images/events/claude.png",
-      eventUrl: "/events/claude-hackathon"
-    },
-    {
       name: "Healthcare Hackathon",
       date: "March 27-28, 2026",
       location: "ECS First Floor",
@@ -70,6 +60,16 @@ export default function Page() {
   ];
 
   const pastEvents: Event[] = [
+    {
+      name: "Claude Hackathon",
+      date: "March 21, 2026",
+      location: "Hickman 105",
+      tag: "Sponsored",
+      description:
+        "Bring your ideas to life with free Claude credits for the event!",
+      imageUrl: "/images/events/claude.png",
+      eventUrl: "/events/claude-hackathon"
+    },
     {
       name: "Startup Hackathon",
       date: "Feb 27-28, 2026",

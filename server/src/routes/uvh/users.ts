@@ -66,7 +66,7 @@ router.post("/account-reg", upload.single('resume'), async (req: any, res) => {
 
         await client.query('COMMIT');
 
-        const token = jwt.sign({ userId: newUser.id, email: newUser.email }, JWT_SECRET, { expiresIn: '24h' });
+        const token = jwt.sign({ userId: newUser.id, email: newUser.email, role: newUser.role }, JWT_SECRET, { expiresIn: '24h' });
 
         res.status(201).json({
             success: true,
@@ -137,7 +137,7 @@ router.post("/login", async (req, res) => {
             } catch (err) { console.error(err); }
         }
 
-        const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '24h' });
+        const token = jwt.sign({ userId: user.id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '24h' });
 
         res.json({
             success: true,

@@ -4,6 +4,8 @@ import Link from "next/link";
 import Navbar from "@/app/components/NavBar";
 
 const REGISTER_URL = "https://forms.gle/7785jcZShuUmyxuXA";
+const SUBMIT_URL = "/events/healthcare-hackathon/submit";
+const PROJECTS_URL = "/events/healthcare-hackathon/projects";
 
 export default function HealthcareHackathonPage() {
     return (
@@ -43,19 +45,31 @@ export default function HealthcareHackathonPage() {
                             </div>
 
                             <div className="mt-12 flex flex-wrap gap-4">
+                                <Link
+                                    href={SUBMIT_URL}
+                                    className="bg-teal-500 px-10 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-teal-400 active:scale-95"
+                                >
+                                    Submit Project
+                                </Link>
+                                <Link
+                                    href={PROJECTS_URL}
+                                    className="px-10 py-4 text-xs font-bold uppercase tracking-widest text-teal-400 hover:text-white transition border border-teal-800 hover:border-teal-600"
+                                >
+                                    View Projects
+                                </Link>
                                 <a
                                     href={REGISTER_URL}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="bg-white px-10 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-teal-400 active:scale-95"
+                                    className="px-10 py-4 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition border border-neutral-800 hover:border-neutral-700"
                                 >
-                                    Register Now
+                                    Register
                                 </a>
                                 <a
                                     href="#schedule"
-                                    className="px-10 py-4 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white transition border border-neutral-800 hover:border-neutral-700"
+                                    className="px-10 py-4 text-xs font-bold uppercase tracking-widest text-neutral-500 hover:text-neutral-400 transition"
                                 >
-                                    See Schedule
+                                    Schedule
                                 </a>
                             </div>
                         </div>
@@ -285,19 +299,25 @@ export default function HealthcareHackathonPage() {
             <section className="py-20 border-b border-neutral-900">
                 <div className="mx-auto max-w-6xl px-4 md:px-6 text-center">
                     <h2 className="text-3xl font-bold italic uppercase tracking-tighter text-white mb-4">
-                        Ready to <span className="text-teal-500">Build?</span>
+                        Ready to <span className="text-teal-500">Submit?</span>
                     </h2>
                     <p className="text-neutral-400 text-sm max-w-md mx-auto mb-10">
-                        Registration is free. Spots are limited. Open to all UVic students regardless of background.
+                        Deadline is Mar 28, 3:30 PM. Submit your GitHub repo and you're done — no account required.
                     </p>
-                    <a
-                        href={REGISTER_URL}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-block bg-white px-12 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-teal-400 active:scale-95"
-                    >
-                        Register Now
-                    </a>
+                    <div className="flex flex-wrap justify-center gap-4">
+                        <Link
+                            href={SUBMIT_URL}
+                            className="inline-block bg-teal-500 px-12 py-4 text-xs font-black uppercase tracking-widest text-black transition hover:bg-teal-400 active:scale-95"
+                        >
+                            Submit Project
+                        </Link>
+                        <Link
+                            href={PROJECTS_URL}
+                            className="inline-block border border-neutral-700 px-12 py-4 text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-white hover:border-neutral-500 transition"
+                        >
+                            View Projects
+                        </Link>
+                    </div>
                 </div>
             </section>
 
